@@ -3,7 +3,7 @@ import Highlighter from "react-highlight-words";
 import AudioPlayer from "./AudioPlayer";
 import "../../../../styles/text_highlight.module.css";
 
-const TextToSpeech = ({ text, setCurrentWord, currentWord }) => {
+const TextToSpeech = ({ text, setCurrentWord, currentWord, isActive }) => {
   const [isPaused, setIsPaused] = useState(false);
   const [utterance, setUtterance] = useState(null);
   const [selectedVoice, setSelectedVoice] = useState(null);
@@ -131,16 +131,20 @@ const TextToSpeech = ({ text, setCurrentWord, currentWord }) => {
 
   return (
     <div>
-      <AudioPlayer
+      {/* <AudioPlayer
         audioSrc="http://127.0.0.1:5001/audio_files"
         isPaused={isPaused}
         handlePlay={handlePlay}
         handlePause={handlePause}
         handleStop={handleStop}
-      />
-      <div className="flex space-x-4 fixed bottom-4 right-4 border-2 border-black bg-white bg-opacity-50  rounded-md px-2 py-2">
+      /> */}
+      <div
+        className={`flex space-x-4 fixed ${isActive ? "w-1/6" : ""} ${
+          isActive ? "space-x-6" : "space-x-4"
+        }  bottom-4 right-1 border-2 border-black bg-white bg-opacity-50  rounded-md px-2 py-2`}
+      >
         <button
-          className={`px-2 py-1 rounded-md ${
+          className={` ${isActive ? "px-3 py-2" : "px-2 py-1"} rounded-md ${
             isPaused ? "bg-blue-500" : "bg-gray-500"
           } text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50`}
           onClick={handlePlay}
@@ -148,13 +152,17 @@ const TextToSpeech = ({ text, setCurrentWord, currentWord }) => {
           {isPaused ? "Resume" : "Play"}
         </button>
         <button
-          className="px-2 py-1 rounded-md bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
+          className={`${
+            isActive ? "px-3 py-2" : "px-2 py-1"
+          } rounded-md bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50`}
           onClick={handlePause}
         >
           Pause
         </button>
         <button
-          className="px-2 py-1 rounded-md bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
+          className={`${
+            isActive ? "px-3 py-1" : "px-2 py-1"
+          } rounded-md bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50`}
           onClick={handleStop}
         >
           Stop

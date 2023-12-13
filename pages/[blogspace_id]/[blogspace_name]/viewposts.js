@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import "material-icons/iconfont/material-icons.css";
+import ThemeSwitch from "./themeSwitch";
+// import "../../globals.css";
 
 const ViewPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -21,11 +23,25 @@ const ViewPosts = () => {
   const [followersCount, setFollowersCount] = useState(0);
   const [viewMode, setViewMode] = useState("card");
   const [sortedPosts, setSortedPosts] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   console.log(router.query.blogspace_id);
 
   const blog_id = router.query.blogspace_id;
   const blog_name = router.query.blogspace_name;
+
+  useEffect(() => {
+    // Check the initial theme when the component mounts
+    const initialTheme = localStorage.getItem("theme");
+    setIsDarkMode(initialTheme === "dark");
+  }, []);
+
+  // Function to toggle dark mode
+  const toggleDarkMode = (newTheme) => {
+    setIsDarkMode(newTheme === "dark");
+    // Set the theme in local storage
+    localStorage.setItem("theme", newTheme);
+  };
 
   useEffect(() => {
     console.log("hi");
@@ -168,7 +184,8 @@ const ViewPosts = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full bg-slate-300">
+    <div className="flex flex-col justify-center w-full ">
+      <ThemeSwitch onThemeChange={toggleDarkMode} />
       <h2 className="text-2xl font-bold mx-auto my-8">
         {blogspace_name}'s Blog
       </h2>
@@ -176,21 +193,23 @@ const ViewPosts = () => {
       <div className="flex items-center justify-center gap-4 mb-4 my-2">
         {/* Follow button */}
         <button
-          className="px-4 py-2 bg-black text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+          className="px-4 py-2 bg-black text-white border border-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
           onClick={() => toggleFollow(blogspace_name)}
         >
           {followedCompanies.includes(blogspace_name) ? "Unfollow" : "Follow"}
         </button>
 
         {/* Followers count */}
-        <span className="text-sm text-black">
+        <span
+          className={`text-sm ${isDarkMode ? "dark:text-white" : "text-black"}`}
+        >
           {followersCount} {followersCount === 1 ? "follower" : "followers"}
         </span>
       </div>
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-8 rounded-md w-1/3">
             <h2 className="text-xl font-bold mb-2">
               Follow {currentFollowCompany}
@@ -204,13 +223,13 @@ const ViewPosts = () => {
             />
             <div className="flex justify-end space-x-2">
               <button
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
                 onClick={handleConfirmFollow}
               >
                 Confirm Follow
               </button>
               <button
-                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
+                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
                 onClick={handleCloseModal}
               >
                 Cancel
@@ -221,7 +240,7 @@ const ViewPosts = () => {
       )}
 
       <form
-        className="mb-4 flex justify-center"
+        className="w-full mb-4 flex justify-center"
         onSubmit={(e) => e.preventDefault()}
       >
         <div>
@@ -236,14 +255,44 @@ const ViewPosts = () => {
       </form>
       <section className=" flex justify-center mb-4">
         <div className="flex space-x-4">
-          <div className="px-4 py-2 bg-black text-white rounded-md">All</div>
-          <div className="px-4 py-2 bg-gray-200 rounded-md">Recent Posted</div>
-          <div className="px-4 py-2 bg-gray-200 rounded-md">
+          <div className="px-4 py-2 bg-black text-white border border-white shadow-xl rounded-md">
+            All
+          </div>
+          <div
+            className={`px-4 py-2 bg-white ${
+              isDarkMode ? "dark:text-black" : "text-black"
+            } border border-black shadow-xl rounded-md`}
+          >
+            Recent Posted
+          </div>
+          <div
+            className={`px-4 py-2 bg-white ${
+              isDarkMode ? "dark:text-black" : "text-black"
+            } border border-black shadow-xl rounded-md`}
+          >
             Most Trending Posted
           </div>
-          <div className="px-4 py-2 bg-gray-200 rounded-md">Geography</div>
-          <div className="px-4 py-2 bg-gray-200 rounded-md">Science</div>
-          <div className="px-4 py-2 bg-gray-200 rounded-md">History</div>
+          <div
+            className={`px-4 py-2 bg-white ${
+              isDarkMode ? "dark:text-black" : "text-black"
+            } border border-black shadow-xl rounded-md`}
+          >
+            Geography
+          </div>
+          <div
+            className={`px-4 py-2 bg-white ${
+              isDarkMode ? "dark:text-black" : "text-black"
+            } border border-black shadow-xl rounded-md`}
+          >
+            Science
+          </div>
+          <div
+            className={`px-4 py-2 bg-white ${
+              isDarkMode ? "dark:text-black" : "text-black"
+            } border border-black shadow-xl rounded-md`}
+          >
+            History
+          </div>
         </div>
       </section>
 
@@ -275,10 +324,14 @@ const ViewPosts = () => {
           {filteredPosts.map((post, index) => (
             <div
               key={index}
-              className="flex w-full"
+              className={`flex w-full`}
               onClick={() => handlePostClick(post._id)}
             >
-              <div className="flex flex-col w-full bg-white shadow-2xl rounded-md p-4 m-2 transform transition-transform duration-200 hover:scale-105">
+              <div
+                className={`flex flex-col w-full ${
+                  isDarkMode ? "dark:bg-dark-blue" : "bg-white"
+                } shadow-2xl shadow-slate-950 border border-slate-950" rounded-md m-2 transform transition-transform duration-200 hover:scale-105`}
+              >
                 <img
                   src={
                     post.imageUrl ||
@@ -288,11 +341,11 @@ const ViewPosts = () => {
                   alt={"image"}
                 />
                 <div className="flex flex-col space-y-2">
-                  <h2 className="text-lg font-bold">
+                  <h2 className="text-lg font-bold px-3">
                     {post.title.substring(0, 30)}
                   </h2>
-                  <p className="text-sm text-gray-500">~{post.author}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 px-3">~{post.author}</p>
+                  <p className="text-sm text-gray-500 px-3 pb-2">
                     <FontAwesomeIcon icon={faEye} />: {post.views}
                   </p>
                 </div>

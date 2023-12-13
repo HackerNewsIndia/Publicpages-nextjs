@@ -184,7 +184,7 @@ const PublicBlogSpace = () => {
               className="flex w-full "
               onClick={() => handleBlog(companyData)}
             >
-              <div className="flex flex-col w-full bg-white shadow-2xl rounded-md p-4 m-2 transform transition-transform duration-200 hover:scale-105">
+              <div className="flex flex-col w-full bg-white shadow-2xl shadow-slate-950 border border-slate-950 rounded-md p-4 m-2 transform transition-transform duration-200 hover:scale-105">
                 <img
                   src={randomImageUrls[index]}
                   className="w-full h-48 object-cover mb-2 rounded-md"
@@ -194,7 +194,7 @@ const PublicBlogSpace = () => {
                   <h2 className="text-lg font-bold">{companyData.name}</h2>
                   <div className="flex justify-between items-center">
                     <button
-                      className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                      className="px-2 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
                       onClick={(e) => {
                         e.stopPropagation(); // To prevent handleBlog from being called
                         toggleFollow(companyData.name);
@@ -232,8 +232,18 @@ const PublicBlogSpace = () => {
                   className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
                 />
                 <div className="flex justify-end space-x-2">
-                  <button onClick={handleConfirmFollow}>Confirm Follow</button>
-                  <button onClick={handleCloseModal}>Cancel</button>
+                  <button
+                    onClick={handleConfirmFollow}
+                    className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                  >
+                    Confirm Follow
+                  </button>
+                  <button
+                    onClick={handleCloseModal}
+                    className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </div>

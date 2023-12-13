@@ -1,27 +1,111 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* :root {
+  --bg-color-light: #ffffff;
+  --text-color-light: #000000;
+  
+
+  --bg-color-dark: #1f1f1f;
+  --text-color-dark: #ffffff;
+} */
+
+/* [data-theme='light'] {
+  --bg-color: var(--bg-color-light);
+  --text-color: var(--text-color-light);
+} */
+
+/* [data-theme='dark'] {
+  --bg-color: var(--bg-color-dark);
+  --text-color: var(--text-color-dark);
+} */
+
+/* body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+} */
+
+/* :root {
+  
+  --background: white;
+  --foreground: black;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+[data-theme='dark'] {
+  --background: black;
+  --foreground: white;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--background);
+  color: var(--foreground);
 }
+
+.flex {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.card {
+  background-color: var(--background);
+  color: var(--foreground);
+  
+} */
+
+/* globals.css */
+
+/* Light mode styles */
+:root {
+  --background: theme("colors.white");
+  --background-secondary: theme("colors.gray.50");
+
+  --primary-dark: theme("colors.gray.900");
+  --primary-medium: theme("colors.gray.700");
+  --primary-light: theme("colors.gray.500");
+
+}
+
+/* Dark mode styles */
+[data-theme="dark"] {
+  --background: theme("colors.black");
+  --background-secondary: theme("colors.gray.50");
+
+  --accent-dark: theme("colors.fuchsia.900");
+  --accent-medium: theme("colors.fuchsia.700");
+  --accent-light: theme("colors.fuchsia.500");
+
+  --primary-dark: theme("colors.gray.300");
+  --primary-medium: theme("colors.gray.200");
+  --primary-light: theme("colors.gray.100");
+}
+
+[data-theme="pink"] {
+  --background: var(--theme-color-dark-blue);
+  --background-secondary: theme("colors.pink.50");
+
+  --accent-dark: theme("colors.pink.900");
+  --accent-medium: theme("colors.pink.700");
+  --accent-light: theme("colors.pink.500");
+
+  --primary-dark: theme("colors.gray.500");
+  --primary-medium: theme("colors.gray.200");
+  --primary-light: theme("colors.gray.100");
+
+  /* Add other pink theme styles here */
+}
+
+/* Apply light mode styles by default */
+body {
+  background-color: var(--background);
+  color: var(--primary-dark);
+}
+
+/* Apply dark mode styles with the dark: variant */
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply dark:bg-gray-200;
+    @apply dark:text-white;
+  }
+}
+
+/* Other styles... */
+
+

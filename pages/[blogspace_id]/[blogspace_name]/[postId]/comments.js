@@ -8,10 +8,12 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faFaceLaughSquint } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 const Comments = ({ blogId, postId, post_title }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [isSentimentActive, setIsSentimentActive] = useState(false);
+  const [selectedSentimentIcon, setSelectedSentimentIcon] = useState("");
   // const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -37,18 +39,33 @@ const Comments = ({ blogId, postId, post_title }) => {
     fetchComments();
   }, [postId]);
 
-  console.log(comments);
+  useEffect(() => {
+    // Initialize sentimentsActive array with false values for each comment
+    setIsSentimentActive(Array(comments.length).fill(false));
+  }, [comments]);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
-  const sentimentsActive = () => {
-    setIsSentimentActive(true);
+  const setSentimentsActiveForComment = (index, isActive) => {
+    setIsSentimentActive((prev) => {
+      const newState = [...prev];
+      newState[index] = isActive;
+      return newState;
+    });
   };
-  const sentimentsInactive = () => {
-    setIsSentimentActive(false);
+
+  const handleSentimentIcon = (index, iconId) => {
+    // setSelectedSentimentIcon((prev) => {
+    //   const newState = [...prev];
+    //   newState[index] = iconId;
+    //   return newState;
+    // });
+    setSelectedSentimentIcon(iconId);
+    console.log("selected icon:", iconId);
   };
+  console.log(selectedSentimentIcon);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -126,43 +143,94 @@ const Comments = ({ blogId, postId, post_title }) => {
           <ul>
             {comments.map((commentData, index) => (
               <div key={index}>
-                <li className="m-1 p-1 pb-2 relative">
+                <li
+                  className={`m-1 p-1  ${
+                    isSentimentActive ? "pb-4" : "pb-2"
+                  } relative`}
+                >
                   {commentData.comment}
                   <div
                     className="text-xs italic text-slate-300  absolute left-1 mb-1 cursor-pointer"
-                    onMouseEnter={sentimentsActive}
-                    onMouseLeave={sentimentsInactive}
+                    onMouseEnter={() => {
+                      setSentimentsActiveForComment(index, true);
+                    }}
+                    onMouseLeave={() => {
+                      setSentimentsActiveForComment(index, false);
+                    }}
                   >
-                    {isSentimentActive ? (
-                      <div className="flex text-lg text-slate-900 border border-slate-400 bg-white rounded-md  absolute left-1 mb-1 z-10">
-                        {console.log("sentimentActive")}
+                    {isSentimentActive[index] ? (
+                      <div className="flex text-lg bg-transparent rounded-md  absolute left-1 mb-1 z-10">
                         <span>
                           <FontAwesomeIcon
-                            className="pt-2 pb-2 pr-1 pl-1"
+                            id="faHeart"
+                            className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-pink-400 duration-300"
+                            onClick={(event) =>
+                              handleSentimentIcon(index, event.currentTarget.id)
+                            }
                             icon={faHeart}
                           />
                         </span>{" "}
                         <span>
                           <FontAwesomeIcon
-                            className="pt-2 pb-2 pr-1 pl-1"
+                            id="faThumbsUp"
+                            className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-blue-400 duration-300"
+                            onClick={(event) =>
+                              handleSentimentIcon(index, event.currentTarget.id)
+                            }
                             icon={faThumbsUp}
                           />
                         </span>{" "}
                         <span>
                           <FontAwesomeIcon
-                            className="pt-2 pb-2 pr-1 pl-1"
+                            id="faFaceLaughSquint"
+                            className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-yellow-400 duration-300"
+                            onClick={(event) =>
+                              handleSentimentIcon(index, event.currentTarget.id)
+                            }
                             icon={faFaceLaughSquint}
                           />
                         </span>{" "}
                         <span>
                           <FontAwesomeIcon
-                            className="pt-2 pb-2 pr-1 pl-1"
+                            id="faThumbsDown"
+                            className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-blue-400 duration-300"
+                            onClick={(event) =>
+                              handleSentimentIcon(index, event.currentTarget.id)
+                            }
                             icon={faThumbsDown}
                           />
                         </span>
                       </div>
+                    ) : selectedSentimentIcon ? (
+                      <FontAwesomeIcon
+                        icon={
+                          selectedSentimentIcon === "faHeart"
+                            ? faHeart
+                            : selectedSentimentIcon === "faThumbsUp"
+                            ? faThumbsUp
+                            : selectedSentimentIcon === "faFaceLaughSquint"
+                            ? faFaceLaughSquint
+                            : selectedSentimentIcon === "faThumbsDown"
+                            ? faThumbsDown
+                            : null
+                        }
+                        className={`text-lg ${
+                          selectedSentimentIcon === "faHeart"
+                            ? "text-pink-400"
+                            : selectedSentimentIcon === "faThumbsUp"
+                            ? "text-blue-400"
+                            : selectedSentimentIcon === "faFaceLaughSquint"
+                            ? "text-yellow-400"
+                            : selectedSentimentIcon === "faThumbsDown"
+                            ? "text-blue-400"
+                            : ""
+                        }`}
+                      />
                     ) : (
-                      <FontAwesomeIcon icon={faHeart} />
+                      <div>
+                        <FontAwesomeIcon icon={faHeart} />
+                        {console.log("sentiment InActive")}
+                      </div>
                     )}
                   </div>
                   <div className="text-xs italic text-slate-400 absolute right-1 mb-1 ">

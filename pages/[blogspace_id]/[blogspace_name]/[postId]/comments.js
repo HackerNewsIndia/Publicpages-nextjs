@@ -11,9 +11,11 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { icon } from "@fortawesome/fontawesome-svg-core";
 const Comments = ({ blogId, postId, post_title }) => {
   const [comments, setComments] = useState([]);
+  const [commentData, setCommentData] = useState();
   const [newComment, setNewComment] = useState("");
   const [isSentimentActive, setIsSentimentActive] = useState(false);
   const [selectedSentimentIcon, setSelectedSentimentIcon] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState();
   // const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const Comments = ({ blogId, postId, post_title }) => {
       try {
         const response = await fetch(
           `https://typeit-api.onrender.com/get_comments/${postId}`
+          // `http://127.0.0.1:5000/get_comments/${postId}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -30,6 +33,7 @@ const Comments = ({ blogId, postId, post_title }) => {
         const data = await response.json();
         // Assuming the response structure is { comments: [...] }
         console.log("commentData:", data);
+        setCommentData(data);
         setComments(data.comments);
       } catch (error) {
         console.error("error in fetching comments", error.message);
@@ -56,14 +60,34 @@ const Comments = ({ blogId, postId, post_title }) => {
     });
   };
 
-  const handleSentimentIcon = (index, iconId) => {
+  const handleSentimentIcon = (index, iconId, commentId) => {
     // setSelectedSentimentIcon((prev) => {
     //   const newState = [...prev];
     //   newState[index] = iconId;
     //   return newState;
     // });
     setSelectedSentimentIcon(iconId);
+    setSelectedIndex(index);
     console.log("selected icon:", iconId);
+    console.log("commentId:", commentId);
+
+    fetch("https://typeit-api.onrender.com/post_sentiment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        blog_id: blogId,
+        post_id: postId,
+        comment_id: commentId,
+        sentiment_type: iconId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => {
+        console.log("Error:", error);
+      });
   };
   console.log(selectedSentimentIcon);
 
@@ -144,6 +168,7 @@ const Comments = ({ blogId, postId, post_title }) => {
             {comments.map((commentData, index) => (
               <div key={index}>
                 <li
+                  key={commentData._id}
                   className={`m-1 p-1  ${
                     isSentimentActive ? "pb-4" : "pb-2"
                   } relative`}
@@ -165,7 +190,11 @@ const Comments = ({ blogId, postId, post_title }) => {
                             id="faHeart"
                             className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-pink-400 duration-300"
                             onClick={(event) =>
-                              handleSentimentIcon(index, event.currentTarget.id)
+                              handleSentimentIcon(
+                                index,
+                                event.currentTarget.id,
+                                commentData._id
+                              )
                             }
                             icon={faHeart}
                           />
@@ -175,7 +204,11 @@ const Comments = ({ blogId, postId, post_title }) => {
                             id="faThumbsUp"
                             className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-blue-400 duration-300"
                             onClick={(event) =>
-                              handleSentimentIcon(index, event.currentTarget.id)
+                              handleSentimentIcon(
+                                index,
+                                event.currentTarget.id,
+                                commentData._id
+                              )
                             }
                             icon={faThumbsUp}
                           />
@@ -185,7 +218,11 @@ const Comments = ({ blogId, postId, post_title }) => {
                             id="faFaceLaughSquint"
                             className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-yellow-400 duration-300"
                             onClick={(event) =>
-                              handleSentimentIcon(index, event.currentTarget.id)
+                              handleSentimentIcon(
+                                index,
+                                event.currentTarget.id,
+                                commentData._id
+                              )
                             }
                             icon={faFaceLaughSquint}
                           />
@@ -195,13 +232,17 @@ const Comments = ({ blogId, postId, post_title }) => {
                             id="faThumbsDown"
                             className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-blue-400 duration-300"
                             onClick={(event) =>
-                              handleSentimentIcon(index, event.currentTarget.id)
+                              handleSentimentIcon(
+                                index,
+                                event.currentTarget.id,
+                                commentData._id
+                              )
                             }
                             icon={faThumbsDown}
                           />
                         </span>
                       </div>
-                    ) : selectedSentimentIcon ? (
+                    ) : index === selectedIndex ? (
                       <FontAwesomeIcon
                         icon={
                           selectedSentimentIcon === "faHeart"

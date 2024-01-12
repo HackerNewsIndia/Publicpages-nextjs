@@ -50,7 +50,7 @@ const Post = () => {
         alt={alt}
         src={src}
         style={{
-          width: "70%",
+          width: "100%",
           maxWidth: "500px",
           maxHeight: "300px",
           display: "block",
@@ -67,7 +67,7 @@ const Post = () => {
     // Fetch the post details here using the companyName and postId
     console.log("Company:", blogId, "PostId:", post_id);
     fetch(
-      `https://diaryblogapi2.onrender.com/api/companies/${blogId}/posts/${post_id}`
+      `https://diaryblogapi2.onrender.com/api/companies/${blogId}/posts/${post_id}`,
     )
       .then((response) => {
         if (!response.ok) {
@@ -153,7 +153,13 @@ const Post = () => {
           <img
             src={post.imageUrl || "path-to-default-image.jpg"}
             alt={`Image for ${post.title}`}
-            className="w-fit h-max mx-auto object-cover rounded-md justify-center transform transition-transform duration-300 ease-in-out "
+            style={{
+              maxwidth: "500%", // Set the desired width (you can use a specific value like "500px" or a percentage like "100%")
+              maxHeight: "500px", // Set the maximum height if needed
+              objectFit: "covers", // This property ensures the image covers the entire container
+              borderRadius: "5px",
+              margin: "0 auto",
+            }}
           />
           <button
             className="absolute top-2 left-8 hover:bg-transparent transform transition-transform duration-300 ease-in-out hover:scale-105 z-10"

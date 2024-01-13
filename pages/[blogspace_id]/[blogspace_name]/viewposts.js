@@ -187,7 +187,7 @@ const ViewPosts = () => {
     <div className="flex flex-col justify-center w-full ">
       <ThemeSwitch onThemeChange={toggleDarkMode} />
       <h2 className="text-2xl font-bold mx-auto my-8">
-        {blogspace_name}'s Blog
+        {blogspace_name}&apos;s Blog
       </h2>
 
       <div className="flex items-center justify-center gap-4 mb-4 my-2">

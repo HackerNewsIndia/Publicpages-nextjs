@@ -75,7 +75,7 @@ const Home = () => {
         ))}
         <div className="mt-10">
           <h2 className="text-white text-center text-3xl mb-5">
-            Don't Take Our Words See Who Are Using Ore Web Products
+            Dont Take Our Words See Who Are Using Ore Web Products
           </h2>
           {/* <Testimonials /> */}
         </div>

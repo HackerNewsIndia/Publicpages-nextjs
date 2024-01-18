@@ -6,7 +6,7 @@ export function useBlogContext() {
   return useContext(BlogContext);
 }
 
-export function BlogProvider({ children }) {
+function BlogProvider({ children }) {
   const [blogData, setBlogData] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
 
@@ -18,3 +18,5 @@ export function BlogProvider({ children }) {
     </BlogContext.Provider>
   );
 }
+
+export default BlogProvider;

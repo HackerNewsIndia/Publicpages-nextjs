@@ -2,13 +2,9 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-// import { useNavigate } from "react-router-dom";
-// import "./PublicBlogSpace.css";
-// import { useBlogContext } from "./BlogContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/header";
-// import ViewPosts from "./[blogspace_id]/[blogspace_name]/viewposts";
 
 const PublicBlogSpace = () => {
   // const { blogData, setBlogData } = useBlogContext();

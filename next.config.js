@@ -7,7 +7,7 @@ const nextConfig = {
         name: "publicpages",
         filename: "remoteEntry.js",
         exposes: {
-          "./PublicBlogSpace": "./components/PublicBlogSpace.js",
+          // "./PublicBlogSpace": "./components/PublicBlogSpace.js",
         },
         shared: [
           {

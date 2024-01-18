@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Home from "@/components/home";
+import Home from "../components/home";
 // import Login from "@/components/Login";
 // import Register from "@/components/Registration";
 // import Dashboard from "@/components/Dashboard";
-import PublicBlogSpace from "@/components/publicblogspace";
+import PublicBlogSpace from "../components/publicblogspace";
 // import ViewPosts from "@/components/ViewPosts";
 // import Post from "@/components/Post";
 

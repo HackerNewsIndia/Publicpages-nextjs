@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 // import "./globals.css";
 // import PublicBlogSpace from "../components/PublicBlogSpace";
-import Home from "@/components/home";
+import Home from "../components/home";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 

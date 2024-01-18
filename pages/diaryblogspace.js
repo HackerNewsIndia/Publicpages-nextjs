@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 // import { useBlogContext } from "./BlogContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import Header from "../components/header";
 // import ViewPosts from "./[blogspace_id]/[blogspace_name]/viewposts";
 
 const PublicBlogSpace = () => {
@@ -158,96 +159,99 @@ const PublicBlogSpace = () => {
   };
 
   return (
-    <div className="mx-2 mb-4">
-      <div className="flex flex-col bg-slate-200 rounded-md m-2">
-        <input
-          className="w-2/3 px-4 py-3 mx-auto m-2 border border-slate-950 rounded-md"
-          type="text"
-          placeholder="search blogs"
-          value={blogSearch}
-          onChange={handleChange}
-        />
-        {/* <button className="search-button">Search</button> */}
-      </div>
+    <div>
+      <Header />
+      <div className="mx-2 mb-4">
+        <div className="flex flex-col bg-slate-200 rounded-md m-2">
+          <input
+            className="w-2/3 px-4 py-3 mx-auto m-2 border border-slate-950 rounded-md"
+            type="text"
+            placeholder="search blogs"
+            value={blogSearch}
+            onChange={handleChange}
+          />
+          {/* <button className="search-button">Search</button> */}
+        </div>
 
-      <div className="flex flex-col mx-auto bg-slate-300 shadow-md rounded-md p-4 m-2">
-        <button
-          className="mt-4 ml-4 text-gray-500 hover:text-gray-700"
-          onClick={handleBackClick}
-        >
-          <i className="fas fa-arrow-left" aria-hidden="true"></i>
-        </button>
-        <div className="grid grid-cols-4 gap-4 m-2">
-          {filteredBlogSpace.map((companyData, index) => (
-            <div
-              key={index}
-              className="flex w-full "
-              onClick={() => handleBlog(companyData)}
-            >
-              <div className="flex flex-col w-full bg-white shadow-2xl shadow-slate-950 border border-slate-950 rounded-md p-4 m-2 transform transition-transform duration-200 hover:scale-105">
-                <img
-                  src={randomImageUrls[index]}
-                  className="w-full h-48 object-cover mb-2 rounded-md"
-                  alt={"Company Logo"}
-                />
-                <div className="flex flex-col space-y-2">
-                  <h2 className="text-lg font-bold">{companyData.name}</h2>
-                  <div className="flex justify-between items-center">
-                    <button
-                      className="px-2 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                      onClick={(e) => {
-                        e.stopPropagation(); // To prevent handleBlog from being called
-                        toggleFollow(companyData.name);
-                      }}
-                    >
-                      {followedCompanies.includes(companyData.name)
-                        ? "Unfollow"
-                        : "Follow"}
-                    </button>
+        <div className="flex flex-col mx-auto bg-slate-300 shadow-md rounded-md p-4 m-2">
+          <button
+            className="mt-4 ml-4 text-gray-500 hover:text-gray-700"
+            onClick={handleBackClick}
+          >
+            <i className="fas fa-arrow-left" aria-hidden="true"></i>
+          </button>
+          <div className="grid grid-cols-4 gap-4 m-2">
+            {filteredBlogSpace.map((companyData, index) => (
+              <div
+                key={index}
+                className="flex w-full "
+                onClick={() => handleBlog(companyData)}
+              >
+                <div className="flex flex-col w-full bg-white shadow-2xl shadow-slate-950 border border-slate-950 rounded-md p-4 m-2 transform transition-transform duration-200 hover:scale-105">
+                  <img
+                    src={randomImageUrls[index]}
+                    className="w-full h-48 object-cover mb-2 rounded-md"
+                    alt={"Company Logo"}
+                  />
+                  <div className="flex flex-col space-y-2">
+                    <h2 className="text-lg font-bold">{companyData.name}</h2>
+                    <div className="flex justify-between items-center">
+                      <button
+                        className="px-2 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                        onClick={(e) => {
+                          e.stopPropagation(); // To prevent handleBlog from being called
+                          toggleFollow(companyData.name);
+                        }}
+                      >
+                        {followedCompanies.includes(companyData.name)
+                          ? "Unfollow"
+                          : "Follow"}
+                      </button>
+                      <p className="text-sm text-gray-500">
+                        {companyData.blogPosts.length} Posts
+                      </p>
+                    </div>
                     <p className="text-sm text-gray-500">
-                      {companyData.blogPosts.length} Posts
+                      Followers: {followersCounts[companyData._id.$oid] || 0}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      <FontAwesomeIcon icon={faEye} />: {companyData.views}
                     </p>
                   </div>
-                  <p className="text-sm text-gray-500">
-                    Followers: {followersCounts[companyData._id.$oid] || 0}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    <FontAwesomeIcon icon={faEye} />: {companyData.views}
-                  </p>
                 </div>
               </div>
-            </div>
-          ))}
-          {isModalOpen && (
-            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-md w-1/3">
-                <h2 className="text-xl font-bold mb-2">
-                  Follow {currentFollowCompany}
-                </h2>
-                <input
-                  type="email"
-                  value={emailForFollow}
-                  onChange={(e) => setEmailForFollow(e.target.value)}
-                  placeholder="Enter your email"
-                  className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
-                />
-                <div className="flex justify-end space-x-2">
-                  <button
-                    onClick={handleConfirmFollow}
-                    className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                  >
-                    Confirm Follow
-                  </button>
-                  <button
-                    onClick={handleCloseModal}
-                    className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                  >
-                    Cancel
-                  </button>
+            ))}
+            {isModalOpen && (
+              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-8 rounded-md w-1/3">
+                  <h2 className="text-xl font-bold mb-2">
+                    Follow {currentFollowCompany}
+                  </h2>
+                  <input
+                    type="email"
+                    value={emailForFollow}
+                    onChange={(e) => setEmailForFollow(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
+                  />
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      onClick={handleConfirmFollow}
+                      className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                    >
+                      Confirm Follow
+                    </button>
+                    <button
+                      onClick={handleCloseModal}
+                      className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

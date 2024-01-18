@@ -8,6 +8,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import "material-icons/iconfont/material-icons.css";
 import ThemeSwitch from "./themeSwitch";
+import Header from "../../../components/header";
 // import "../../globals.css";
 
 const ViewPosts = () => {
@@ -184,209 +185,214 @@ const ViewPosts = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full ">
-      <ThemeSwitch onThemeChange={toggleDarkMode} />
-      <h2 className="text-2xl font-bold mx-auto my-8">
-        {blogspace_name}&apos;s Blog
-      </h2>
+    <div>
+      <Header />
+      <div className="flex flex-col justify-center w-full ">
+        <ThemeSwitch onThemeChange={toggleDarkMode} />
+        <h2 className="text-2xl font-bold mx-auto my-8">
+          {blogspace_name}&apos;s Blog
+        </h2>
 
-      <div className="flex items-center justify-center gap-4 mb-4 my-2">
-        {/* Follow button */}
-        <button
-          className="px-4 py-2 bg-black text-white border border-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-          onClick={() => toggleFollow(blogspace_name)}
-        >
-          {followedCompanies.includes(blogspace_name) ? "Unfollow" : "Follow"}
-        </button>
-
-        {/* Followers count */}
-        <span
-          className={`text-sm ${isDarkMode ? "dark:text-white" : "text-black"}`}
-        >
-          {followersCount} {followersCount === 1 ? "follower" : "followers"}
-        </span>
-      </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-8 rounded-md w-1/3">
-            <h2 className="text-xl font-bold mb-2">
-              Follow {currentFollowCompany}
-            </h2>
-            <input
-              type="email"
-              value={emailForFollow}
-              onChange={(e) => setEmailForFollow(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
-            />
-            <div className="flex justify-end space-x-2">
-              <button
-                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                onClick={handleConfirmFollow}
-              >
-                Confirm Follow
-              </button>
-              <button
-                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
-                onClick={handleCloseModal}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <form
-        className="w-full mb-4 flex justify-center"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <div>
-          <input
-            className=" w-full px-4 py-3 mx-auto m-2 border border-slate-950 rounded-md"
-            type="text"
-            placeholder="search posts, company"
-            value={postSearch}
-            onChange={handleChange}
-          />
-        </div>
-      </form>
-      <section className=" flex justify-center mb-4">
-        <div className="flex space-x-4">
-          <div className="px-4 py-2 bg-black text-white border border-white shadow-xl rounded-md">
-            All
-          </div>
-          <div
-            className={`px-4 py-2 bg-white ${
-              isDarkMode ? "dark:text-black" : "text-black"
-            } border border-black shadow-xl rounded-md`}
-          >
-            Recent Posted
-          </div>
-          <div
-            className={`px-4 py-2 bg-white ${
-              isDarkMode ? "dark:text-black" : "text-black"
-            } border border-black shadow-xl rounded-md`}
-          >
-            Most Trending Posted
-          </div>
-          <div
-            className={`px-4 py-2 bg-white ${
-              isDarkMode ? "dark:text-black" : "text-black"
-            } border border-black shadow-xl rounded-md`}
-          >
-            Geography
-          </div>
-          <div
-            className={`px-4 py-2 bg-white ${
-              isDarkMode ? "dark:text-black" : "text-black"
-            } border border-black shadow-xl rounded-md`}
-          >
-            Science
-          </div>
-          <div
-            className={`px-4 py-2 bg-white ${
-              isDarkMode ? "dark:text-black" : "text-black"
-            } border border-black shadow-xl rounded-md`}
-          >
-            History
-          </div>
-        </div>
-      </section>
-
-      <div className="flex justify-between mx-16 my-4">
-        <button
-          className=" p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-          onClick={handleBackClick}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-        <div className="flex space-x-4">
+        <div className="flex items-center justify-center gap-4 mb-4 my-2">
+          {/* Follow button */}
           <button
-            className="p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-            onClick={() => handleViewModeChange("card")}
+            className="px-4 py-2 bg-black text-white border border-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+            onClick={() => toggleFollow(blogspace_name)}
           >
-            <i className="material-icons">grid_on</i>
+            {followedCompanies.includes(blogspace_name) ? "Unfollow" : "Follow"}
           </button>
-          <button
-            className="p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-            onClick={() => handleViewModeChange("list")}
-          >
-            <i className="material-icons">list</i>
-          </button>
-        </div>
-      </div>
 
-      {viewMode === "card" ? (
-        <div className="grid grid-cols-4 gap-4 mx-4">
-          {filteredPosts.map((post, index) => (
-            <div
-              key={index}
-              className={`flex w-full`}
-              onClick={() => handlePostClick(post._id)}
-            >
-              <div
-                className={`flex flex-col w-full ${
-                  isDarkMode ? "dark:bg-dark-blue" : "bg-white"
-                } shadow-2xl shadow-slate-950 border border-slate-950" rounded-md m-2 transform transition-transform duration-200 hover:scale-105`}
-              >
-                <img
-                  src={
-                    post.imageUrl ||
-                    "https://assets.hongkiat.com/uploads/psd-text-svg/logo-example.jpg"
-                  }
-                  className="w-full h-48 object-cover mb-2 rounded-md"
-                  alt={"image"}
-                />
-                <div className="flex flex-col space-y-2">
-                  <h2 className="text-lg font-bold px-3">
-                    {post.title.substring(0, 30)}
-                  </h2>
-                  <p className="text-sm text-gray-500 px-3">~{post.author}</p>
-                  <p className="text-sm text-gray-500 px-3 pb-2">
-                    <FontAwesomeIcon icon={faEye} />: {post.views}
-                  </p>
-                </div>
+          {/* Followers count */}
+          <span
+            className={`text-sm ${
+              isDarkMode ? "dark:text-white" : "text-black"
+            }`}
+          >
+            {followersCount} {followersCount === 1 ? "follower" : "followers"}
+          </span>
+        </div>
+
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-8 rounded-md w-1/3">
+              <h2 className="text-xl font-bold mb-2">
+                Follow {currentFollowCompany}
+              </h2>
+              <input
+                type="email"
+                value={emailForFollow}
+                onChange={(e) => setEmailForFollow(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
+              />
+              <div className="flex justify-end space-x-2">
+                <button
+                  className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                  onClick={handleConfirmFollow}
+                >
+                  Confirm Follow
+                </button>
+                <button
+                  className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
+                  onClick={handleCloseModal}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
-          ))}
+          </div>
+        )}
+
+        <form
+          className="w-full mb-4 flex justify-center"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <div>
+            <input
+              className=" w-full px-4 py-3 mx-auto m-2 border border-slate-950 rounded-md"
+              type="text"
+              placeholder="search posts, company"
+              value={postSearch}
+              onChange={handleChange}
+            />
+          </div>
+        </form>
+        <section className=" flex justify-center mb-4">
+          <div className="flex space-x-4">
+            <div className="px-4 py-2 bg-black text-white border border-white shadow-xl rounded-md">
+              All
+            </div>
+            <div
+              className={`px-4 py-2 bg-white ${
+                isDarkMode ? "dark:text-black" : "text-black"
+              } border border-black shadow-xl rounded-md`}
+            >
+              Recent Posted
+            </div>
+            <div
+              className={`px-4 py-2 bg-white ${
+                isDarkMode ? "dark:text-black" : "text-black"
+              } border border-black shadow-xl rounded-md`}
+            >
+              Most Trending Posted
+            </div>
+            <div
+              className={`px-4 py-2 bg-white ${
+                isDarkMode ? "dark:text-black" : "text-black"
+              } border border-black shadow-xl rounded-md`}
+            >
+              Geography
+            </div>
+            <div
+              className={`px-4 py-2 bg-white ${
+                isDarkMode ? "dark:text-black" : "text-black"
+              } border border-black shadow-xl rounded-md`}
+            >
+              Science
+            </div>
+            <div
+              className={`px-4 py-2 bg-white ${
+                isDarkMode ? "dark:text-black" : "text-black"
+              } border border-black shadow-xl rounded-md`}
+            >
+              History
+            </div>
+          </div>
+        </section>
+
+        <div className="flex justify-between mx-16 my-4">
+          <button
+            className=" p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+            onClick={handleBackClick}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </button>
+          <div className="flex space-x-4">
+            <button
+              className="p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+              onClick={() => handleViewModeChange("card")}
+            >
+              <i className="material-icons">grid_on</i>
+            </button>
+            <button
+              className="p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+              onClick={() => handleViewModeChange("list")}
+            >
+              <i className="material-icons">list</i>
+            </button>
+          </div>
         </div>
-      ) : (
-        <div className="w-full p-8 shadow-lg">
-          <ul className=" mx-8 p-4 list-none bg-gray-200  shadow-md rounded-md overflow-hidden flex flex-col">
+
+        {viewMode === "card" ? (
+          <div className="grid grid-cols-4 gap-4 mx-4">
             {filteredPosts.map((post, index) => (
-              <li
+              <div
                 key={index}
-                className="w-3/4 mx-auto flex items-center justify-center p-2 bg-white border-b border-gray-300 cursor-pointer my-2 shadow-md rounded-md transform transition-transform duration-200 hover:scale-105"
+                className={`flex w-full`}
+                onClick={() => handlePostClick(post._id)}
               >
-                <img
-                  src={
-                    post.imageUrl ||
-                    "https://assets.hongkiat.com/uploads/psd-text-svg/logo-example.jpg"
-                  }
-                  alt={"image"}
-                  className="w-16 h-16 object-cover mr-2"
-                />
-                <div className="flex-1 ml-2">
-                  <h2 className="text-xl mb-1 border-b border-gray-400">
-                    <ReactMarkdown className="mb-0">
+                <div
+                  className={`flex flex-col w-full ${
+                    isDarkMode ? "dark:bg-dark-blue" : "bg-white"
+                  } shadow-2xl shadow-slate-950 border border-slate-950" rounded-md m-2 transform transition-transform duration-200 hover:scale-105`}
+                >
+                  <img
+                    src={
+                      post.imageUrl ||
+                      "https://assets.hongkiat.com/uploads/psd-text-svg/logo-example.jpg"
+                    }
+                    className="w-full h-48 object-cover mb-2 rounded-md"
+                    alt={"image"}
+                  />
+                  <div className="flex flex-col space-y-2">
+                    <h2 className="text-lg font-bold px-3">
                       {post.title.substring(0, 30)}
-                    </ReactMarkdown>
-                  </h2>
-                  <div className="flex justify-between items-center">
-                    <p className="mt-0 mb-0">
-                      {post.description.substring(0, 90)}...
+                    </h2>
+                    <p className="text-sm text-gray-500 px-3">~{post.author}</p>
+                    <p className="text-sm text-gray-500 px-3 pb-2">
+                      <FontAwesomeIcon icon={faEye} />: {post.views}
                     </p>
-                    <p className="text-gray-500 mb-0">~{post.author}</p>
                   </div>
                 </div>
-              </li>
+              </div>
             ))}
-          </ul>
-        </div>
-      )}
+          </div>
+        ) : (
+          <div className="w-full p-8 shadow-lg">
+            <ul className=" mx-8 p-4 list-none bg-gray-200  shadow-md rounded-md overflow-hidden flex flex-col">
+              {filteredPosts.map((post, index) => (
+                <li
+                  key={index}
+                  className="w-3/4 mx-auto flex items-center justify-center p-2 bg-white border-b border-gray-300 cursor-pointer my-2 shadow-md rounded-md transform transition-transform duration-200 hover:scale-105"
+                >
+                  <img
+                    src={
+                      post.imageUrl ||
+                      "https://assets.hongkiat.com/uploads/psd-text-svg/logo-example.jpg"
+                    }
+                    alt={"image"}
+                    className="w-16 h-16 object-cover mr-2"
+                  />
+                  <div className="flex-1 ml-2">
+                    <h2 className="text-xl mb-1 border-b border-gray-400">
+                      <ReactMarkdown className="mb-0">
+                        {post.title.substring(0, 30)}
+                      </ReactMarkdown>
+                    </h2>
+                    <div className="flex justify-between items-center">
+                      <p className="mt-0 mb-0">
+                        {post.description.substring(0, 90)}...
+                      </p>
+                      <p className="text-gray-500 mb-0">~{post.author}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import Product from "./Product";
+import Product from "./product";
 // import Testimonials from "./Testimonials";
 // import "./Home.css";
 
@@ -58,26 +58,28 @@ const Home = () => {
 
   const chunkedProducts = chunkArray([...products], chunkSize);
   return (
-    <div className="p-5 bg-gray-200">
-      <p className="text-2xl font-bold text-gray-800 text-center mt-5">
-        Web Components that just works !
-      </p>
-      <div className="max-w-screen-xl mx-auto bg-gray-800 p-1 rounded-lg shadow-md">
-        {chunkedProducts.map((chunk, index) => (
-          <div
-            className=" flex flex-wrap justify-evenly gap-5 ml-2.5 pl-2.5 bg-gray-200"
-            key={index}
-          >
-            {chunk.map((product) => (
-              <Product key={product.id} product={product} />
-            ))}
+    <div>
+      <div className="p-5 bg-gray-200">
+        <p className="text-2xl font-bold text-gray-800 text-center mt-5">
+          Web Components that just works !
+        </p>
+        <div className="max-w-screen-xl mx-auto bg-gray-800 p-1 rounded-lg shadow-md">
+          {chunkedProducts.map((chunk, index) => (
+            <div
+              className=" flex flex-wrap justify-evenly gap-5 ml-2.5 pl-2.5 bg-gray-200"
+              key={index}
+            >
+              {chunk.map((product) => (
+                <Product key={product.id} product={product} />
+              ))}
+            </div>
+          ))}
+          <div className="mt-10">
+            <h2 className="text-white text-center text-3xl mb-5">
+              Dont Take Our Words See Who Are Using Ore Web Products
+            </h2>
+            {/* <Testimonials /> */}
           </div>
-        ))}
-        <div className="mt-10">
-          <h2 className="text-white text-center text-3xl mb-5">
-            Dont Take Our Words See Who Are Using Ore Web Products
-          </h2>
-          {/* <Testimonials /> */}
         </div>
       </div>
     </div>

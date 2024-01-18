@@ -8,7 +8,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faFeather } from "@fortawesome/free-solid-svg-icons";
 import Markdown from "markdown-to-jsx";
 import TextToSpeech from "./texttospeech";
-import AudioPlayer from "./audioPlayer";
+// import AudioPlayer from "./audioPlayer";
 import Comments from "./comments";
 import Header from "../../../../components/header";
 import Postsentiment from "./postsentiment";

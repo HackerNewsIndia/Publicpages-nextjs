@@ -7,7 +7,7 @@ import {
   faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import Highlighter from "react-highlight-words";
-import AudioPlayer from "./audioPlayer";
+// import AudioPlayer from "./audioPlayer";
 import "../../../../styles/text_highlight.module.css";
 
 const TextToSpeech = ({ text, setCurrentWord, currentWord, isActive }) => {

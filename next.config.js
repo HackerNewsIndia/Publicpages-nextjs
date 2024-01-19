@@ -5,7 +5,7 @@ const nextConfig = {
     config.plugins.push(
       new options.webpack.container.ModuleFederationPlugin({
         name: "publicpages",
-        filename: "remoteEntry.js",
+        filename: "public/remoteEntry.js",
         exposes: {
           // "./PublicBlogSpace": "./components/PublicBlogSpace.js",
         },

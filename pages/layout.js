@@ -1,21 +1,15 @@
-import Head from "next/head";
-import { Inter } from "@next/react/font";
-// import '../styles/globals.css';
+import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
-const RootLayout = ({ children }) => {
+export default function RootLayout({ children }) {
   return (
-    <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-      </Head>
-      <body className={inter.className}>{children}</body>
-    </>
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
   );
-};
-
-export default RootLayout;
+}

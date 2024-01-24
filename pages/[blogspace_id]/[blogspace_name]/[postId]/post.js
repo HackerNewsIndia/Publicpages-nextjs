@@ -185,7 +185,7 @@ const Post = () => {
                 />
               </span>
               <span className="w-10 flex-row">
-                <Sharepost />
+                <Sharepost post_title={post.title} post_image={post.imageUrl} />
               </span>
             </div>
 

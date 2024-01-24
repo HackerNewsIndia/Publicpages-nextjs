@@ -181,7 +181,7 @@ const Post = () => {
                 <Postsentiment
                   postId={post_id}
                   blogId={blogId}
-                  postlikes={post.likes.length}
+                  postlikes={post.likes ? post.likes.length : ""}
                 />
               </span>
               <span className="w-10 flex-row">

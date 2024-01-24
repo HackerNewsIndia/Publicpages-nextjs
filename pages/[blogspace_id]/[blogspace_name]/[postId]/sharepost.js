@@ -13,7 +13,7 @@ const Sharepost = ({ post_title, post_image }) => {
   const [selectedShareIcon, setSelectedShareIcon] = useState(null);
 
   const router = useRouter();
-  const currentUrl = window.location.href;
+  const currentUrl = typeof window !== "undefined" ? window.location.href : "";
 
   const handleShareIcon = (icon) => {
     // Your logic to handle sentiment changes

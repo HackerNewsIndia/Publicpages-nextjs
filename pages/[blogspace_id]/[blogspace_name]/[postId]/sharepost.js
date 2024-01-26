@@ -5,6 +5,7 @@ import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { LinkedinShareButton, TwitterShareButton } from "react-share";
+import Head from "next/head";
 
 import { useRouter } from "next/router";
 
@@ -14,6 +15,8 @@ const Sharepost = ({ post_title, post_image }) => {
 
   const router = useRouter();
   const currentUrl = typeof window !== "undefined" ? window.location.href : "";
+  const imageUrl =
+    "https://upload.twitter.com/1/statuses/update_with_media.json";
 
   const handleShareIcon = (icon) => {
     // Your logic to handle sentiment changes
@@ -34,6 +37,9 @@ const Sharepost = ({ post_title, post_image }) => {
       onMouseLeave={() => setIsShareIconActive(false)}
     >
       <div className="flex">
+        <Head>
+          <meta property="og:image" content={post_image} />
+        </Head>
         <div className="flex-col">
           {isShareIconActive ? (
             <div className="flex text-2xl bg-transparent rounded-md">
@@ -70,35 +76,27 @@ const Sharepost = ({ post_title, post_image }) => {
                   currentUrl
                 )}&text=${encodeURIComponent(
                   post_title
-                )}&via=diaryblogUnv&media=${encodeURIComponent(post_image)}`}
+                )}&via=diaryblogUnv&image=${encodeURIComponent(post_image)}`}
                 target="_blank"
                 rel="noreferrer"
               >
                 <FontAwesomeIcon
                   id="faLinkedin"
-                  className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-blue-700 duration-300 cursor-pointer"
+                  className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-slate-700 duration-300 cursor-pointer"
                   // onClick={() => handleShareIcon("faLinkedin")}
                   icon={faXTwitter}
                 />
               </a>
-              <TwitterShareButton title={post_title} url={currentUrl}>
+              {/* <TwitterShareButton title={post_title} url={currentUrl}>
                 <FontAwesomeIcon
                   id="faLinkedin"
                   className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-blue-700 duration-300 cursor-pointer"
                   // onClick={() => handleShareIcon("faLinkedin")}
                   icon={faXTwitter}
                 />
-              </TwitterShareButton>
+              </TwitterShareButton> */}
             </div>
           ) : (
-            //   : selectedShareIcon ? (
-            //     <FontAwesomeIcon
-            //       icon={selectedSentimentIcon === "faHeart" ? faHeart : null}
-            //       className={`text-lg ${
-            //         selectedSentimentIcon === "faHeart" ? "text-pink-700" : ""
-            //       }`}
-            //     />
-            //   )
             <FontAwesomeIcon icon={faShare} />
           )}
         </div>

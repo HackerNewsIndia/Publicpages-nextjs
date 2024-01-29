@@ -37,7 +37,7 @@ const Header = () => {
   };
   return (
     <div className="bg-slate-900 w-full ">
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between mx-20">
         <div className="flex flex-row space-x-4">
           <CustomLink href="/" aria-label={"DiaryBlog"}>
             {/* Use Image component directly inside Link */}
@@ -45,7 +45,7 @@ const Header = () => {
               <Image
                 src={logo}
                 alt="Logo"
-                width={280}
+                width={200}
                 height={70}
                 objectFit="fill"
                 className="rounded-md"
@@ -59,10 +59,10 @@ const Header = () => {
               .map((link) => (
                 <div
                   key={link.title}
-                  className="bg-white text-black rounded-md px-3 py-2 text-sm font-medium"
+                  className="bg-white text-black rounded-md px-2 py-1 text-sm font-medium"
                 >
                   <CustomLink
-                    href={link.href}
+                    href={link.href === "/allposts" ? "/" : link.href}
                     className="hidden font-medium text-white !important dark:text-white sm:block "
                   >
                     {link.title}

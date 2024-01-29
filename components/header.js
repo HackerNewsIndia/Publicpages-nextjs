@@ -38,7 +38,7 @@ const Header = () => {
   return (
     <div className="bg-slate-900 w-full ">
       <header className="flex items-center justify-between">
-        <div>
+        <div className="flex flex-row space-x-4">
           <CustomLink href="/" aria-label={"DiaryBlog"}>
             {/* Use Image component directly inside Link */}
             <div className="flex items-center justify-between mt-3 ml-10 mr-3 mb-2 rounded-md bg-slate-900 cursor-pointer">
@@ -53,27 +53,26 @@ const Header = () => {
               {/* <h1>Universe</h1> */}
             </div>
           </CustomLink>
-        </div>
-        <div className="flex flex-row space-x-10">
-          <div className="flex items-center text-white mr-5 space-x-4 leading-5 sm:space-x-6">
+          <div className="flex items-center  space-x-4 leading-5 sm:space-x-6">
             {headerNavLinks
               .filter((link) => link.href !== "/")
               .map((link) => (
-                <CustomLink
-                  key={link.title}
-                  href={link.href}
-                  className="hidden font-medium text-white !important dark:text-white sm:block "
-                >
-                  {/* <a className="font-medium text-white-900 dark:text-white-100 sm:block"> */}
-                  {link.title}
-                  {/* </a> */}
-                </CustomLink>
+                <div className="bg-white text-black rounded-md px-3 py-2 text-sm font-medium">
+                  <CustomLink
+                    key={link.title}
+                    href={link.href}
+                    className="hidden font-medium text-white !important dark:text-white sm:block "
+                  >
+                    {/* <a className="font-medium text-white-900 dark:text-white-100 sm:block"> */}
+                    {link.title}
+                    {/* </a> */}
+                  </CustomLink>
+                </div>
               ))}
-            {/* <SearchButton />
-        <ThemeSwitch />
-        <MobileNav /> */}
           </div>
-          <div className="py-6">
+        </div>
+        <div className="flex flex-row items-center">
+          <div className="flex items-center py-6">
             {!isLoggedIn ? (
               <button
                 // href=`https://universal-jikv.onrender.com/login?redirectUrl=${encodeURIComponent(

@@ -57,15 +57,15 @@ const Header = () => {
             {headerNavLinks
               .filter((link) => link.href !== "/")
               .map((link) => (
-                <div className="bg-white text-black rounded-md px-3 py-2 text-sm font-medium">
+                <div
+                  key={link.title}
+                  className="bg-white text-black rounded-md px-3 py-2 text-sm font-medium"
+                >
                   <CustomLink
-                    key={link.title}
                     href={link.href}
                     className="hidden font-medium text-white !important dark:text-white sm:block "
                   >
-                    {/* <a className="font-medium text-white-900 dark:text-white-100 sm:block"> */}
                     {link.title}
-                    {/* </a> */}
                   </CustomLink>
                 </div>
               ))}

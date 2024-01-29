@@ -81,86 +81,84 @@ const Home = () => {
   }
 
   return (
-    <div className="m-10">
+    <div className="mx-40">
       <div className="flex flex-col">
         <div className="flex flex-row text-center mx-auto">
           <h2
-            className="text-3xl font-bold"
+            className="text-3xl font-bold mt-10"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
             Latest Post
           </h2>
         </div>
         <div className="flex flex-row mt-0">
-          <ul className="divide-y divide-gray-200 dark:divide-gray-700 mx-48 mt-5 mb-5">
+          <ul className="divide-y divide-gray-200 dark:divide-gray-700 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10 mt-5 mb-5">
             {posts.map((post, index) =>
               post.status === "published" ? (
                 <li key={index} className="py-5 divide-slate-900">
-                  <article>
-                    <div className="flex ">
-                      <div className="flex flex-row p-2 w-1/5">
-                        <img
-                          src={post.imageUrl}
-                          alt="Logo"
-                          width={250}
-                          height={250}
-                          objectFit="fit"
-                          className="rounded-md"
-                        />
-                      </div>
-                      <div className="flex flex-col p-2 w-4/5">
-                        <dl>
-                          <dt className="sr-only">Published on</dt>
-                          <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                            <time dateTime={post.createDate}>
-                              {formatDate(post.createDate)}
-                            </time>
-                          </dd>
-                        </dl>
-                        <div className="space-y-5 xl:col-span-3">
-                          <div className="space-y-6">
-                            <div>
-                              <h2 className="text-2xl font-bold leading-8 tracking-tight">
-                                <div className="text-gray-900 dark:text-gray-100">
-                                  {post.title}
-                                </div>
-                              </h2>
-                              <div className="flex flex-wrap">
-                                {/* {tags.map((tag) => (
+                  <article className="flex flex-col md:flex-row">
+                    <div className="flex flex-row p-2 md:w-1/5">
+                      <img
+                        src={post.imageUrl}
+                        alt="Logo"
+                        width={250}
+                        height={250}
+                        objectFit="fit"
+                        className="rounded-md"
+                      />
+                    </div>
+                    <div className="flex flex-col p-2 md:w-4/5">
+                      <dl>
+                        <dt className="sr-only">Published on</dt>
+                        <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                          <time dateTime={post.createDate}>
+                            {formatDate(post.createDate)}
+                          </time>
+                        </dd>
+                      </dl>
+                      <div className="space-y-5 xl:col-span-3">
+                        <div className="space-y-6">
+                          <div>
+                            <h2 className="text-2xl font-bold leading-8 tracking-tight">
+                              <div className="text-gray-900 dark:text-gray-100">
+                                {post.title}
+                              </div>
+                            </h2>
+                            <div className="flex flex-wrap">
+                              {/* {tags.map((tag) => (
                                   <Tag key={tag} text={tag} />
                                 ))} */}
-                              </div>
-                            </div>
-                            <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                              {truncateText(post.description, 27)}
                             </div>
                           </div>
-                          <div className="flex items-center justify-between mt-4">
-                            <div className="text-base font-medium leading-6">
-                              <CustomLink
-                                // href={`/blog/${slug}`}
-                                className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                                aria-label={`Read more: "${post.title}"`}
-                              >
-                                Read more &rarr;
-                              </CustomLink>
-                            </div>
-                            <div>
-                              <a
-                                rel="noopener noreferrer"
-                                href="#"
-                                className="flex items-center"
-                              >
-                                <img
-                                  src="https://source.unsplash.com/50x50/?portrait"
-                                  alt="avatar"
-                                  className="object-cover w-10 h-10 mx-4 rounded-full dark:bg-gray-500"
-                                />
-                                <span className="hover:underline dark:text-gray-400">
-                                  Leroy Jenkins
-                                </span>
-                              </a>
-                            </div>
+                          <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                            {truncateText(post.description, 27)}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between mt-4">
+                          <div className="text-base font-medium leading-6">
+                            <CustomLink
+                              // href={`/blog/${slug}`}
+                              className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                              aria-label={`Read more: "${post.title}"`}
+                            >
+                              Read more &rarr;
+                            </CustomLink>
+                          </div>
+                          <div>
+                            <a
+                              rel="noopener noreferrer"
+                              href="#"
+                              className="flex items-center"
+                            >
+                              <img
+                                src="https://source.unsplash.com/50x50/?portrait"
+                                alt="avatar"
+                                className="object-cover w-10 h-10 mx-4 rounded-full dark:bg-gray-500"
+                              />
+                              <span className="hover:underline dark:text-gray-400">
+                                Leroy Jenkins
+                              </span>
+                            </a>
                           </div>
                         </div>
                       </div>

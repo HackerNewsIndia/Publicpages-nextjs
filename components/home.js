@@ -12,7 +12,10 @@ const Home = () => {
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5001/api/all_posts");
+        const response = await fetch(
+          // "http://127.0.0.1:5001/api/all_posts"
+          "https://diaryblogapi2.onrender.com/api/all_posts"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

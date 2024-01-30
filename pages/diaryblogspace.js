@@ -391,24 +391,53 @@ const PublicBlogSpace = () => {
     <div>
       <Header />
       <div className="mx-2 mb-4 bg-white ">
-        <section className="py-6 sm:py-12 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
+        <section className="py-6 sm:py-6 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
           <div className="container p-6 mx-auto space-y-8">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">All Channels</h2>
             </div>
           </div>
-          <div className="container mx-auto flex flex-col items-center justify-center p-4 space-y-8 md:p-10 lg:space-y-0 lg:flex-row lg:justify-between">
-            <h1 className="text-3xl sm:text-xl md:text-xl font-semibold text-center lg:text-left">
+          <div className="container mx-auto flex flex-col items-center justify-center p-4  space-y-8 md:p-4 lg:space-y-0 lg:flex-row lg:justify-between">
+            <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
               {blogSpace.length} Blogs in 12 categories
             </h1>
-            <input
+            {/* <input
               type="search"
               name="Search"
               placeholder="Search..."
               value={blogSearch}
               onChange={handleChange}
               className="w-full md:w-32 py-2 pl-10 border-2 bg-white border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none "
-            />
+            /> */}
+          </div>
+          <div className="flex flex-row items-center justify-center">
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg
+                  className="w-4 h-4 text-gray-500"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                name="Search"
+                placeholder="Search..."
+                value={blogSearch}
+                onChange={handleChange}
+                className="w-32 py-2 pl-10 border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
+              />
+            </div>
           </div>
         </section>
 

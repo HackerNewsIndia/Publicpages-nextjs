@@ -391,7 +391,7 @@ const PublicBlogSpace = () => {
     <div>
       <Header />
       <div className="mx-2 mb-4 ">
-        <section className="py-6 sm:py-12 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
+        <section className="py-6 sm:py-12 text-slate-900 dark:text-white mx-4 md:mx-10 lg:mx-20 xl:mx-40">
           <div className="container p-6 mx-auto space-y-8">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">All Channels</h2>
@@ -511,14 +511,14 @@ const PublicBlogSpace = () => {
                   <a
                     rel="noopener noreferrer"
                     href="#"
-                    className="text-xs tracking uppercase hover:underline text-slate-900"
+                    className="text-xs tracking uppercase hover:underline text-slate-900 dark:text-white"
                   >
                     Convenire
                   </a>
-                  <h3 className="flex-1 py-2 text-lg font-semibold leading-5 text-slate-900">
+                  <h3 className="flex-1 py-2 text-lg font-semibold leading-5 text-slate-900 dark:text-white">
                     {companyData.name}
                   </h3>
-                  <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900">
+                  <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900 dark:text-white">
                     <span>{companyData.views} Views</span>
                     <span>
                       {followersCounts[companyData._id.$oid] || 0} Followers

@@ -172,7 +172,7 @@ const PublicBlogSpace = () => {
     //       />
 
     //     </div> */}
-    //     <section className="py-6 dark:bg-gray-800 dark:text-gray-50 mx-40">
+    //     <section className="py-6 bg-gray-800 text-gray-50 mx-40">
     //       <div class="container p-6 mx-auto space-y-8">
     //         <div class="space-y-2 text-center">
     //           <h2 class="text-3xl font-bold">All Channels</h2>
@@ -190,7 +190,7 @@ const PublicBlogSpace = () => {
     //           placeholder="Search..."
     //           value={blogSearch}
     //           onChange={handleChange}
-    //           className="w-32 py-2 pl-10 border-2 border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400"
+    //           className="w-32 py-2 pl-10 border-2 border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none bg-gray-800 text-gray-100 focus:bg-gray-900 focus:border-violet-400"
     //         />
     //       </div>
     //     </section>
@@ -282,10 +282,10 @@ const PublicBlogSpace = () => {
     //       </button> */}
     //       <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4 ">
     //         {filteredBlogSpace.map((companyData, index) => (
-    //           <article key={index} className="flex flex-col dark:bg-gray-900">
+    //           <article key={index} className="flex flex-col bg-gray-900">
     // <img
     //   alt=""
-    //   className="object-cover w-full h-52 dark:bg-gray-500 cursor-pointer"
+    //   className="object-cover w-full h-52 bg-gray-500 cursor-pointer"
     //   src={randomImageUrls[index]}
     //   onClick={() => handleBlog(companyData)}
     // />
@@ -299,14 +299,14 @@ const PublicBlogSpace = () => {
     //   <a
     //     rel="noopener noreferrer"
     //     href="#"
-    //     className="text-xs tracki uppercase hover:underline dark:text-violet-400"
+    //     className="text-xs tracki uppercase hover:underline text-violet-400"
     //   >
     //     Convenire
     //   </a>
     //   <h3 className="flex-1 py-2 text-lg font-semibold leadi">
     //     {companyData.name}
     //   </h3>
-    //   <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">
+    //   <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-gray-400">
     //     <span>{companyData.views} Views</span>
     //     <span>
     //       {followersCounts[companyData._id.$oid] || 0} Followers
@@ -390,15 +390,15 @@ const PublicBlogSpace = () => {
     // </div>
     <div>
       <Header />
-      <div className="mx-2 mb-4 bg-white">
-        <section className="py-6 sm:py-12 dark:bg-gray-800 dark:text-gray-100 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
+      <div className="mx-2 mb-4 bg-white ">
+        <section className="py-6 sm:py-12 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
           <div className="container p-6 mx-auto space-y-8">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">All Channels</h2>
             </div>
           </div>
           <div className="container mx-auto flex flex-col items-center justify-center p-4 space-y-8 md:p-10 lg:space-y-0 lg:flex-row lg:justify-between">
-            <h1 className="text-3xl font-semibold leadi text-center lg:text-left">
+            <h1 className="text-3xl sm:text-xl md:text-xl font-semibold leadi text-center lg:text-left">
               {blogSpace.length} Blogs in 12 categories
             </h1>
             <input
@@ -407,7 +407,7 @@ const PublicBlogSpace = () => {
               placeholder="Search..."
               value={blogSearch}
               onChange={handleChange}
-              className="w-full md:w-32 py-2 pl-10 border-2 border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400"
+              className="w-full md:w-32 py-2 pl-10 border-2 border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none  text-slate-900 "
             />
           </div>
         </section>
@@ -493,16 +493,16 @@ const PublicBlogSpace = () => {
             {filteredBlogSpace.map((companyData, index) => (
               <article
                 key={index}
-                className="flex flex-col border-2 border-slate-200 rounded-md dark:bg-gray-500 divide-slate-900 "
+                className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 "
                 onClick={() => handleBlog(companyData)}
               >
                 <img
                   alt=""
-                  className="object-cover w-full h-52 dark:bg-gray-500 cursor-pointer"
+                  className="object-cover w-full h-52  cursor-pointer"
                   src={randomImageUrls[index]}
                 />
 
-                <div className="flex flex-col flex-1 p-6 dark:bg-gray-500">
+                <div className="flex flex-col flex-1 p-6 ">
                   <a
                     rel="noopener noreferrer"
                     href="#"
@@ -511,14 +511,14 @@ const PublicBlogSpace = () => {
                   <a
                     rel="noopener noreferrer"
                     href="#"
-                    className="text-xs tracking uppercase hover:underline dark:text-violet-400"
+                    className="text-xs tracking uppercase hover:underline text-slate-900"
                   >
                     Convenire
                   </a>
-                  <h3 className="flex-1 py-2 text-lg font-semibold leading-5 dark:text-gray-600">
+                  <h3 className="flex-1 py-2 text-lg font-semibold leading-5 text-slate-900">
                     {companyData.name}
                   </h3>
-                  <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">
+                  <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900">
                     <span>{companyData.views} Views</span>
                     <span>
                       {followersCounts[companyData._id.$oid] || 0} Followers

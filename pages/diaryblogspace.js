@@ -412,7 +412,7 @@ const PublicBlogSpace = () => {
           </div>
         </section>
 
-        <div className="flex flex-wrap items-start justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
+        <div className="flex flex-wrap items-start text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
           <button
             type="button"
             className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"

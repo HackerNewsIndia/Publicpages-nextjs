@@ -126,7 +126,7 @@ const Home = () => {
                         {truncateText(post.description, 27)}
                       </div>
                     </div>
-                    <div className="flex items-center justify-between mt-4">
+                    <div className="flex items-center justify-between mt-4 text-slate-900">
                       <div className="text-base font-medium leading-6">
                         <CustomLink
                           // href={`/blog/${slug}`}
@@ -136,7 +136,7 @@ const Home = () => {
                           Read more &rarr;
                         </CustomLink>
                       </div>
-                      <div className="hidden md:flex items-center">
+                      <div className="hidden md:flex items-center ">
                         <img
                           src="https://source.unsplash.com/50x50/?portrait"
                           alt="avatar"

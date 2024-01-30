@@ -390,7 +390,7 @@ const PublicBlogSpace = () => {
     // </div>
     <div>
       <Header />
-      <div className="mx-2 mb-4 ">
+      <div className="mx-2 mb-4 bg-white ">
         <section className="py-6 sm:py-12 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
           <div className="container p-6 mx-auto space-y-8">
             <div className="space-y-2 text-center">

@@ -488,18 +488,21 @@ const PublicBlogSpace = () => {
           </button>
         </div>
 
-        <div className="flex flex-col mx-auto shadow-md rounded-md mx-4 my-5 sm:mx-20 md:mx-20 lg:mx-20 xl:mx-40">
-          <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="flex flex-col mx-auto rounded-md mx-4 my-5 sm:mx-20 md:mx-20 lg:mx-20 xl:mx-40 p-6 ">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4  ">
             {filteredBlogSpace.map((companyData, index) => (
-              <article key={index} className="flex flex-col dark:bg-gray-900">
+              <article
+                key={index}
+                className="flex flex-col border-2 border-slate-200 rounded-md dark:bg-gray-500 divide-slate-900 "
+                onClick={() => handleBlog(companyData)}
+              >
                 <img
                   alt=""
                   className="object-cover w-full h-52 dark:bg-gray-500 cursor-pointer"
                   src={randomImageUrls[index]}
-                  onClick={() => handleBlog(companyData)}
                 />
 
-                <div className="flex flex-col flex-1 p-6">
+                <div className="flex flex-col flex-1 p-6 dark:bg-gray-500">
                   <a
                     rel="noopener noreferrer"
                     href="#"
@@ -508,11 +511,11 @@ const PublicBlogSpace = () => {
                   <a
                     rel="noopener noreferrer"
                     href="#"
-                    className="text-xs tracki uppercase hover:underline dark:text-violet-400"
+                    className="text-xs tracking uppercase hover:underline dark:text-violet-400"
                   >
                     Convenire
                   </a>
-                  <h3 className="flex-1 py-2 text-lg font-semibold leadi">
+                  <h3 className="flex-1 py-2 text-lg font-semibold leading-5 dark:text-gray-600">
                     {companyData.name}
                   </h3>
                   <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">

@@ -103,13 +103,13 @@ const Home = () => {
                     width={250}
                     height={250}
                     objectFit="fit"
-                    className="rounded-md"
+                    className="rounded-md w-full"
                   />
                 </div>
                 <div className="flex flex-col p-2 md:w-4/5">
                   <dl className="md:flex md:items-center md:justify-between">
                     <dt className="sr-only">Published on</dt>
-                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400 md:mr-4">
+                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-300 md:mr-4">
                       <time dateTime={post.createDate}>
                         {formatDate(post.createDate)}
                       </time>
@@ -118,7 +118,7 @@ const Home = () => {
                   <div className="space-y-5 md:col-span-3">
                     <div className="space-y-6">
                       <div>
-                        <h2 className="text-2xl font-bold leading-8 tracking-tight text-gray-900 dark:text-gray-100">
+                        <h2 className="text-2xl font-bold leading-8 tracking-tight text-gray-900 dark:text-gray-600">
                           {post.title}
                         </h2>
                         <div className="flex flex-wrap">

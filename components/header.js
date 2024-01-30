@@ -141,7 +141,10 @@ const Header = () => {
             {!isLoggedIn ? (
               <button className="mr-5 text-white" onClick={() => handleLogin()}>
                 Log in
-                <FontAwesomeIcon className="pl-2" icon={faArrowRight} />
+                <FontAwesomeIcon
+                  className="pl-2 hidden md:inline"
+                  icon={faArrowRight}
+                />
               </button>
             ) : (
               <div className="bg-white rounded-full text-blue"></div>

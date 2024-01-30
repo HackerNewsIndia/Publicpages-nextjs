@@ -81,7 +81,7 @@ const Home = () => {
   }
 
   return (
-    <div className="mx-4 md:mx-10 lg:mx-20 xl:mx-40">
+    <div className="mx-4 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
       <div className="text-center mt-10">
         <h2
           className="text-3xl font-bold"
@@ -91,7 +91,7 @@ const Home = () => {
         </h2>
       </div>
 
-      <ul className="divide-y divide-gray-200 dark:divide-gray-700 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10 mt-5 mb-5">
+      <ul className="divide-y divide-gray-400 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10 mt-5 mb-5">
         {posts.map((post, index) =>
           post.status === "published" ? (
             <li key={index} className="py-5 divide-slate-900">
@@ -109,7 +109,7 @@ const Home = () => {
                 <div className="flex flex-col p-2 md:w-4/5">
                   <dl className="md:flex md:items-center md:justify-between">
                     <dt className="sr-only">Published on</dt>
-                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-300 md:mr-4">
+                    <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
                       <time dateTime={post.createDate}>
                         {formatDate(post.createDate)}
                       </time>
@@ -118,7 +118,7 @@ const Home = () => {
                   <div className="space-y-5 md:col-span-3">
                     <div className="space-y-6">
                       <div>
-                        <h2 className="text-2xl font-bold leading-8 tracking-tight text-gray-900 dark:text-white">
+                        <h2 className="text-2xl font-bold leading-8 tracking-tight text-gray-900 ">
                           {post.title}
                         </h2>
                         <div className="flex flex-wrap">
@@ -127,7 +127,7 @@ const Home = () => {
                           ))} */}
                         </div>
                       </div>
-                      <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                      <div className="prose max-w-none text-gray-500 ">
                         {truncateText(post.description, 27)}
                       </div>
                     </div>
@@ -135,7 +135,7 @@ const Home = () => {
                       <div className="text-base font-medium leading-6">
                         <CustomLink
                           // href={`/blog/${slug}`}
-                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                          className="text-primary-500 hover:text-primary-600 "
                           aria-label={`Read more: "${post.title}"`}
                         >
                           Read more &rarr;
@@ -145,11 +145,9 @@ const Home = () => {
                         <img
                           src="https://source.unsplash.com/50x50/?portrait"
                           alt="avatar"
-                          className="object-cover w-10 h-10 mx-4 rounded-full dark:bg-gray-500"
+                          className="object-cover w-10 h-10 mx-4 rounded-full "
                         />
-                        <span className="hover:underline dark:text-gray-400">
-                          Leroy Jenkins
-                        </span>
+                        <span className="hover:underline ">Leroy Jenkins</span>
                       </div>
                     </div>
                   </div>

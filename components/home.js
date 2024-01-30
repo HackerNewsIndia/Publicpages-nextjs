@@ -81,7 +81,7 @@ const Home = () => {
   }
 
   return (
-    <div className="mx-4 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
+    <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
       <div className="text-center pt-10">
         <h2 className="text-3xl text-slate-900 font-bold">Latest Post</h2>
       </div>

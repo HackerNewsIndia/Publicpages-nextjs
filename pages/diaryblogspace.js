@@ -435,7 +435,7 @@ const PublicBlogSpace = () => {
                 placeholder="Search..."
                 value={blogSearch}
                 onChange={handleChange}
-                className="w-32 py-2 pl-10 border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
+                className="w-32 py-2 pl-10 bg-white border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
               />
             </div>
           </div>

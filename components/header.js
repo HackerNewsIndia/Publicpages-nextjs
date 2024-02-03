@@ -63,7 +63,7 @@ const Header = () => {
 
   return (
     <div className="bg-slate-900 w-full">
-      <header className="flex items-center justify-between mx-4 sm:mx-6 md:mx-8 lg:mx-10 xl:mx-20 py-4">
+      <header className="flex items-center justify-between mx-4 sm:mx-6 md:mx-8 lg:mx-10 xl:mx-20 py-1">
         {/* Mobile Menu Button */}
         <div className="flex flex-row space-x-4 items-center">
           <div className="sm:hidden " ref={mobileMenuRef}>

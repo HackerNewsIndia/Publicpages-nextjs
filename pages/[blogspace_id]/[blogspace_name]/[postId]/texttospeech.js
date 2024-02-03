@@ -118,24 +118,28 @@ const TextToSpeech = ({ text, setCurrentWord, currentWord, isActive }) => {
   };
 
   return (
-    <div>
-      {/* <FontAwesomeIcon icon={faVolume} /> */}
-
+    <div className="text-md md:text-2xl lg:text-2xl">
       <div
         className={`flex space-x-4 fixed 
-        bottom-1 right-1 px-2 py-2`}
+        bottom-1 right-1 px-2 py-2 text-md md:text-2xl lg:text-2xl`}
         onMouseEnter={() => setIsTextToSpeechActive(true)}
         onMouseLeave={() => setIsTextToSpeechActive(false)}
       >
-        <div className="justify-center p-auto text-slate-900 text-2xl ">
+        <div className="justify-center p-auto text-slate-900 text-md md:text-2xl lg:text-2xl ">
           <FontAwesomeIcon icon={faVolumeHigh} />{" "}
         </div>
         {IsTextToSpeechActive ? (
           <div className="justify-center space-x-4">
             <button
-              className={`${isActive ? "px-2 py-1" : "px-2 py-1"} rounded-md ${
-                isPaused ? "bg-blue-500" : "bg-yellow-500"
-              } text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50`}
+              className={`${
+                isActive
+                  ? "px-2 py-1"
+                  : "px-2 py-1 text-md md:text-3xl lg:text-3xl"
+              } rounded-md ${
+                isPaused
+                  ? "bg-blue-500"
+                  : "bg-yellow-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50 text-md md:text-3xl lg:text-3xl"
+              }`}
               onClick={isPaused ? handlePlay : handlePause}
             >
               {isPaused ? (
@@ -145,10 +149,14 @@ const TextToSpeech = ({ text, setCurrentWord, currentWord, isActive }) => {
               )}
             </button>
             <button
-              className={`${
-                isActive ? "px-2 py-1" : "px-2 py-1"
+              className={`text-md md:text-3xl lg:text-3xl ${
+                isActive
+                  ? "px-2 py-1"
+                  : "px-2 py-1 text-md md:text-3xl lg:text-3xl"
               } rounded-md  bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 ${
-                isPaused ? "opacity-0.7 cursor-not-allowed" : ""
+                isPaused
+                  ? "opacity-0.7 cursor-not-allowed text-md md:text-3xl lg:text-3xl"
+                  : ""
               }`}
               onClick={handleStop}
               style={{ opacity: isPaused ? 0.7 : 1 }}

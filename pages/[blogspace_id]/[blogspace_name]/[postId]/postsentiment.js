@@ -81,14 +81,14 @@ const Postsentiment = ({ postId, blogId, postlikes }) => {
 
   return (
     <div
-      className="text-xl italic text-pink-400 "
+      className="text-xl italic text-pink-400 text-md md:text-2xl lg:text-2xl"
       onMouseEnter={() => setIsSentimentActive(true)}
       onMouseLeave={() => setIsSentimentActive(false)}
     >
       <div className="flex flex-col">
         <div>
           {isSentimentActive ? (
-            <div className="flex text-lg bg-transparent rounded-md item-center">
+            <div className="flex text-md md:text-2xl lg:text-2xl bg-transparent rounded-md item-center">
               <FontAwesomeIcon
                 id="faHeart"
                 className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-pink-700 duration-300 cursor-pointer"
@@ -99,7 +99,7 @@ const Postsentiment = ({ postId, blogId, postlikes }) => {
           ) : selectedSentimentIcon ? (
             <FontAwesomeIcon
               icon={selectedSentimentIcon === "faHeart" ? faHeart : null}
-              className={`text-lg ${
+              className={`text-md md:text-2xl lg:text-2xl ${
                 selectedSentimentIcon === "faHeart" ? "text-pink-700" : ""
               }`}
             />

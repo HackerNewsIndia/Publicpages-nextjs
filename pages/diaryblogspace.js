@@ -522,12 +522,12 @@ const PublicBlogSpace = () => {
             {filteredBlogSpace.map((companyData, index) => (
               <article
                 key={index}
-                className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 "
+                className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 cursor-pointer"
                 onClick={() => handleBlog(companyData)}
               >
                 <img
                   alt=""
-                  className="object-cover w-full h-52  cursor-pointer"
+                  className="object-cover w-full h-52  "
                   src={randomImageUrls[index]}
                 />
 

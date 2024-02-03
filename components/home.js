@@ -8,6 +8,7 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [blogspace, setBlogSpace] = useState([]);
   const uniquePostIds = new Set(); // Keep track of unique post IDs
 
   const fetchAllPosts = async () => {
@@ -57,6 +58,27 @@ const Home = () => {
     }
   };
 
+  // const fetchBlogSpace = async (blogSpaceId) => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await fetch(
+  //       `http://127.0.0.1:5001/api/blogSpace/${blogSpaceId}`
+  //       // `https://diaryblogapi2.onrender.com/api/all_posts?page=${page}`
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setBlogSpace(data);
+  //   } catch (error) {
+  //     console.error("Error in fetching posts", error.message);
+  //     setLoading(false);
+  //   }
+  // };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -68,6 +90,10 @@ const Home = () => {
   useEffect(() => {
     fetchAllPosts();
   }, []); // Fetch initial posts
+
+  // useEffect(() => {
+  //   fetchBlogSpace();
+  // }, []);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -127,10 +153,11 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-between mt-4 text-slate-900">
-                      <div className="text-base font-medium leading-6">
+                      <div className="text-base font-medium leading-6 hover:text-orange-600 cursor-pointer">
                         <CustomLink
-                          // href={`/blog/${slug}`}
+                          href={`/${post.blogSpace}/${blogspace.name}/${post._id}/post`}
                           className="text-primary-500 hover:text-primary-600 "
+                          // onClick={() => fetchBlogSpace(post.blogSpace)}
                           aria-label={`Read more: "${post.title}"`}
                         >
                           Read more &rarr;

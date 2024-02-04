@@ -273,7 +273,7 @@ const Post = () => {
             </button>
           </div>
           <div className="p-5 pt-0">
-            <h1 className="text-2xl mb-4 text-black font-semibold">
+            <h1 className="text-2xl mb-2 text-black font-semibold">
               {post.title}
             </h1>
             <h3 className="text-slate-900">{post.author}</h3>

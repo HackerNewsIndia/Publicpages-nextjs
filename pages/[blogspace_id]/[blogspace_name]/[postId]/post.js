@@ -276,7 +276,7 @@ const Post = () => {
             <h1 className="text-2xl mb-4 text-black font-semibold">
               {post.title}
             </h1>
-            <h3>{post.author}</h3>
+            <h3 className="text-slate-900">{post.author}</h3>
             <div className="flex text-md md:text-2xl lg:text-2xl ">
               <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
                 <Postsentiment

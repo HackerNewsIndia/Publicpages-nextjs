@@ -200,7 +200,7 @@ const ViewPosts = () => {
   return (
     <div>
       <Header />
-      <div>
+      <div className="bg-white">
         <section className="bg-white py-6 sm:py-6 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
           <div className="container p-6 mx-auto space-y-8">
             <div className="space-y-2 text-center">

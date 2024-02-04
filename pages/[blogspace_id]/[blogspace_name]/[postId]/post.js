@@ -215,7 +215,7 @@ const Post = () => {
           </div>
         </div>
       </div> */}
-      <div className=" relative pt-4 bg-white m-3 md:m-0 lg:m-0">
+      <div className=" relative pt-3 bg-white p-3 md:p-0 lg:p-0">
         <div
           className={`bg-white text-black border border-slate-900 p-1 mt-4 ${
             isActive

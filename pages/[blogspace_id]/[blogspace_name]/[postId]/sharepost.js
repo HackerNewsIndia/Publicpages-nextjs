@@ -2,8 +2,11 @@ import React, { useState } from "react";
 // import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
-import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faLinkedin,
+  faXTwitter,
+  faRedditAlien,
+} from "@fortawesome/free-brands-svg-icons";
 import { LinkedinShareButton, TwitterShareButton } from "react-share";
 import Head from "next/head";
 
@@ -85,6 +88,18 @@ const Sharepost = ({ post_title, post_image }) => {
                   className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-slate-700 duration-300 cursor-pointer"
                   // onClick={() => handleShareIcon("faLinkedin")}
                   icon={faXTwitter}
+                />
+              </a>
+              <a
+                href={`https://www.reddit.com/submit?url=${encodeURIComponent(
+                  currentUrl
+                )}&title=${encodeURIComponent(post_title)}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <FontAwesomeIcon
+                  className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:text-orange-700 duration-300 cursor-pointer"
+                  icon={faRedditAlien}
                 />
               </a>
               {/* <TwitterShareButton title={post_title} url={currentUrl}>

@@ -42,9 +42,20 @@ const Sharepost = ({ post_title, post_image }) => {
       <div className="flex">
         <Head>
           {/* <meta property="og:image" content={post_image} /> */}
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={post_title} />
-          <meta name="twitter:image:src" content={post_image} />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:site" content="@site_account" />
+          <meta name="twitter:creator" content="@individual_account" />
+          <meta name="twitter:url" content="https://example.com/page.html" />
+          <meta name="twitter:title" content="Content Title" />
+          <meta
+            name="twitter:description"
+            content="Content description less than 200 characters"
+          />
+          <meta name="twitter:image" content="https://example.com/image.jpg" />
+          <meta
+            name="twitter:image:alt"
+            content="A text description of the image conveying the essential nature of an image to users who are visually impaired. Maximum 420 characters."
+          />
         </Head>
         <div className="flex-col">
           {isShareIconActive ? (

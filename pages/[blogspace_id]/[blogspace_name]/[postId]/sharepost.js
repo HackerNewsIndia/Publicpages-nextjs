@@ -42,6 +42,9 @@ const Sharepost = ({ post_title, post_image }) => {
       <div className="flex">
         <Head>
           <meta property="og:image" content={post_image} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={post_title} />
+          <meta name="twitter:image" content={post_image} />
         </Head>
         <div className="flex-col">
           {isShareIconActive ? (

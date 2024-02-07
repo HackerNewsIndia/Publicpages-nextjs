@@ -12,7 +12,7 @@ import Head from "next/head";
 
 import { useRouter } from "next/router";
 
-const Sharepost = ({ post_title, post_image }) => {
+const Sharepost = ({ post_title, post_image, post_description }) => {
   const [isShareIconActive, setIsShareIconActive] = useState(false);
   const [selectedShareIcon, setSelectedShareIcon] = useState(null);
 
@@ -33,6 +33,12 @@ const Sharepost = ({ post_title, post_image }) => {
     }
   };
 
+  function truncateText(text, limit) {
+    const words = text.split(" ");
+    const truncated = words.slice(0, limit).join(" ");
+    return `${truncated}${words.length > limit ? "..." : ""}`;
+  }
+
   return (
     <div
       className="text-xl italic text-slate-900 "
@@ -40,19 +46,6 @@ const Sharepost = ({ post_title, post_image }) => {
       onMouseLeave={() => setIsShareIconActive(false)}
     >
       <div className="flex">
-        <Head>
-          <title>{post_title}</title>
-          <meta property="og:title" content={post_title} />
-          {/* <meta property="og:description" content={post.description} /> */}
-          <meta property="og:image" content={post_image} />
-          <meta property="og:type" content="article" />
-          <meta property="og:url" content={router.asPath} />
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@diaryblogUnv" />
-          <meta name="twitter:title" content={post_title} />
-          {/* <meta name="twitter:description" content={post.description} /> */}
-          <meta name="twitter:image" content={post_image} />
-        </Head>
         <div className="flex-col">
           {isShareIconActive ? (
             <div className="flex text-2xl bg-transparent rounded-md">
@@ -89,6 +82,8 @@ const Sharepost = ({ post_title, post_image }) => {
                   currentUrl
                 )}&text=${encodeURIComponent(
                   post_title
+                )}&description=${encodeURIComponent(
+                  truncateText(post_description, 27)
                 )}&via=diaryblogUnv&image=${encodeURIComponent(post_image)}`}
                 target="_blank"
                 rel="noreferrer"

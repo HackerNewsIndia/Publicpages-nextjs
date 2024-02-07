@@ -19,8 +19,10 @@ const Post = ({ metadata }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
-  const [post, setPost] = useState(null);
+  // const [post, setPost] = useState(null);
   const [isActive, setIsActive] = useState(false);
+
+  console.log(metadata);
 
   const showCommentBar = () => {
     setIsActive(true);
@@ -59,27 +61,27 @@ const Post = ({ metadata }) => {
     </div>
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const params = { blogspace_id, postId };
-        const metadata = await generateMetadata(params);
-        setMetadata(metadata);
-      } catch (error) {
-        console.error("Error fetching metadata:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const params = { blogspace_id, postId };
+  //       const metadata = await generateMetadata(params);
+  //       setMetadata(metadata);
+  //     } catch (error) {
+  //       console.error("Error fetching metadata:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [blogspace_id, postId]);
+  //   fetchData();
+  // }, [blogspace_id, postId]);
 
   const handleBackClick = () => {
     router.back();
   };
 
-  if (!metadata) {
-    return <div>Loading...</div>;
-  }
+  // if (!metadata) {
+  //   return <div>Loading...</div>;
+  // }
 
   const stripMarkdown = (md) => {
     let content = md.replace(/#+\s+/g, "");
@@ -92,7 +94,7 @@ const Post = ({ metadata }) => {
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>{metadata.title}</title>
         <meta property="og:title" content={metadata.title} />
@@ -106,113 +108,116 @@ const Post = ({ metadata }) => {
         <meta name="twitter:description" content={metadata.description} />
         <meta name="twitter:image" content={metadata.imageUrl} />
       </Head>
-      <Header />
-      <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
-        <div
-          className={`bg-white text-black border border-slate-900 p-1 mt-4 ${
-            isActive
-              ? "fixed top-15 right-0 w-3/4 md:w-1/6 lg:w-1/6 h-2/3 md:h-3/4 lg:h-3/4 bg-gray-100 rounded-md p-2 transition-transform duration-10000 ease-in-out shadow-md z-999"
-              : "fixed top-40 right-[-1%] bg-gray-100 rounded-full p-2 shadow-md text-md md:text-2xl lg:text-2xl"
-          } `}
-          onMouseEnter={showCommentBar}
-          style={{ zIndex: 100 }}
-        >
-          <div>
+      <div>
+        <Header />
+        <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
+          <div
+            className={`bg-white text-black border border-slate-900 p-1 mt-4 ${
+              isActive
+                ? "fixed top-15 right-0 w-3/4 md:w-1/6 lg:w-1/6 h-2/3 md:h-3/4 lg:h-3/4 bg-gray-100 rounded-md p-2 transition-transform duration-10000 ease-in-out shadow-md z-999"
+                : "fixed top-40 right-[-1%] bg-gray-100 rounded-full p-2 shadow-md text-md md:text-2xl lg:text-2xl"
+            } `}
+            onMouseEnter={showCommentBar}
+            style={{ zIndex: 100 }}
+          >
+            <div>
+              {isActive ? (
+                <button
+                  onClick={closeCommentBar}
+                  className="absolute top-[-2%] right-[-1%] bg-white border border-slate-900 w-6 h-6 rounded-full hover:bg-black hover:text-white "
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              ) : null}
+            </div>
+            <div className="m-0 md:m-1 lg:m-1 font-mono text-md md:text-2xl lg:text-2xl">
+              {isActive ? (
+                <h1>
+                  Type IT <FontAwesomeIcon icon={faFeather} />
+                </h1>
+              ) : (
+                <FontAwesomeIcon icon={faFeather} />
+              )}
+            </div>
+
             {isActive ? (
-              <button
-                onClick={closeCommentBar}
-                className="absolute top-[-2%] right-[-1%] bg-white border border-slate-900 w-6 h-6 rounded-full hover:bg-black hover:text-white "
-              >
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
+              <Comments
+                blogId={blogspace_id}
+                postId={postId}
+                post_title={metadata.title}
+              />
             ) : null}
           </div>
-          <div className="m-0 md:m-1 lg:m-1 font-mono text-md md:text-2xl lg:text-2xl">
-            {isActive ? (
-              <h1>
-                Type IT <FontAwesomeIcon icon={faFeather} />
-              </h1>
-            ) : (
-              <FontAwesomeIcon icon={faFeather} />
-            )}
-          </div>
 
-          {isActive ? (
-            <Comments
-              blogId={blogspace_id}
-              postId={postId}
-              post_title={metadata.title}
-            />
-          ) : null}
-        </div>
-
-        <div
-          className={`my-5 mt-3 w-full md:w-4/5 mx-auto ${
-            isActive ? "ml-4 mr-1" : "mx-auto"
-          }`}
-        >
-          <div className="relative mx-auto justify-center flex items-center">
-            <img
-              className="w-full sm:w-11/12 md:w-4/5 lg:w-4/5 h-1/2 object-cover rounded-md mt-5 mb-1 mx-5 justify-center"
-              src={metadata.imageUrl || "path-to-default-image.jpg"}
-              alt={`Image for ${metadata.title}`}
-            />
-            <button
-              className="hidden sm:block absolute top-4 left-11 hover:bg-transparent transform transition-transform duration-300 ease-in-out hover:scale-105 z-10"
-              onClick={handleBackClick}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-            </button>
-          </div>
-          <div className="p-5 pt-0">
-            <h1 className="text-2xl mb-2 text-black font-semibold">
-              {metadata.title}
-            </h1>
-            <h3 className="text-slate-900">{metadata.author}</h3>
-            <div className="flex text-md md:text-2xl lg:text-2xl ">
-              <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
-                <Postsentiment
-                  postId={postId}
-                  blogId={blogspace_id}
-                  postlikes={metadata.likes ? metadata.likes.length : ""}
-                />
-              </span>
-              <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
-                <Sharepost
-                  post_title={metadata.title}
-                  post_image={metadata.imageUrl}
-                />
-              </span>
-            </div>
-
-            <div className="text-black leading-6 text-justify">
-              <Markdown
-                options={{
-                  overrides: {
-                    h1: { component: H1 },
-                    h2: { component: H2 },
-                    h3: { component: H3 },
-                    p: { component: P },
-                    img: { component: Img },
-                    hr: { component: Hr },
-                  },
-                }}
-              >
-                {metadata.description}
-              </Markdown>
-              <TextToSpeech
-                text={stripMarkdown(metadata.description)}
-                setCurrentWord={setCurrentWord}
-                currentWord={currentWord}
-                isActive={isActive}
+          <div
+            className={`my-5 mt-3 w-full md:w-4/5 mx-auto ${
+              isActive ? "ml-4 mr-1" : "mx-auto"
+            }`}
+          >
+            <div className="relative mx-auto justify-center flex items-center">
+              <img
+                className="w-full sm:w-11/12 md:w-4/5 lg:w-4/5 h-1/2 object-cover rounded-md mt-5 mb-1 mx-5 justify-center"
+                src={metadata.imageUrl || "path-to-default-image.jpg"}
+                alt={`Image for ${metadata.title}`}
               />
+              <button
+                className="hidden sm:block absolute top-4 left-11 hover:bg-transparent transform transition-transform duration-300 ease-in-out hover:scale-105 z-10"
+                onClick={handleBackClick}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} />
+              </button>
+            </div>
+            <div className="p-5 pt-0">
+              <h1 className="text-2xl mb-2 text-black font-semibold">
+                {metadata.title}
+              </h1>
+              <h3 className="text-slate-900">{metadata.author}</h3>
+              <div className="flex text-md md:text-2xl lg:text-2xl ">
+                <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
+                  <Postsentiment
+                    postId={postId}
+                    blogId={blogspace_id}
+                    postlikes={metadata.likes ? metadata.likes.length : ""}
+                  />
+                </span>
+                <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
+                  <Sharepost
+                    post_title={metadata.title}
+                    post_image={metadata.imageUrl}
+                    post_description={metadata.description}
+                  />
+                </span>
+              </div>
+
+              <div className="text-black leading-6 text-justify">
+                <Markdown
+                  options={{
+                    overrides: {
+                      h1: { component: H1 },
+                      h2: { component: H2 },
+                      h3: { component: H3 },
+                      p: { component: P },
+                      img: { component: Img },
+                      hr: { component: Hr },
+                    },
+                  }}
+                >
+                  {metadata.description}
+                </Markdown>
+                <TextToSpeech
+                  text={stripMarkdown(metadata.description)}
+                  setCurrentWord={setCurrentWord}
+                  currentWord={currentWord}
+                  isActive={isActive}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 };
 

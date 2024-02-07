@@ -24,12 +24,9 @@ const generateMetadata = async (params) => {
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
+  console.log(post);
 
-  return {
-    title: post.title,
-    description: post.description,
-    imageUrl: post.imageUrl,
-  };
+  return post;
 };
 
 export default generateMetadata;

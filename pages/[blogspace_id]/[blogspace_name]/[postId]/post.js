@@ -242,16 +242,17 @@ export async function generateMetadata({ params, searchParams }, parent) {
 }
 
 export async function getServerSideProps(context) {
-  const { blogspace_id, postId } = context;
+  const { params } = context;
+  const { blogspace_id, postId } = params;
 
   const response = await fetch(
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
-  const post = await response.json();
+  const metadata = await response.json();
 
   return {
     props: {
-      post,
+      metadata,
     },
   };
 }

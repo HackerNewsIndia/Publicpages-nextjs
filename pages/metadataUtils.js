@@ -18,15 +18,16 @@
 
 import React from "react";
 
-const generateMetadata = async (params) => {
+export const generateMetadata = async (params) => {
   const { blogspace_id, postId } = params;
   const response = await fetch(
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
-  console.log(post);
 
-  return post;
+  return {
+    title: post.title,
+    description: post.description,
+    imageUrl: post.imageUrl,
+  };
 };
-
-export default generateMetadata;

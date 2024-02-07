@@ -41,11 +41,16 @@ const Sharepost = ({ post_title, post_image }) => {
     >
       <div className="flex">
         <Head>
-          <meta property="og:image" content={post_image} />
+          <title>{post_title}</title>
           <meta property="og:title" content={post_title} />
-          <meta property="og:description" content={post_title} />
+          {/* <meta property="og:description" content={post.description} /> */}
+          <meta property="og:image" content={post_image} />
+          <meta property="og:type" content="article" />
+          <meta property="og:url" content={router.asPath} />
           <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="@diaryblogUnv" />
           <meta name="twitter:title" content={post_title} />
+          {/* <meta name="twitter:description" content={post.description} /> */}
           <meta name="twitter:image" content={post_image} />
         </Head>
         <div className="flex-col">

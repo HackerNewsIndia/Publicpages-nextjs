@@ -15,7 +15,7 @@ import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
 import { generateMetadata } from "../../../metadataUtils";
 
-const Post = () => {
+const Post = ({ metadata }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
@@ -60,28 +60,24 @@ const Post = () => {
   );
 
   useEffect(() => {
-    fetch(
-      `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch post details");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setPost(data);
-      })
-      .catch((error) => {
-        console.log("Error fetching post details", error);
-      });
+    const fetchData = async () => {
+      try {
+        const params = { blogspace_id, postId };
+        const metadata = await generateMetadata(params);
+        setMetadata(metadata);
+      } catch (error) {
+        console.error("Error fetching metadata:", error);
+      }
+    };
+
+    fetchData();
   }, [blogspace_id, postId]);
 
   const handleBackClick = () => {
     router.back();
   };
 
-  if (!post) {
+  if (!metadata) {
     return <div>Loading...</div>;
   }
 
@@ -98,17 +94,17 @@ const Post = () => {
   return (
     <div>
       <Head>
-        <title>{post.title}</title>
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description} />
-        <meta property="og:image" content={post.imageUrl} />
+        <title>{metadata.title}</title>
+        <meta property="og:title" content={metadata.title} />
+        <meta property="og:description" content={metadata.description} />
+        <meta property="og:image" content={metadata.imageUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={router.asPath} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@diaryblogUnv" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.description} />
-        <meta name="twitter:image" content={post.imageUrl} />
+        <meta name="twitter:title" content={metadata.title} />
+        <meta name="twitter:description" content={metadata.description} />
+        <meta name="twitter:image" content={metadata.imageUrl} />
       </Head>
       <Header />
       <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
@@ -145,7 +141,7 @@ const Post = () => {
             <Comments
               blogId={blogspace_id}
               postId={postId}
-              post_title={post.title}
+              post_title={metadata.title}
             />
           ) : null}
         </div>
@@ -158,8 +154,8 @@ const Post = () => {
           <div className="relative mx-auto justify-center flex items-center">
             <img
               className="w-full sm:w-11/12 md:w-4/5 lg:w-4/5 h-1/2 object-cover rounded-md mt-5 mb-1 mx-5 justify-center"
-              src={post.imageUrl || "path-to-default-image.jpg"}
-              alt={`Image for ${post.title}`}
+              src={metadata.imageUrl || "path-to-default-image.jpg"}
+              alt={`Image for ${metadata.title}`}
             />
             <button
               className="hidden sm:block absolute top-4 left-11 hover:bg-transparent transform transition-transform duration-300 ease-in-out hover:scale-105 z-10"
@@ -170,19 +166,22 @@ const Post = () => {
           </div>
           <div className="p-5 pt-0">
             <h1 className="text-2xl mb-2 text-black font-semibold">
-              {post.title}
+              {metadata.title}
             </h1>
-            <h3 className="text-slate-900">{post.author}</h3>
+            <h3 className="text-slate-900">{metadata.author}</h3>
             <div className="flex text-md md:text-2xl lg:text-2xl ">
               <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
                 <Postsentiment
                   postId={postId}
                   blogId={blogspace_id}
-                  postlikes={post.likes ? post.likes.length : ""}
+                  postlikes={metadata.likes ? metadata.likes.length : ""}
                 />
               </span>
               <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
-                <Sharepost post_title={post.title} post_image={post.imageUrl} />
+                <Sharepost
+                  post_title={metadata.title}
+                  post_image={metadata.imageUrl}
+                />
               </span>
             </div>
 
@@ -199,10 +198,10 @@ const Post = () => {
                   },
                 }}
               >
-                {post.description}
+                {metadata.description}
               </Markdown>
               <TextToSpeech
-                text={stripMarkdown(post.description)}
+                text={stripMarkdown(metadata.description)}
                 setCurrentWord={setCurrentWord}
                 currentWord={currentWord}
                 isActive={isActive}

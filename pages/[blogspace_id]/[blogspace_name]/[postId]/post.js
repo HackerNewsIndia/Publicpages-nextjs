@@ -14,6 +14,7 @@ import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
 // import { generateMetadata } from "../../../metadataUtils";
+import type { Metadata, ResolvingMetadata } from 'next'
 
 const Post = ({ metadata }) => {
   const router = useRouter();
@@ -221,15 +222,24 @@ const Post = ({ metadata }) => {
   );
 };
 
-export async function generateMetadata(params) {
+type Props = {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+ 
+export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {  
   const { blogspace_id, postId } = params;
   const response = await fetch(
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
-  console.log(post);
-
-  return post;
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      images: [post.imageUrl, ...previousImages],
+    },
+  }
 }
 
 export async function getServerSideProps(context) {

@@ -242,7 +242,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
 }
 
 export async function getServerSideProps(context) {
-  const { blogspace_id, postId } = params;
+  const { blogspace_id, postId } = context;
 
   const response = await fetch(
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`

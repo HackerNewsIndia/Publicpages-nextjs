@@ -13,7 +13,7 @@ import Header from "../../../../components/header";
 import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
-import { generateMetadata } from "../../../metadataUtils";
+import generateMetadata from "../../../metadataUtils";
 
 const Post = ({ metadata }) => {
   const router = useRouter();

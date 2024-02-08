@@ -89,6 +89,13 @@ const Post = ({ metadata }) => {
         <meta property="og:image" content={metadata.imageUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={router.asPath} />
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content={metadata.author} />
+        <meta
+          property="og:article:published_time"
+          content={metadata.createDate}
+        />
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@diaryblogUnv" />
         <meta name="twitter:title" content={metadata.title} />

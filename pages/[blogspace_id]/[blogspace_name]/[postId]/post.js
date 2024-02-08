@@ -333,9 +333,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
    return {
      title: post.title,
      description: post.description,
-     openGraph: {
-       images: [post.imageUrl, ...previousImages],
-     },
+     
    }
 }
 

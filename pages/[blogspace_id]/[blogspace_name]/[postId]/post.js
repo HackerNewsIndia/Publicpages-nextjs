@@ -252,7 +252,7 @@ export async function getServerSideProps(context) {
   );
   const metadata = await response.json();
 
-  alert("serverside");
+  
 
   return {
     props: {

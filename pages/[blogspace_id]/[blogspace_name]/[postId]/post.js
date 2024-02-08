@@ -14,6 +14,10 @@ import Header from "../../../../components/header";
 import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
+<<<<<<< HEAD
+=======
+import { generateMetadata } from "../../../metadataUtils";
+>>>>>>> parent of daf8930 (removed metadatautils file and added metadata function in post.js)
 
 const Post = ({ params, searchParams }) => {
   const router = useRouter();
@@ -318,6 +322,7 @@ const Post = ({ params, searchParams }) => {
   );
 };
 
+<<<<<<< HEAD
 export async function generateMetadata({ params, searchParams }, parent) {
   const { blogspace_id, postId } = params;
 
@@ -325,6 +330,11 @@ export async function generateMetadata({ params, searchParams }, parent) {
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
+=======
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const metadata = await generateMetadata(params);
+>>>>>>> parent of daf8930 (removed metadatautils file and added metadata function in post.js)
 
   const previousImages = (await parent).openGraph?.images || [];
   console.log("metacalled");

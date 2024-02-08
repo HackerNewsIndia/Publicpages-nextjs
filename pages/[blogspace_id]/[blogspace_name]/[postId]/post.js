@@ -324,6 +324,8 @@ const Post =  ({ params, searchParams }) => {
 export async function generateMetadata({ params, searchParams }, parent) {
   // const router = useRouter();
 
+  console.log("generateMetadata called"); 
+
   /*const blogId = '65c2c69e6472bb6b6f48f9ee';//router.query.blogspace_id;
   const post_id = '65c2c76e6472bb6b6f48f9ef';//router.query.postId;
    
@@ -335,6 +337,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
    console.log("metacalled");**/
    const previousImages = (await parent).openGraph?.images || [];
+
+  console.log("generateMetadata returned"); 
    
    return {
      title: 'test',

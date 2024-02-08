@@ -87,6 +87,11 @@ const Post = ({ metadata }) => {
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
         <meta property="og:image" content={metadata.imageUrl} />
+        <meta
+          name="image"
+          property="og:image"
+          content={metadata.imageUrl}
+        ></meta>
         <meta property="og:type" content="article" />
         <meta property="og:url" content={router.asPath} />
         <meta property="og:type" content="article" />

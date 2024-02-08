@@ -323,14 +323,13 @@ const Post =  ({ params, searchParams }) => {
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const router = useRouter();
-  const { blogspace_id, postId } = router.query || {};
 
   const blogId = router.query.blogspace_id;
   const post_id = router.query.postId;
    
   
   const response = await fetch(
-     `https://diaryblogapi2.onrender.com/api/companies/${blogId}/posts/${postId}`
+     `https://diaryblogapi2.onrender.com/api/companies/${blogId}/posts/${post_id}`
    );
    const post = await response.json();
 

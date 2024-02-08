@@ -220,22 +220,5 @@ const Post = async () => {
   );
 };
 
-export async function generateMetadata({ params, searchParams }, parent) {
-   const { blogspace_id, postId } = params;
-
-   const response = await fetch(
-     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
-   );
-   const post = await response.json();
-
-   const previousImages = (await parent).openGraph?.images || [];
-   console.log("metacalled");
-
-   return {
-     title: post.title,
-     description: post.description,
-     
-   }
-}
 
 export default Post;

@@ -13,7 +13,7 @@ import Header from "../../../../components/header";
 import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
-import { generateMetadata } from "../../../metadataUtils";
+// import { generateMetadata } from "../../../metadataUtils";
 
 const Post = ({ metadata }) => {
   const router = useRouter();
@@ -221,13 +221,37 @@ const Post = ({ metadata }) => {
   );
 };
 
+ 
+export async function generateMetadata({ params, searchParams }, parent) {
+  const { blogspace_id, postId } = params;
+
+  const response = await fetch(
+    `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
+  );
+  const post = await response.json();
+
+  const previousImages = (await parent).openGraph?.images || []
+  
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      images: [post.imageUrl, ...previousImages],
+    },
+  }
+}
+
 export async function getServerSideProps(context) {
-  const { params } = context;
-  const metadata = await generateMetadata(params);
+  const { blogspace_id, postId } = context;
+
+  const response = await fetch(
+    `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
+  );
+  const post = await response.json();
 
   return {
     props: {
-      metadata,
+      post,
     },
   };
 }

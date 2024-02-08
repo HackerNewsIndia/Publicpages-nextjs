@@ -231,6 +231,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const post = await response.json();
 
   const previousImages = (await parent).openGraph?.images || []
+
+  alert(post.title);
   
   return {
     title: post.title,

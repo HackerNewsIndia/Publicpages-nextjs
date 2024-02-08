@@ -15,7 +15,7 @@ import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
 
-const Post = async ({ params, searchParams }) => {
+const Post =  ({ params, searchParams }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");

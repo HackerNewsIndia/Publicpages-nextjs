@@ -95,6 +95,7 @@ const Sharepost = ({ post_title, post_image, post_description }) => {
                   icon={faXTwitter}
                 />
               </a>*/}
+
               <a
                 href={`https://www.reddit.com/submit?url=${encodeURIComponent(
                   currentUrl

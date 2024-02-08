@@ -324,7 +324,7 @@ const Post =  ({ params, searchParams }) => {
 export async function generateMetadata({ params, searchParams }, parent) {
   // const router = useRouter();
 
-  const blogId = '65c2c69e6472bb6b6f48f9ee';//router.query.blogspace_id;
+  /*const blogId = '65c2c69e6472bb6b6f48f9ee';//router.query.blogspace_id;
   const post_id = '65c2c76e6472bb6b6f48f9ef';//router.query.postId;
    
   
@@ -333,14 +333,14 @@ export async function generateMetadata({ params, searchParams }, parent) {
    );
    const post = await response.json();
 
+   console.log("metacalled");**/
    const previousImages = (await parent).openGraph?.images || [];
-   console.log("metacalled");
-
+   
    return {
-     title: post.title,
-     description: post.description,
+     title: 'test',
+     description: 'test Description',
      openGraph: {
-       images: [post.imageUrl, ...previousImages],
+       images: ['https://st5.depositphotos.com/1005979/64740/i/450/depositphotos_647406182-stock-photo-productivity-team-employee-output-higher.jpg', ...previousImages],
      },
    }
 }

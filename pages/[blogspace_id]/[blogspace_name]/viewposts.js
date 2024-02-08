@@ -13,6 +13,11 @@ import Header from "../../../components/header";
 import Footer from "../../../components/footer";
 // import "../../globals.css";
 
+export const metadata = {
+  title: 'Diary Blog',
+}
+
+
 const ViewPosts = () => {
   const [posts, setPosts] = useState([]);
   const [postSearch, setPostSearch] = useState("");

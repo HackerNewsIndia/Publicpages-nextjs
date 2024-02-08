@@ -19,7 +19,7 @@ import Footer from "../../../../components/footer";
 import { generateMetadata } from "../../../metadataUtils";
 >>>>>>> parent of daf8930 (removed metadatautils file and added metadata function in post.js)
 
-const Post = ({ params, searchParams }) => {
+const Post =  ({ params, searchParams }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
@@ -96,6 +96,9 @@ const Post = ({ params, searchParams }) => {
     router.back();
   };
 
+  if (!post) {
+    return <div>Loading...</div>;
+  }
 
   const stripMarkdown = (md) => {
     // Remove headers
@@ -324,28 +327,31 @@ const Post = ({ params, searchParams }) => {
 
 <<<<<<< HEAD
 export async function generateMetadata({ params, searchParams }, parent) {
-  const { blogspace_id, postId } = params;
+  // const router = useRouter();
 
+  console.log("generateMetadata called"); 
+
+  /*const blogId = '65c2c69e6472bb6b6f48f9ee';//router.query.blogspace_id;
+  const post_id = '65c2c76e6472bb6b6f48f9ef';//router.query.postId;
+   
+  
   const response = await fetch(
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
-=======
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const metadata = await generateMetadata(params);
->>>>>>> parent of daf8930 (removed metadatautils file and added metadata function in post.js)
 
-  const previousImages = (await parent).openGraph?.images || [];
-  console.log("metacalled");
-  
-  return {
-    title: post.title,
-    description: post.description,
-    openGraph: {
-      images: [post.imageUrl, ...previousImages],
-    },
-  }
+   console.log("metacalled");**/
+   const previousImages = (await parent).openGraph?.images || [];
+
+  console.log("generateMetadata returned"); 
+   
+   return {
+     title: 'test',
+     description: 'test Description',
+     openGraph: {
+       images: ['https://st5.depositphotos.com/1005979/64740/i/450/depositphotos_647406182-stock-photo-productivity-team-employee-output-higher.jpg', ...previousImages],
+     },
+   }
 }
 
 export default Post;

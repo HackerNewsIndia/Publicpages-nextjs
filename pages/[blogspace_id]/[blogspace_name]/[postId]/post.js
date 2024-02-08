@@ -322,10 +322,10 @@ const Post =  ({ params, searchParams }) => {
 };
 
 export async function generateMetadata({ params, searchParams }, parent) {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const blogId = router.query.blogspace_id;
-  const post_id = router.query.postId;
+  const blogId = '65c2c69e6472bb6b6f48f9ee';//router.query.blogspace_id;
+  const post_id = '65c2c76e6472bb6b6f48f9ef';//router.query.postId;
    
   
   const response = await fetch(

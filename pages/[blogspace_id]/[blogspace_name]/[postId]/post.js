@@ -15,7 +15,7 @@ import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
 // import { generateMetadata } from "../../../metadataUtils";
 
-const Post = ({ metadata }) => {
+const Post = ({ params, searchParams }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
@@ -61,19 +61,19 @@ const Post = ({ metadata }) => {
     </div>
   );
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const params = { blogspace_id, postId };
-  //       const metadata = await generateMetadata(params);
-  //       setMetadata(metadata);
-  //     } catch (error) {
-  //       console.error("Error fetching metadata:", error);
-  //     }
-  //   };
+   useEffect(() => {
+    const fetchData = async () => {
+  try {
+         const params = { blogspace_id, postId };
+         const metadata = await generateMetadata(params);
+         setMetadata(metadata);
+        } catch (error) {
+         console.error("Error fetching metadata:", error);
+       }
+    };
 
-  //   fetchData();
-  // }, [blogspace_id, postId]);
+    fetchData();
+  }, [blogspace_id, postId]);
 
   const handleBackClick = () => {
     router.back();
@@ -230,9 +230,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
   );
   const post = await response.json();
 
-  const previousImages = (await parent).openGraph?.images || []
-
-  alert(post.title);
+  const previousImages = (await parent).openGraph?.images || [];
+  alert();
   
   return {
     title: post.title,
@@ -243,22 +242,6 @@ export async function generateMetadata({ params, searchParams }, parent) {
   }
 }
 
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const { blogspace_id, postId } = params;
 
-  const response = await fetch(
-    `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
-  );
-  const metadata = await response.json();
-
-  
-
-  return {
-    props: {
-      metadata,
-    },
-  };
-}
 
 export default Post;

@@ -322,10 +322,12 @@ const Post =  ({ params, searchParams }) => {
 };
 
 export async function generateMetadata({ params, searchParams }, parent) {
-   const { blogspace_id, postId } = params;
+   const { blogId, post_id } = params;
 
-   const response = await fetch(
-     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
+   
+  
+  const response = await fetch(
+     `https://diaryblogapi2.onrender.com/api/companies/${blogId}/posts/${postId}`
    );
    const post = await response.json();
 

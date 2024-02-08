@@ -15,7 +15,7 @@ import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
 
-const Post = ({ params, searchParams }) => {
+const Post = () => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
@@ -92,6 +92,9 @@ const Post = ({ params, searchParams }) => {
     router.back();
   };
 
+  if (!post) {
+    return <div>Loading...</div>;
+  }
 
   const stripMarkdown = (md) => {
     // Remove headers
@@ -317,25 +320,5 @@ const Post = ({ params, searchParams }) => {
     </div>
   );
 };
-
-export async function generateMetadata({ params, searchParams }, parent) {
-  const { blogspace_id, postId } = params;
-
-  const response = await fetch(
-    `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
-  );
-  const post = await response.json();
-
-  const previousImages = (await parent).openGraph?.images || [];
-  console.log("metacalled");
-  
-  return {
-    title: post.title,
-    description: post.description,
-    openGraph: {
-      images: [post.imageUrl, ...previousImages],
-    },
-  }
-}
 
 export default Post;

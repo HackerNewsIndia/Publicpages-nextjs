@@ -19,8 +19,8 @@ export default function HomeApp() {
   return (
      <>
      <Head>
-         <title>Diary-Blog</title>
-         <meta property="og:title" content="DiaryBlog" />
+         <title>Diary-Blog1</title>
+         <meta property="og:title" content="Diary-Blog1" />
          <meta property="og:description" content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community" />
          <meta property="og:image" content="" />
          <meta property="og:url" content="https://universe-nextjs.onrender.com/" />

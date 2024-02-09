@@ -14,6 +14,7 @@ import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
 import ImageResizer from "react-image-file-resizer";
+import { NextSeo } from "next-seo";
 
 const Post = ({ metadata }) => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const Post = ({ metadata }) => {
   const [currentWord, setCurrentWord] = useState("");
   // const [post, setPost] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  const [resizedImageUrl, setResizedImageUrl] = useState("");
+  // const [resizedImageUrl, setResizedImageUrl] = useState("");
   console.log(metadata);
   const showCommentBar = () => {
     setIsActive(true);
@@ -33,33 +34,33 @@ const Post = ({ metadata }) => {
   const width = 1200;
   const height = 627;
 
-  const resizeImage = async () => {
-    try {
-      const response = await fetch(metadata.imageUrl);
-      const blob = await response.blob();
+  // const resizeImage = async () => {
+  //   try {
+  //     const response = await fetch(metadata.imageUrl);
+  //     const blob = await response.blob();
 
-      ImageResizer.imageFileResizer(
-        blob,
-        width,
-        height,
-        "JPEG",
-        100,
-        0,
-        (uri) => {
-          setResizedImageUrl(uri);
-        },
-        "base64"
-      );
-    } catch (error) {
-      console.error("Error fetching or resizing image:", error);
-    }
-  };
+  //     ImageResizer.imageFileResizer(
+  //       blob,
+  //       width,
+  //       height,
+  //       "JPEG",
+  //       100,
+  //       0,
+  //       (uri) => {
+  //         setResizedImageUrl(uri);
+  //       },
+  //       "base64"
+  //     );
+  //   } catch (error) {
+  //     console.error("Error fetching or resizing image:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    resizeImage();
-  }, [metadata.imageUrl, width, height]);
+  // useEffect(() => {
+  //   resizeImage();
+  // }, [metadata.imageUrl, width, height]);
 
-  console.log("resized image:", resizedImageUrl);
+  // console.log("resized image:", resizedImageUrl);
 
   const H1 = ({ children }) => (
     <h1 className="text-2xl font-bold mb-4">{children}</h1>
@@ -116,19 +117,47 @@ const Post = ({ metadata }) => {
   };
   return (
     <>
-      <Head>
+      <NextSeo
+        title={metadata.title}
+        description={metadata.description}
+        openGraph={{
+          title: metadata.title,
+          description: metadata.description,
+          images: [
+            {
+              url: metadata.imageUrl,
+              width: 1200,
+              height: 627,
+              alt: "Diary Blog",
+            },
+          ],
+          locale: "en_US",
+          type: "article",
+          url: router.asPath,
+          article: {
+            publishedTime: metadata.createDate,
+            authors: [metadata.author],
+          },
+        }}
+        twitter={{
+          cardType: "summary_large_image",
+          site: "@diaryblogUnv",
+        }}
+        canonical={router.asPath}
+      />
+      {/* <Head>
         <title>{metadata.title}</title>
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
-        {/* <meta property="og:image" content={metadata.imageUrl} /> */}
+        <meta property="og:image" content={metadata.imageUrl} />
         <meta name="image" property="og:image" content={resizedImageUrl}></meta>
         <meta property="og:locale" content="en_US" />
-        {/* <meta property="og:image:url" content={metadata.imageUrl} />
+        <meta property="og:image:url" content={metadata.imageUrl} />
          <meta property="og:image:width" content="800" />
          <meta property="og:image:height" content="600" />
          <meta property="og:image:url" content={metadata.imageUrl} />
          <meta property="og:image:width" content="1800" />
-         <meta property="og:image:height" content="1600" /> */}
+         <meta property="og:image:height" content="1600" />
         <meta property="og:image:alt" content="Diary Blog" />
 
         <meta property="og:type" content="article" />
@@ -146,7 +175,7 @@ const Post = ({ metadata }) => {
         <meta name="twitter:description" content={metadata.description} />
         <meta name="twitter:image" content={metadata.imageUrl} />
         <link rel="canonical" href={router.asPath} />
-      </Head>
+      </Head> */}
       <div>
         <Header />
         <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">

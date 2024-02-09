@@ -8,6 +8,14 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
+export const metadata = {
+  title: 'Acme3',
+  openGraph: {
+    title: 'Acme3',
+    description: 'Acme3 is a...',
+  },
+}
+
 const PublicBlogSpace = () => {
   // const { blogData, setBlogData } = useBlogContext();
   const [blogSpace, setBlogSpace] = useState([]);
@@ -391,8 +399,8 @@ const PublicBlogSpace = () => {
     // </div>
     <>
       <Head>
-        <title>DiaryBlog</title>
-        <meta property="og:title" content="DiaryBlog" />
+        <title>Diary-Blog3</title>
+        <meta property="og:title" content="Diary-Blog3" />
         <meta
           property="og:description"
           content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"

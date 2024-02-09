@@ -86,21 +86,21 @@ const Post = ({ metadata }) => {
         <title>{metadata.title}</title>
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
-        <meta property="og:image" content={metadata.imageUrl} />
+        {/* <meta property="og:image" content={metadata.imageUrl} /> */}
         <meta
           name="image"
           property="og:image"
           content={metadata.imageUrl}
         ></meta>
-         <meta property="og:locale" content="en_US" />
-         <meta property="og:image:url" content={metadata.imageUrl} />
+        <meta property="og:locale" content="en_US" />
+        {/* <meta property="og:image:url" content={metadata.imageUrl} />
          <meta property="og:image:width" content="800" />
          <meta property="og:image:height" content="600" />
          <meta property="og:image:url" content={metadata.imageUrl} />
          <meta property="og:image:width" content="1800" />
-         <meta property="og:image:height" content="1600" />
-         <meta property="og:image:alt" content="Diary Blog" />
-          
+         <meta property="og:image:height" content="1600" /> */}
+        <meta property="og:image:alt" content="Diary Blog" />
+
         <meta property="og:type" content="article" />
         <meta property="og:url" content={router.asPath} />
         <meta property="og:type" content="article" />
@@ -115,6 +115,7 @@ const Post = ({ metadata }) => {
         <meta name="twitter:title" content={metadata.title} />
         <meta name="twitter:description" content={metadata.description} />
         <meta name="twitter:image" content={metadata.imageUrl} />
+        <link rel="canonical" href={router.asPath} />
       </Head>
       <div>
         <Header />

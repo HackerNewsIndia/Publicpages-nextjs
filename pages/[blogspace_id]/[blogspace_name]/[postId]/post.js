@@ -92,6 +92,15 @@ const Post = ({ metadata }) => {
           property="og:image"
           content={metadata.imageUrl}
         ></meta>
+         <meta property="og:locale" content="en_US" />
+         <meta property="og:image:url" content={metadata.imageUrl} />
+         <meta property="og:image:width" content="800" />
+         <meta property="og:image:height" content="600" />
+         <meta property="og:image:url" content={metadata.imageUrl} />
+         <meta property="og:image:width" content="1800" />
+         <meta property="og:image:height" content="1600" />
+         <meta property="og:image:alt" content="Diary Blog" />
+          
         <meta property="og:type" content="article" />
         <meta property="og:url" content={router.asPath} />
         <meta property="og:type" content="article" />

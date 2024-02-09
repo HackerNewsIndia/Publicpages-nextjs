@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CustomLink from "./link";
 import Image from "next/image";
-import Head from "next/head";
+
 
 
 const Home = () => {
@@ -109,15 +109,7 @@ const Home = () => {
   }
 
   return (
-    <>
-    <Head>
-        <title>DiaryBlog</title>
-        <meta property="og:title" content="DiaryBlog" />
-        <meta property="og:description" content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community" />
-        <meta property="og:image" content="https://universe-nextjs.onrender.com/_next/static/media/logo2.82936ace.svg" />
-    </Head>
-    
-    <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
+   <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
       <div className="text-center pt-10">
         <h2 className="text-3xl text-slate-900 font-bold">Latest Post</h2>
       </div>
@@ -191,8 +183,7 @@ const Home = () => {
       </ul>
 
       {loading && <p>Loading...</p>}
-    </div>
-        </>   
+    </div>   
   );
 };
 

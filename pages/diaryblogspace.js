@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -388,20 +389,33 @@ const PublicBlogSpace = () => {
     //   </div>
     //   <Footer />
     // </div>
-    <div>
-      <Header />
-      <div className="mx-2 mb-4 bg-white ">
-        <section className="py-6 sm:py-6 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
-          <div className="container p-6 mx-auto space-y-8">
-            <div className="space-y-2 text-center">
-              <h2 className="text-3xl font-bold">All Channels</h2>
+    <>
+      <Head>
+        <title>DiaryBlog</title>
+        <meta property="og:title" content="DiaryBlog" />
+        <meta
+          property="og:description"
+          content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"
+        />
+        <meta
+          property="og:image"
+          content="https://universe-nextjs.onrender.com/_next/static/media/logo2.82936ace.svg"
+        />
+      </Head>
+      <div>
+        <Header />
+        <div className="mx-2 mb-4 bg-white ">
+          <section className="py-6 sm:py-6 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
+            <div className="container p-6 mx-auto space-y-8">
+              <div className="space-y-2 text-center">
+                <h2 className="text-3xl font-bold">All Channels</h2>
+              </div>
             </div>
-          </div>
-          <div className="container mx-auto flex flex-col items-center justify-center p-4  space-y-8 md:p-4 lg:space-y-0 lg:flex-row lg:justify-between">
-            <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
-              {blogSpace.length} Blogs in 12 categories
-            </h1>
-            {/* <input
+            <div className="container mx-auto flex flex-col items-center justify-center p-4  space-y-8 md:p-4 lg:space-y-0 lg:flex-row lg:justify-between">
+              <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
+                {blogSpace.length} Blogs in 12 categories
+              </h1>
+              {/* <input
               type="search"
               name="Search"
               placeholder="Search..."
@@ -409,188 +423,189 @@ const PublicBlogSpace = () => {
               onChange={handleChange}
               className="w-full md:w-32 py-2 pl-10 border-2 bg-white border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none "
             /> */}
-          </div>
-          <div className="flex flex-row items-center justify-center">
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
+            </div>
+            <div className="flex flex-row items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="search"
+                  name="Search"
+                  placeholder="Search..."
+                  value={blogSearch}
+                  onChange={handleChange}
+                  className="w-32 py-2 pl-10 bg-white border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
+                />
               </div>
-              <input
-                type="search"
-                name="Search"
-                placeholder="Search..."
-                value={blogSearch}
-                onChange={handleChange}
-                className="w-32 py-2 pl-10 bg-white border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
-              />
+            </div>
+          </section>
+
+          <div className="flex flex-wrap items-start text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
+
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
+          </div>
+
+          <div className="flex flex-col mx-auto rounded-md mx-4 my-5 sm:mx-20 md:mx-20 lg:mx-20 xl:mx-40 p-6 ">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4  ">
+              {filteredBlogSpace.map((companyData, index) => (
+                <article
+                  key={index}
+                  className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 cursor-pointer"
+                  onClick={() => handleBlog(companyData)}
+                >
+                  <img
+                    alt=""
+                    className="object-cover w-full h-52  "
+                    src={randomImageUrls[index]}
+                  />
+
+                  <div className="flex flex-col flex-1 p-6 ">
+                    <a
+                      rel="noopener noreferrer"
+                      href="#"
+                      aria-label="Te nulla oportere reprimique his dolorum"
+                    ></a>
+                    <a
+                      rel="noopener noreferrer"
+                      href="#"
+                      className="text-xs tracking uppercase hover:underline text-slate-900 "
+                    >
+                      Convenire
+                    </a>
+                    <h3 className="flex-1 py-2 text-lg font-semibold leading-5 text-slate-900 ">
+                      {companyData.name}
+                    </h3>
+                    <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900 ">
+                      <span>{companyData.views} Views</span>
+                      <span>
+                        {followersCounts[companyData._id.$oid] || 0} Followers
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+              {isModalOpen && (
+                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                  <div className="bg-white p-8 rounded-md w-1/3">
+                    <h2 className="text-xl font-bold mb-2">
+                      Follow {currentFollowCompany}
+                    </h2>
+                    <input
+                      type="email"
+                      value={emailForFollow}
+                      onChange={(e) => setEmailForFollow(e.target.value)}
+                      placeholder="Enter your email"
+                      className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
+                    />
+                    <div className="flex justify-end space-x-2">
+                      <button
+                        onClick={handleConfirmFollow}
+                        className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                      >
+                        Confirm Follow
+                      </button>
+                      <button
+                        onClick={handleCloseModal}
+                        className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </section>
-
-        <div className="flex flex-wrap items-start text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
-
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
         </div>
-
-        <div className="flex flex-col mx-auto rounded-md mx-4 my-5 sm:mx-20 md:mx-20 lg:mx-20 xl:mx-40 p-6 ">
-          <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4  ">
-            {filteredBlogSpace.map((companyData, index) => (
-              <article
-                key={index}
-                className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 cursor-pointer"
-                onClick={() => handleBlog(companyData)}
-              >
-                <img
-                  alt=""
-                  className="object-cover w-full h-52  "
-                  src={randomImageUrls[index]}
-                />
-
-                <div className="flex flex-col flex-1 p-6 ">
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    aria-label="Te nulla oportere reprimique his dolorum"
-                  ></a>
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    className="text-xs tracking uppercase hover:underline text-slate-900 "
-                  >
-                    Convenire
-                  </a>
-                  <h3 className="flex-1 py-2 text-lg font-semibold leading-5 text-slate-900 ">
-                    {companyData.name}
-                  </h3>
-                  <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900 ">
-                    <span>{companyData.views} Views</span>
-                    <span>
-                      {followersCounts[companyData._id.$oid] || 0} Followers
-                    </span>
-                  </div>
-                </div>
-              </article>
-            ))}
-            {isModalOpen && (
-              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white p-8 rounded-md w-1/3">
-                  <h2 className="text-xl font-bold mb-2">
-                    Follow {currentFollowCompany}
-                  </h2>
-                  <input
-                    type="email"
-                    value={emailForFollow}
-                    onChange={(e) => setEmailForFollow(e.target.value)}
-                    placeholder="Enter your email"
-                    className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
-                  />
-                  <div className="flex justify-end space-x-2">
-                    <button
-                      onClick={handleConfirmFollow}
-                      className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                    >
-                      Confirm Follow
-                    </button>
-                    <button
-                      onClick={handleCloseModal}
-                      className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
   );
 };
 

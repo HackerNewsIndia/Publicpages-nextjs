@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router"; // Import useRouter from Next.js
 import CustomLink from "../../../components/link";
 // import "./ViewPosts.css";
@@ -202,20 +203,33 @@ const ViewPosts = () => {
   }
 
   return (
-    <div>
-      <Header />
-      <div className="bg-white">
-        <section className="bg-white py-6 sm:py-6 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
-          <div className="container p-6 mx-auto space-y-8">
-            <div className="space-y-2 text-center">
-              <h2 className="text-3xl font-bold">{blog_name}</h2>
+    <>
+      <Head>
+        <title>DiaryBlog</title>
+        <meta property="og:title" content="DiaryBlog" />
+        <meta
+          property="og:description"
+          content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"
+        />
+        <meta
+          property="og:image"
+          content="https://universe-nextjs.onrender.com/_next/static/media/logo2.82936ace.svg"
+        />
+      </Head>
+      <div>
+        <Header />
+        <div className="bg-white">
+          <section className="bg-white py-6 sm:py-6 text-slate-900 mx-4 md:mx-10 lg:mx-20 xl:mx-40">
+            <div className="container p-6 mx-auto space-y-8">
+              <div className="space-y-2 text-center">
+                <h2 className="text-3xl font-bold">{blog_name}</h2>
+              </div>
             </div>
-          </div>
-          <div className="container mx-auto flex flex-col items-center justify-center p-4  space-y-8 md:p-4 lg:space-y-0 lg:flex-row lg:justify-between">
-            <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
-              {posts.length} posts in 12 categories
-            </h1>
-            {/* <input
+            <div className="container mx-auto flex flex-col items-center justify-center p-4  space-y-8 md:p-4 lg:space-y-0 lg:flex-row lg:justify-between">
+              <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
+                {posts.length} posts in 12 categories
+              </h1>
+              {/* <input
               type="search"
               name="Search"
               placeholder="Search..."
@@ -223,192 +237,193 @@ const ViewPosts = () => {
               onChange={handleChange}
               className="w-full md:w-32 py-2 pl-10 border-2 bg-white border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none "
             /> */}
-          </div>
-          <div className="flex flex-row items-center justify-center">
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                name="Search"
-                placeholder="Search..."
-                value={postSearch}
-                onChange={handleChange}
-                className="w-32 py-2 pl-10 bg-white border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
-              />
             </div>
+            <div className="flex flex-row items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="search"
+                  name="Search"
+                  placeholder="Search..."
+                  value={postSearch}
+                  onChange={handleChange}
+                  className="w-32 py-2 pl-10 bg-white border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
+                />
+              </div>
+            </div>
+          </section>
+          <div className="flex flex-wrap items-start bg-white text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
+
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              asdfasdf
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C2
+            </button>
+            <button
+              type="button"
+              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
+            >
+              C3
+            </button>
           </div>
-        </section>
-        <div className="flex flex-wrap items-start bg-white text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
 
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            asdfasdf
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C2
-          </button>
-          <button
-            type="button"
-            className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-          >
-            C3
-          </button>
-        </div>
-
-        <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
-          {/* <div className="text-center pt-10">
+          <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
+            {/* <div className="text-center pt-10">
             <h2 className="text-3xl text-slate-900 font-bold">Latest Post</h2>
           </div> */}
 
-          <ul className="divide-y divide-gray-400 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10 mt-5 mb-5">
-            {filteredPosts.map((post, index) =>
-              post.status === "published" ? (
-                <li key={index} className="py-5 divide-slate-900">
-                  <article className="flex flex-col md:flex-row">
-                    <div className="flex flex-row p-2 md:w-1/5">
-                      <img
-                        src={post.imageUrl}
-                        alt="Logo"
-                        width={250}
-                        height={250}
-                        objectFit="fit"
-                        className="rounded-md w-full"
-                      />
-                    </div>
-                    <div className="flex flex-col p-2 md:w-4/5">
-                      <dl className="md:flex md:items-center md:justify-between">
-                        <dt className="sr-only">Published on</dt>
-                        <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
-                          <time dateTime={post.createDate}>
-                            {formatDate(post.createDate)}
-                          </time>
-                        </dd>
-                      </dl>
-                      <div className="space-y-5 md:col-span-3">
-                        <div className="space-y-6">
-                          <div>
-                            <h2 className="text-2xl font-bold leading-8 tracking-tight text-gray-900 ">
-                              {post.title}
-                            </h2>
-                            <div className="flex flex-wrap">
-                              {/* {tags.map((tag) => (
+            <ul className="divide-y divide-gray-400 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10 mt-5 mb-5">
+              {filteredPosts.map((post, index) =>
+                post.status === "published" ? (
+                  <li key={index} className="py-5 divide-slate-900">
+                    <article className="flex flex-col md:flex-row">
+                      <div className="flex flex-row p-2 md:w-1/5">
+                        <img
+                          src={post.imageUrl}
+                          alt="Logo"
+                          width={250}
+                          height={250}
+                          objectFit="fit"
+                          className="rounded-md w-full"
+                        />
+                      </div>
+                      <div className="flex flex-col p-2 md:w-4/5">
+                        <dl className="md:flex md:items-center md:justify-between">
+                          <dt className="sr-only">Published on</dt>
+                          <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
+                            <time dateTime={post.createDate}>
+                              {formatDate(post.createDate)}
+                            </time>
+                          </dd>
+                        </dl>
+                        <div className="space-y-5 md:col-span-3">
+                          <div className="space-y-6">
+                            <div>
+                              <h2 className="text-2xl font-bold leading-8 tracking-tight text-gray-900 ">
+                                {post.title}
+                              </h2>
+                              <div className="flex flex-wrap">
+                                {/* {tags.map((tag) => (
                             <Tag key={tag} text={tag} />
                           ))} */}
+                              </div>
+                            </div>
+                            <div className="prose max-w-none text-gray-500 ">
+                              {truncateText(post.description, 27)}
                             </div>
                           </div>
-                          <div className="prose max-w-none text-gray-500 ">
-                            {truncateText(post.description, 27)}
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between mt-4 text-slate-900">
-                          <div className="text-base font-medium leading-6 hover:text-orange-600">
-                            <CustomLink
-                              href={`/${router.query.blogspace_id}/${router.query.blogspace_name}/${post._id}/post`}
-                              className="text-primary-500 hover:text-orange-600 "
-                              aria-label={`Read more: "${post.title}"`}
-                            >
-                              Read more &rarr;
-                            </CustomLink>
-                          </div>
-                          <div className="hidden md:flex items-center ">
-                            <img
-                              src="https://source.unsplash.com/50x50/?portrait"
-                              alt="avatar"
-                              className="object-cover w-10 h-10 mx-4 rounded-full "
-                            />
-                            <span className="hover:underline ">
-                              Leroy Jenkins
-                            </span>
+                          <div className="flex items-center justify-between mt-4 text-slate-900">
+                            <div className="text-base font-medium leading-6 hover:text-orange-600">
+                              <CustomLink
+                                href={`/${router.query.blogspace_id}/${router.query.blogspace_name}/${post._id}/post`}
+                                className="text-primary-500 hover:text-orange-600 "
+                                aria-label={`Read more: "${post.title}"`}
+                              >
+                                Read more &rarr;
+                              </CustomLink>
+                            </div>
+                            <div className="hidden md:flex items-center ">
+                              <img
+                                src="https://source.unsplash.com/50x50/?portrait"
+                                alt="avatar"
+                                className="object-cover w-10 h-10 mx-4 rounded-full "
+                              />
+                              <span className="hover:underline ">
+                                Leroy Jenkins
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </article>
-                </li>
-              ) : null
-            )}
-          </ul>
+                    </article>
+                  </li>
+                ) : null
+              )}
+            </ul>
 
-          {/* {loading && <p>Loading...</p>} */}
+            {/* {loading && <p>Loading...</p>} */}
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </>
     // <div>
     //   <Header />
     //   <div className="flex flex-col justify-center w-full ">

@@ -13,6 +13,7 @@ import Header from "../../../../components/header";
 import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
 import Footer from "../../../../components/footer";
+import ImageResizer from "react-image-file-resizer";
 
 const Post = ({ metadata }) => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const Post = ({ metadata }) => {
   const [currentWord, setCurrentWord] = useState("");
   // const [post, setPost] = useState(null);
   const [isActive, setIsActive] = useState(false);
+  const [resizedImageUrl, setResizedImageUrl] = useState("");
   console.log(metadata);
   const showCommentBar = () => {
     setIsActive(true);
@@ -27,6 +29,38 @@ const Post = ({ metadata }) => {
   const closeCommentBar = () => {
     setIsActive(false);
   };
+
+  const width = 1200;
+  const height = 627;
+
+  const resizeImage = async () => {
+    try {
+      const response = await fetch(metadata.imageUrl);
+      const blob = await response.blob();
+
+      ImageResizer.imageFileResizer(
+        blob,
+        width,
+        height,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          setResizedImageUrl(uri);
+        },
+        "base64"
+      );
+    } catch (error) {
+      console.error("Error fetching or resizing image:", error);
+    }
+  };
+
+  useEffect(() => {
+    resizeImage();
+  }, [metadata.imageUrl, width, height]);
+
+  console.log("resized image:", resizedImageUrl);
+
   const H1 = ({ children }) => (
     <h1 className="text-2xl font-bold mb-4">{children}</h1>
   );
@@ -87,11 +121,7 @@ const Post = ({ metadata }) => {
         <meta property="og:title" content={metadata.title} />
         <meta property="og:description" content={metadata.description} />
         {/* <meta property="og:image" content={metadata.imageUrl} /> */}
-        <meta
-          name="image"
-          property="og:image"
-          content={metadata.imageUrl}
-        ></meta>
+        <meta name="image" property="og:image" content={resizedImageUrl}></meta>
         <meta property="og:locale" content="en_US" />
         {/* <meta property="og:image:url" content={metadata.imageUrl} />
          <meta property="og:image:width" content="800" />

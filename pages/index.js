@@ -4,6 +4,7 @@ import Home from "../components/home";
 import BlogProvider from "./blogcontext";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import Head from "next/head";
 
 export default function HomePage() {
   return (

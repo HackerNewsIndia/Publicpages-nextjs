@@ -14,8 +14,8 @@ function BlogProvider({ children }) {
   return (
     <>
       <Head>
-        <title>DiaryBlog</title>
-        <meta property="og:title" content="DiaryBlog" />
+        <title>Diary-Blog4</title>
+        <meta property="og:title" content="Diary-Blog4" />
         <meta property="og:description" content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community" />
         <meta property="og:image" content="https://universe-nextjs.onrender.com/_next/static/media/logo2.82936ace.svg" />
     </Head>

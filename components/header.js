@@ -102,7 +102,7 @@ const Header = () => {
                 >
                   <CustomLink
                     href={link.href === "/allposts" ? "/" : link.href}
-                    className="font-medium text-white !important dark:text-white"
+                    className="font-medium !important "
                   >
                     {link.title}
                   </CustomLink>

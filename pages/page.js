@@ -4,6 +4,15 @@ import Home from "../components/home";
 import Head from "next/head";
 
 
+export const metadata = {
+  title: 'Acme',
+  openGraph: {
+    title: 'Acme',
+    description: 'Acme is a...',
+  },
+}
+
+
 export default function HomeApp() {
 
   

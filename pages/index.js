@@ -21,7 +21,7 @@ export default function HomePage() {
         <title>DiaryBlog2</title>
         <meta property="og:title" content="Diary-Blog2" />
         <meta property="og:description" content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community" />
-        <meta property="og:image" content="https://universe-nextjs.onrender.com/_next/static/media/logo2.82936ace.svg" />
+        <meta property="og:image" content="https://universe-nextjs.onrender.com/DBlogo.png" />
     </Head>
     <BlogProvider>
       <Header />

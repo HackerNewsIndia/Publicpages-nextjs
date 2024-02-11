@@ -14,8 +14,8 @@ function BlogProvider({ children }) {
   return (
     <>
       <Head>
-        <title>Diary-Blog4</title>
-        <meta property="og:title" content="Diary-Blog4" />
+        <title>DiaryBlog All Post</title>
+        <meta property="og:title" content="DiaryBlog All Post" />
         <meta property="og:description" content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community" />
         <meta
           property="og:image"

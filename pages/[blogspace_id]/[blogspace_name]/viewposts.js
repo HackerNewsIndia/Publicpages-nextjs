@@ -205,8 +205,8 @@ const ViewPosts = () => {
   return (
     <>
       <Head>
-        <title>{blog_name}</title>
-        <meta property="og:title" content="{blog_name}" />
+        <title>DiaryBlog - {blog_name}</title>
+        <meta property="og:title" content={blog_name} />
         <meta
           property="og:description"
           content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"

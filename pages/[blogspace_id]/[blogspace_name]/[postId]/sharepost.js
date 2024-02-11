@@ -77,7 +77,7 @@ const Sharepost = ({ post_title, post_image, post_description }) => {
                   icon={faLinkedin}
                 />
               </a>
-              {/*<a
+              <a
                 href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
                   currentUrl
                 )}&text=${encodeURIComponent(
@@ -94,7 +94,7 @@ const Sharepost = ({ post_title, post_image, post_description }) => {
                   // onClick={() => handleShareIcon("faLinkedin")}
                   icon={faXTwitter}
                 />
-              </a>*/}
+              </a>
 
               <a
                 href={`https://www.reddit.com/submit?url=${encodeURIComponent(

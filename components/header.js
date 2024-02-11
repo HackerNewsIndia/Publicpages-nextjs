@@ -84,8 +84,7 @@ const Header = () => {
                   alt="Logo"
                   width={200}
                   height={70}
-                  objectFit="fill"
-                  className="rounded-md"
+                  className="rounded-md object-fill"
                 />
               </div>
             </CustomLink>

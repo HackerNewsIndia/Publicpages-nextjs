@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
@@ -8,13 +7,6 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
-export const metadata = {
-  title: 'Acme3',
-  openGraph: {
-    title: 'Acme3',
-    description: 'Acme3 is a...',
-  },
-}
 
 const PublicBlogSpace = () => {
   // const { blogData, setBlogData } = useBlogContext();
@@ -399,15 +391,15 @@ const PublicBlogSpace = () => {
     // </div>
     <>
       <Head>
-        <title>Diary-Blog3</title>
-        <meta property="og:title" content="Diary-Blog3" />
+        <title>DiaryBlogSpace</title>
+        <meta property="og:title" content="DiaryBlogSpace" />
         <meta
           property="og:description"
           content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"
         />
         <meta
           property="og:image"
-          content="https://universe-nextjs.onrender.com/_next/static/media/logo2.82936ace.svg"
+          content="https://universe-nextjs.onrender.com/DBlogo.png"
         />
       </Head>
       <div>

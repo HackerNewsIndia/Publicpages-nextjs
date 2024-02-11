@@ -23,7 +23,7 @@ const Post = ({ metadata }) => {
   // const [post, setPost] = useState(null);
   const [isActive, setIsActive] = useState(false);
   // const [resizedImageUrl, setResizedImageUrl] = useState("");
-  console.log(metadata);
+  // console.log(metadata);
   const showCommentBar = () => {
     setIsActive(true);
   };
@@ -291,7 +291,7 @@ export async function generateMetadata(params) {
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
-  console.log(post);
+  // console.log(post);
 
   return post;
 }

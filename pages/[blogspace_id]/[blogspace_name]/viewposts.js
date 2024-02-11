@@ -205,15 +205,15 @@ const ViewPosts = () => {
   return (
     <>
       <Head>
-        <title>DiaryBlog4</title>
-        <meta property="og:title" content="DiaryBlog4" />
+        <title>{blog_name}</title>
+        <meta property="og:title" content="{blog_name}" />
         <meta
           property="og:description"
           content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"
         />
         <meta
           property="og:image"
-          content="https://universe-nextjs.onrender.com/_next/static/media/logo2.82936ace.svg"
+          content="https://universe-nextjs.onrender.com/DBlogo.pn"
         />
       </Head>
       <div>

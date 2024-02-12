@@ -49,7 +49,7 @@ function BlogProvider({ children }) {
           content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"
         />
         <meta
-          name="twitter:image"
+          name="twitter:image:src"
           content="https://universe-nextjs.onrender.com/DBlogo.png"
         />
       </Head>

@@ -140,8 +140,11 @@ const Post = ({ metadata }) => {
           },
         }}
         twitter={{
-          cardType: "summary_large_image",
+          title: metadata.title,
+          description: metadata.description,
+          cardType: "summary",
           site: "@diaryblogUnv",
+          image: metadata.imageUrl
         }}
         canonical={router.asPath}
       />

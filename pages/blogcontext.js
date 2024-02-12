@@ -34,7 +34,7 @@ function BlogProvider({ children }) {
         />
 
         {/* <!-- Twitter Meta Tags --> */}
-        <meta name="twitter:card" summary" />
+        <meta name="twitter:card" />
         <meta
           property="twitter:domain"
           content="universe-nextjs.onrender.com"

@@ -34,7 +34,7 @@ function BlogProvider({ children }) {
         />
 
         {/* <!-- Twitter Meta Tags --> */}
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" summary" />
         <meta
           property="twitter:domain"
           content="universe-nextjs.onrender.com"
@@ -49,7 +49,7 @@ function BlogProvider({ children }) {
           content="Writing and publishing articles or posts online, sharing thoughts, opinions, and expertise on various topics to engage with an audience or community"
         />
         <meta
-          name="twitter:image:src"
+          name="twitter:image"
           content="https://universe-nextjs.onrender.com/DBlogo.png"
         />
       </Head>

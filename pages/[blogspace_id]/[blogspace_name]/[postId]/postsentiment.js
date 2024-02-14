@@ -81,17 +81,17 @@ const Postsentiment = ({ postId, blogId, postlikes }) => {
 
   return (
     <div
-      className="text-xl italic text-pink-400 text-md md:text-2xl lg:text-2xl"
+      className="text-md italic text-pink-400 md:text-xl lg:text-xl justify-center"
       onMouseEnter={() => setIsSentimentActive(true)}
       onMouseLeave={() => setIsSentimentActive(false)}
     >
       <div className="flex flex-col">
         <div>
           {isSentimentActive ? (
-            <div className="flex text-md md:text-2xl lg:text-2xl bg-transparent rounded-md item-center">
+            <div className="flex text-md md:text-md lg:text-md bg-transparent rounded-md items-center">
               <FontAwesomeIcon
                 id="faHeart"
-                className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:text-pink-700 duration-300 cursor-pointer"
+                className="pt-2 pb-2 pr-1 pl-1  hover:text-pink-700 duration-300 cursor-pointer"
                 onClick={() => handleSentimentIcon("faHeart")}
                 icon={faHeart}
               />

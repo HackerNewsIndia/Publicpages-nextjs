@@ -73,6 +73,7 @@ const Post = ({ metadata }) => {
   );
   const P = ({ children }) => <p className="mb-4">{children}</p>;
   const Hr = () => <hr />;
+  const a = ({ children }) => <a style={{ color: "blue" }}>{children}</a>;
   const Img = ({ alt, src }) => (
     <div style={{ textAlign: "center" }}>
       <img
@@ -144,7 +145,7 @@ const Post = ({ metadata }) => {
           description: metadata.description,
           cardType: "summary",
           site: "@diaryblogUnv",
-          image: metadata.imageUrl
+          image: metadata.imageUrl,
         }}
         canonical={router.asPath}
       />
@@ -257,7 +258,7 @@ const Post = ({ metadata }) => {
                   />
                 </span>
               </div>
-              <div className="text-black leading-6 text-justify">
+              <div className="pt-8 text-black leading-6 text-justify">
                 <Markdown
                   options={{
                     overrides: {
@@ -267,6 +268,7 @@ const Post = ({ metadata }) => {
                       p: { component: P },
                       img: { component: Img },
                       hr: { component: Hr },
+                      a: { component: a },
                     },
                   }}
                 >

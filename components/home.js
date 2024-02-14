@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CustomLink from "./link";
 import Image from "next/image";
-
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -108,8 +108,21 @@ const Home = () => {
     return `${truncated}${words.length > limit ? "..." : ""}`;
   }
 
+  const wordsPerMinute = 200; // Average reading speed in words per minute
+
+  const calculateTimeToRead = (wordCount) => {
+    const minutes = wordCount / wordsPerMinute;
+    return Math.ceil(minutes);
+  };
+
+  const timeToRead = (post) => {
+    const wordCount = post.description.split(" ").length;
+    const time = calculateTimeToRead(wordCount);
+    return time;
+  };
+
   return (
-   <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
+    <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
       <div className="text-center pt-10">
         <h2 className="text-3xl text-slate-900 font-bold">Latest Post</h2>
       </div>
@@ -130,14 +143,43 @@ const Home = () => {
                   />
                 </div>
                 <div className="flex flex-col p-2 md:w-4/5">
-                  <dl className="md:flex md:items-center md:justify-between">
-                    <dt className="sr-only">Published on</dt>
-                    <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
-                      <time dateTime={post.createDate}>
-                        {formatDate(post.createDate)}
-                      </time>
-                    </dd>
-                  </dl>
+                  <div className="flex flex-row justify-between items-center text-center">
+                    <div className="flex flex-row space-x-3 text-gray-500">
+                      <div>
+                        <dl className="md:flex md:items-center md:justify-between">
+                          <dt className="sr-only">Published on</dt>
+                          <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
+                            <time dateTime={post.createDate}>
+                              {formatDate(post.createDate)}
+                            </time>
+                          </dd>
+                        </dl>
+                      </div>
+                      <div>
+                        <FontAwesomeIcon
+                          className="text-sm text-gray-500"
+                          icon={faEye}
+                        />
+                        : {post.views}
+                      </div>
+                    </div>
+                    <div className="flex flex-row space-x-3 text-gray-500">
+                      {/* <div>
+                        <FontAwesomeIcon
+                          className="text-sm text-gray-500"
+                          icon={faEye}
+                        />
+                        : {post.views}
+                      </div> */}
+                      {/* <div className="bg-white">
+                              <FontAwesomeIcon icon={faBookmark} />
+                            </div> */}
+
+                      <div className="italic text-gray-500">
+                        {timeToRead(post)} min
+                      </div>
+                    </div>
+                  </div>
                   <div className="space-y-5 md:col-span-3">
                     <div className="space-y-6">
                       <div>
@@ -183,7 +225,7 @@ const Home = () => {
       </ul>
 
       {loading && <p>Loading...</p>}
-    </div>   
+    </div>
   );
 };
 

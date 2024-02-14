@@ -340,17 +340,17 @@ const ViewPosts = () => {
                       </div>
                       <div className="flex flex-col p-2 md:w-4/5">
                         <div className="flex flex-row justify-between items-center text-center">
-                          <div>
-                            <dl className="md:flex md:items-center md:justify-between">
-                              <dt className="sr-only">Published on</dt>
-                              <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
-                                <time dateTime={post.createDate}>
-                                  {formatDate(post.createDate)}
-                                </time>
-                              </dd>
-                            </dl>
-                          </div>
                           <div className="flex flex-row space-x-3 text-gray-500">
+                            <div>
+                              <dl className="md:flex md:items-center md:justify-between">
+                                <dt className="sr-only">Published on</dt>
+                                <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
+                                  <time dateTime={post.createDate}>
+                                    {formatDate(post.createDate)}
+                                  </time>
+                                </dd>
+                              </dl>
+                            </div>
                             <div>
                               <FontAwesomeIcon
                                 className="text-sm text-gray-500"
@@ -358,6 +358,15 @@ const ViewPosts = () => {
                               />
                               : {post.views}
                             </div>
+                          </div>
+                          <div className="flex flex-row space-x-3 text-gray-500">
+                            {/* <div>
+                        <FontAwesomeIcon
+                          className="text-sm text-gray-500"
+                          icon={faEye}
+                        />
+                        : {post.views}
+                      </div> */}
                             {/* <div className="bg-white">
                               <FontAwesomeIcon icon={faBookmark} />
                             </div> */}

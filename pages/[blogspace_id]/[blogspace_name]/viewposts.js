@@ -125,11 +125,12 @@ const ViewPosts = () => {
     );
   });
 
-  const handlePostClick = (postId) => {
-    console.log(postId);
-    router.push(
-      `/${router.query.blogspace_id}/${router.query.blogspace_name}/${postId}/post`
-    );
+  const handlePostClick = (post) => {
+    console.log(post);
+    const postId = post._id;
+    // router.push(
+    //   `/${router.query.blogspace_id}/${router.query.blogspace_name}/${postId}/post`
+    // );
 
     fetch(
       `https://diaryblogapi2.onrender.com/api/posts/${blog_name}/${postId}/views`,
@@ -395,6 +396,7 @@ const ViewPosts = () => {
                                 href={`/${router.query.blogspace_id}/${router.query.blogspace_name}/${post._id}/post`}
                                 className="text-primary-500 hover:text-orange-600 "
                                 aria-label={`Read more: "${post.title}"`}
+                                onClick={() => handlePostClick(post)}
                               >
                                 Read more &rarr;
                               </CustomLink>

@@ -413,7 +413,7 @@ const PublicBlogSpace = () => {
             </div>
             <div className="container mx-auto flex flex-col items-center justify-center p-4  space-y-8 md:p-4 lg:space-y-0 lg:flex-row lg:justify-between">
               <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
-                {blogSpace.length} Blogs in 12 categories
+                {blogSpace.length} Blogs in 5 categories
               </h1>
               {/* <input
               type="search"
@@ -460,75 +460,34 @@ const PublicBlogSpace = () => {
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              asdfasdf
+              Lifestyle
             </button>
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              C2
+              Technology
             </button>
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              C3
+                Food and Recipes
             </button>
 
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              asdfasdf
+              Personal Finance
             </button>
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              C2
+              Parenting and Family
             </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C3
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              asdfasdf
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C2
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C3
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              asdfasdf
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C2
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C3
-            </button>
+            
           </div>
 
           <div className="flex flex-col mx-auto rounded-md mx-4 my-5 sm:mx-20 md:mx-20 lg:mx-20 xl:mx-40 p-6 ">

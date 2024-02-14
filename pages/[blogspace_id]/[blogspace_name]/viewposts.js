@@ -8,10 +8,12 @@ import ReactMarkdown from "react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import "material-icons/iconfont/material-icons.css";
 import ThemeSwitch from "./themeSwitch";
 import Header from "../../../components/header";
 import Footer from "../../../components/footer";
+import Sharepost from "./[postId]/sharepost";
 // import "../../globals.css";
 
 // export const metadata = {
@@ -203,6 +205,19 @@ const ViewPosts = () => {
     return `${truncated}${words.length > limit ? "..." : ""}`;
   }
 
+  const wordsPerMinute = 200; // Average reading speed in words per minute
+
+  const calculateTimeToRead = (wordCount) => {
+    const minutes = wordCount / wordsPerMinute;
+    return Math.ceil(minutes);
+  };
+
+  const timeToRead = (post) => {
+    const wordCount = post.description.split(" ").length;
+    const time = calculateTimeToRead(wordCount);
+    return time;
+  };
+
   return (
     <>
       <Head>
@@ -269,79 +284,37 @@ const ViewPosts = () => {
               </div>
             </div>
           </section>
-          <div className="flex flex-wrap items-start bg-white text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
+          <div className="flex flex-wrap items-start text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              asdfasdf
+              Lifestyle
             </button>
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              C2
+              Technology
             </button>
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              C3
+              Food and Recipes
             </button>
 
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              asdfasdf
+              Personal Finance
             </button>
             <button
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-              C2
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C3
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              asdfasdf
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C2
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C3
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              asdfasdf
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C2
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              C3
+              Parenting and Family
             </button>
           </div>
 
@@ -366,20 +339,41 @@ const ViewPosts = () => {
                         />
                       </div>
                       <div className="flex flex-col p-2 md:w-4/5">
-                        <dl className="md:flex md:items-center md:justify-between">
-                          <dt className="sr-only">Published on</dt>
-                          <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
-                            <time dateTime={post.createDate}>
-                              {formatDate(post.createDate)}
-                            </time>
-                          </dd>
-                        </dl>
-                        <div className="space-y-5 md:col-span-3">
-                          <div className="space-y-6">
+                        <div className="flex flex-row justify-between items-center text-center">
+                          <div>
+                            <dl className="md:flex md:items-center md:justify-between">
+                              <dt className="sr-only">Published on</dt>
+                              <dd className="text-base font-medium leading-6 text-gray-500  md:mr-4">
+                                <time dateTime={post.createDate}>
+                                  {formatDate(post.createDate)}
+                                </time>
+                              </dd>
+                            </dl>
+                          </div>
+                          <div className="flex flex-row space-x-3 text-gray-500">
                             <div>
+                              <FontAwesomeIcon
+                                className="text-sm text-gray-500"
+                                icon={faEye}
+                              />
+                              : {post.views}
+                            </div>
+                            {/* <div className="bg-white">
+                              <FontAwesomeIcon icon={faBookmark} />
+                            </div> */}
+
+                            <div className="italic text-gray-500">
+                              {timeToRead(post)} min
+                            </div>
+                          </div>
+                        </div>
+                        <div className="space-y-5 md:col-span-3">
+                          <div className="space-y-4">
+                            <div className="space-y-1">
                               <h2 className="text-2xl font-bold leading-8 tracking-tight text-gray-900 ">
                                 {post.title}
                               </h2>
+
                               <div className="flex flex-wrap">
                                 {/* {tags.map((tag) => (
                             <Tag key={tag} text={tag} />

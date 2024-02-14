@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faFeather } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import Markdown from "markdown-to-jsx";
 import TextToSpeech from "./texttospeech";
 import Comments from "./comments";
@@ -116,6 +118,16 @@ const Post = ({ metadata }) => {
     content = content.replace(/(\*\*|__)?\*.*\*\*(\*\*|__)?/g, "");
     return content;
   };
+
+  const wordsPerMinute = 200; // Average reading speed in words per minute
+
+  const calculateTimeToRead = (wordCount) => {
+    const minutes = wordCount / wordsPerMinute;
+    return Math.ceil(minutes);
+  };
+
+  const wordCount = metadata.description.split(" ").length;
+  const timeToRead = calculateTimeToRead(wordCount);
   return (
     <>
       <NextSeo
@@ -242,21 +254,35 @@ const Post = ({ metadata }) => {
                 {metadata.title}
               </h1>
               <h3 className="text-slate-900">{metadata.author}</h3>
-              <div className="flex text-md md:text-2xl lg:text-2xl ">
-                <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
-                  <Postsentiment
-                    postId={postId}
-                    blogId={blogspace_id}
-                    postlikes={metadata.likes ? metadata.likes.length : ""}
-                  />
-                </span>
-                <span className="w-10 flex-row text-md md:text-2xl lg:text-2xl">
-                  <Sharepost
-                    post_title={metadata.title}
-                    post_image={metadata.imageUrl}
-                    post_description={metadata.description}
-                  />
-                </span>
+              <div className="flex flex-row text-sm md:text-sm lg:text-sm justify-between items-center text-center ">
+                <div className="flex flex-row">
+                  <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
+                    <Postsentiment
+                      postId={postId}
+                      blogId={blogspace_id}
+                      postlikes={metadata.likes ? metadata.likes.length : ""}
+                    />
+                  </span>
+                  <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
+                    <Sharepost
+                      post_title={metadata.title}
+                      post_image={metadata.imageUrl}
+                      post_description={metadata.description}
+                    />
+                  </span>
+                </div>
+                <div className="flex flex-row text-sm space-x-4">
+                  <div className="flex flex-row text-sm items-center text-center ">
+                    <FontAwesomeIcon className="text-lg" icon={faEye} /> :{" "}
+                    {metadata.views}
+                  </div>
+
+                  <div className="bg-white">
+                    <FontAwesomeIcon icon={faBookmark} />
+                  </div>
+
+                  <div className="italic">{timeToRead} min</div>
+                </div>
               </div>
               <div className="pt-8 text-black leading-6 text-justify">
                 <Markdown

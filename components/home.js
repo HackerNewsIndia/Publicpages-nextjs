@@ -60,6 +60,29 @@ const Home = () => {
     }
   };
 
+  const handlePostClick = (post) => {
+    console.log(post);
+    const postId = post._id;
+
+    fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
+      method: "PUT",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the view count locally for the post that was clicked.
+        const updatedPosts = posts.map((postItem) => {
+          if (postItem._id === postId) {
+            postItem.views = data.views; // Assuming data.views contains the updated view count.
+          }
+          return postItem;
+        });
+        setPosts(updatedPosts); // Update the state with the new post views.
+      })
+      .catch((error) => {
+        console.error("Error incrementing views:", error);
+      });
+  };
+
   // const fetchBlogSpace = async (blogSpaceId) => {
   //   try {
   //     setLoading(true);
@@ -203,6 +226,7 @@ const Home = () => {
                           className="text-primary-500 hover:text-primary-600 "
                           // onClick={() => fetchBlogSpace(post.blogSpace)}
                           aria-label={`Read more: "${post.title}"`}
+                          onClick={() => handlePostClick(post)}
                         >
                           Read more &rarr;
                         </CustomLink>

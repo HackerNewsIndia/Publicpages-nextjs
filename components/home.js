@@ -222,7 +222,8 @@ const Home = () => {
                     <div className="flex items-center justify-between mt-4 text-slate-900">
                       <div className="text-base font-medium leading-6 hover:text-orange-600 cursor-pointer">
                         <CustomLink
-                          href={`/${post.blogSpace}/${blogspace.name}/${post._id}/post`}
+                          // href={`/${post.blogSpace}/${blogspace.name}/${post._id}/post`}
+                          href={`/${post.blogSpace}/${post._id}/post`}
                           className="text-primary-500 hover:text-primary-600 "
                           // onClick={() => fetchBlogSpace(post.blogSpace)}
                           aria-label={`Read more: "${post.title}"`}

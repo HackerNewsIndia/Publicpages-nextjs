@@ -11,10 +11,10 @@ import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import Markdown from "markdown-to-jsx";
 import TextToSpeech from "./texttospeech";
 import Comments from "./comments";
-import Header from "../../../../components/header";
+import Header from "../../../components/header";
 import Postsentiment from "./postsentiment";
 import Sharepost from "./sharepost";
-import Footer from "../../../../components/footer";
+import Footer from "../../../components/footer";
 import ImageResizer from "react-image-file-resizer";
 import { NextSeo } from "next-seo";
 

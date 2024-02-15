@@ -7,7 +7,6 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
-
 const PublicBlogSpace = () => {
   // const { blogData, setBlogData } = useBlogContext();
   const [blogSpace, setBlogSpace] = useState([]);
@@ -81,7 +80,7 @@ const PublicBlogSpace = () => {
     // const param1 = blogspace_name;
     // const param2 = blogspace_id;
     // router.push(`/viewposts?param1=${param1}&param2=${param2}`);
-    router.push(`/${blogspace_id}/${blogspace_name}/viewposts`);
+    router.push(`/${blogspace_id}/viewposts`);
     fetch(`https://diaryblogapi2.onrender.com/api/${blogspace_id}/views`, {
       method: "PUT",
     })
@@ -472,7 +471,7 @@ const PublicBlogSpace = () => {
               type="button"
               className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
             >
-                Food and Recipes
+              Food and Recipes
             </button>
 
             <button
@@ -487,7 +486,6 @@ const PublicBlogSpace = () => {
             >
               Parenting and Family
             </button>
-            
           </div>
 
           <div className="flex flex-col mx-auto rounded-md mx-4 my-5 sm:mx-20 md:mx-20 lg:mx-20 xl:mx-40 p-6 ">

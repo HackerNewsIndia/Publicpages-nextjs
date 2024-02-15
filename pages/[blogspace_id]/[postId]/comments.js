@@ -175,6 +175,9 @@ const Comments = ({ blogId, postId, post_title }) => {
     window.location.href = `https://universal-jikv.onrender.com/#/login?redirectUrl=${encodeURIComponent(
       currentUrl
     )}`;
+    // window.location.href = `http://localhost:3000/#/login?redirectUrl=${encodeURIComponent(
+    //   currentUrl
+    // )}`;
   };
 
   return (

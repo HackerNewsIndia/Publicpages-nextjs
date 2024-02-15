@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router"; // Import useRouter from Next.js
-import CustomLink from "../../../components/link";
+import CustomLink from "../../components/link";
 // import "./ViewPosts.css";
 // import { useBlogContext } from "./BlogContext";
 import ReactMarkdown from "react-markdown";
@@ -11,8 +11,8 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import "material-icons/iconfont/material-icons.css";
 import ThemeSwitch from "./themeSwitch";
-import Header from "../../../components/header";
-import Footer from "../../../components/footer";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
 import Sharepost from "./[postId]/sharepost";
 // import "../../globals.css";
 
@@ -393,7 +393,8 @@ const ViewPosts = () => {
                           <div className="flex items-center justify-between mt-4 text-slate-900">
                             <div className="text-base font-medium leading-6 hover:text-orange-600">
                               <CustomLink
-                                href={`/${router.query.blogspace_id}/${router.query.blogspace_name}/${post._id}/post`}
+                                // href={`/${router.query.blogspace_id}/${router.query.blogspace_name}/${post._id}/post`}
+                                href={`/${router.query.blogspace_id}/${post._id}/post`}
                                 className="text-primary-500 hover:text-orange-600 "
                                 aria-label={`Read more: "${post.title}"`}
                                 onClick={() => handlePostClick(post)}

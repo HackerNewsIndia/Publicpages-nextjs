@@ -134,12 +134,9 @@ const ViewPosts = () => {
     //   `/${router.query.blogspace_id}/${router.query.blogspace_name}/${postId}/post`
     // );
 
-    fetch(
-      `https://diaryblogapi2.onrender.com/api/posts/${blog_name}/${postId}/views`,
-      {
-        method: "PUT",
-      }
-    )
+    fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
+      method: "PUT",
+    })
       .then((response) => response.json())
       .then((data) => {
         // Update the view count locally for the post that was clicked.

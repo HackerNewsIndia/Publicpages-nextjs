@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Highlighter from "react-highlight-words";
-import "../../../../styles/text_highlight.module.css";
+import "../../../styles/text_highlight.module.css";
 
 export default function AudioPlayer({ audioSrc, text }) {
   const audioRef = useRef();

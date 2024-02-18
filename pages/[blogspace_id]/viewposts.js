@@ -240,7 +240,7 @@ const ViewPosts = () => {
             </div>
             <div className="container mx-auto flex flex-col items-center justify-center p-4  space-y-8 md:p-4 lg:space-y-0 lg:flex-row lg:justify-between">
               <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
-                {posts.length} posts in 12 categories
+                {posts.length} posts in 5 categories
               </h1>
               {/* <input
               type="search"

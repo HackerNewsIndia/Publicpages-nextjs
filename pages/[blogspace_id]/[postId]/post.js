@@ -156,7 +156,7 @@ const Post = ({ metadata }) => {
           title: metadata.title,
           description: metadata.description,
           cardType: "summary",
-          site: "@diaryblogUnv",
+          site: "@PeopleConInc",
           image: metadata.imageUrl,
         }}
         canonical={router.asPath}

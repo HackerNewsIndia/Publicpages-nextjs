@@ -233,15 +233,19 @@ const Home = () => {
                         </CustomLink>
                       </div>
                       <div className="hidden md:flex items-center ">
-                        <CustomLink
-  href={{
-    pathname: '/profile',
-    query: { author: post.author }
-  }}
-  className="text-primary-500 hover:text-primary-600"
->
-  <span>{post.author}</span>
-</CustomLink>
+                        <img
+                          src="https://source.unsplash.com/50x50/?portrait"
+                          alt="avatar"
+                          className="object-cover w-10 h-10 mx-4 rounded-full "
+                        />
+                        <a
+                          href={`/profile?user_id=${encodeURIComponent(
+                            post.author
+                          )}`}
+                          className="text-primary-500 hover:text-primary-600"
+                        >
+                          <span>{post.author}</span>
+                        </a>
                       </div>
                     </div>
                   </div>

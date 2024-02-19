@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const Profile = () => {
-  console.log(user_id)
+  // console.log(user_id)
   const router = useRouter();
   const { user_id } = router.query;
   const [userData, setUserData] = useState({});
@@ -12,17 +12,20 @@ const Profile = () => {
     const getUserData = async () => {
       try {
         if (user_id) {
-          const response = await fetch(`http://localhost:5000/api/get_user/${user_id}`);
+          const response = await fetch(
+            // `http://127.0.0.1:5000/api/get_user/${user_id}`
+            `https://usermgtapi3.onrender.com/api/get_user/${user_id}`
+          );
           const data = await response.json();
 
           if (response.ok) {
             setUserData(data);
           } else {
-            console.error('Error fetching user data:', data.error);
+            console.error("Error fetching user data:", data.error);
           }
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       } finally {
         setLoading(false);
       }
@@ -37,21 +40,31 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full" style={{ boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px 10px rgba(0, 0, 0, 0.1)' }}>
+      <div
+        className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full"
+        style={{
+          boxShadow:
+            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px 10px rgba(0, 0, 0, 0.1)",
+        }}
+      >
         <div className="mx-auto flex w-full items-center justify-center overflow-hidden">
           {userData.image_base64 && (
-            <img src={`data:image/png;base64, ${userData.image_base64}`} alt="" style={{ borderRadius: '500px', maxWidth: '50%' }} />
+            <img
+              src={`data:image/png;base64, ${userData.image_base64}`}
+              alt=""
+              style={{ borderRadius: "500px", maxWidth: "50%" }}
+            />
           )}
         </div>
 
         <section
           className="px-5 py-8 sm-p:md:px-10"
           style={{
-            backgroundColor: '#fff5be6d',
-            color: '#000000',
-            '--link-bg': '#fff5be6d',
-            '--link-bg-hover': '#b154ce',
-            '--link-text-hover': '#ffffff',
+            backgroundColor: "#fff5be6d",
+            color: "#000000",
+            "--link-bg": "#fff5be6d",
+            "--link-bg-hover": "#b154ce",
+            "--link-text-hover": "#ffffff",
           }}
         >
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm-p:md:grid-cols-2">

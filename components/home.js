@@ -233,12 +233,15 @@ const Home = () => {
                         </CustomLink>
                       </div>
                       <div className="hidden md:flex items-center ">
-                        <img
-                          src="https://source.unsplash.com/50x50/?portrait"
-                          alt="avatar"
-                          className="object-cover w-10 h-10 mx-4 rounded-full "
-                        />
-                        <span className="hover:underline ">Leroy Jenkins</span>
+                        <CustomLink
+  href={{
+    pathname: '/profile',
+    query: { author: post.author }
+  }}
+  className="text-primary-500 hover:text-primary-600"
+>
+  <span>{post.author}</span>
+</CustomLink>
                       </div>
                     </div>
                   </div>

@@ -402,15 +402,20 @@ const ViewPosts = () => {
                                 Read more &rarr;
                               </CustomLink>
                             </div>
-                            <div className="hidden md:flex items-center ">
+                               <div className="flex items-center sm:hidden ">
                               <img
                                 src="https://source.unsplash.com/50x50/?portrait"
                                 alt="avatar"
                                 className="object-cover w-10 h-10 mx-4 rounded-full "
                               />
-                              <span className="hover:underline ">
-                                Leroy Jenkins
-                              </span>
+                               <a
+                          href={`/profile?user_id=${encodeURIComponent(
+                            post.author
+                          )}`}
+                          className="text-primary-500 hover:text-primary-600 hover:underline"
+                        >
+                          <span>{post.author}</span>
+                        </a>
                             </div>
                           </div>
                         </div>

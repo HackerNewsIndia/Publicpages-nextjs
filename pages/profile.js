@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Footer from "../components/footer";
+import Header from "../components/header";
+
 
 const Profile = () => {
   // console.log(user_id)
@@ -39,6 +42,10 @@ const Profile = () => {
   }
 
   return (
+    
+    <div>
+      <Header />
+      
     <div className="flex items-center justify-center h-screen">
       <div
         className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full"
@@ -52,10 +59,12 @@ const Profile = () => {
             <img
               src={`data:image/png;base64, ${userData.image_base64}`}
               alt=""
-              style={{ borderRadius: "500px", maxWidth: "50%" }}
+              style={{ borderRadius: "500px", maxWidth: "30%" }}
             />
           )}
+          
         </div>
+        <div className="text-center mt-4">  <h2 className="text-2xl font-bold   mt-4">{userData.username}</h2></div>
 
         <section
           className="px-5 py-8 sm-p:md:px-10"
@@ -140,7 +149,10 @@ const Profile = () => {
           </div>
         </section>
       </div>
+      </div>
+      <Footer />
     </div>
+    
   );
 };
 

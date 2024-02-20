@@ -402,7 +402,7 @@ const ViewPosts = () => {
                                 Read more &rarr;
                               </CustomLink>
                             </div>
-                               <div className="flex items-center sm:hidden ">
+                               <div className="flex items-center hidden md:flex">
                               <img
                                 src="https://source.unsplash.com/50x50/?portrait"
                                 alt="avatar"

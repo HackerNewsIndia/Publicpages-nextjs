@@ -18,51 +18,42 @@ import Footer from "../../../components/footer";
 import ImageResizer from "react-image-file-resizer";
 import { NextSeo } from "next-seo";
 
-const Post = ({ metadata }) => {
+const getUsernameById = async (userId) => {
+  console.log('Inside getUsernameById');
+  try {
+    const response = await fetch(`https://usermgtapi3.onrender.com/api/get_user/${userId}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return {
+      username: data.username,
+      image_base64: data.image_base64,
+    };
+  } catch (error) {
+    console.error("Error fetching username:", error.message);
+    return { username: '', image_base64: '' };
+  }
+};
+
+const Post = ({ metadata, sorted }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
-  // const [post, setPost] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  // const [resizedImageUrl, setResizedImageUrl] = useState("");
-  // console.log(metadata);
+  const [sortedPosts, setSortedPosts] = useState([]);
+
   const showCommentBar = () => {
     setIsActive(true);
   };
+
   const closeCommentBar = () => {
     setIsActive(false);
   };
 
   const width = 1200;
   const height = 627;
-
-  // const resizeImage = async () => {
-  //   try {
-  //     const response = await fetch(metadata.imageUrl);
-  //     const blob = await response.blob();
-
-  //     ImageResizer.imageFileResizer(
-  //       blob,
-  //       width,
-  //       height,
-  //       "JPEG",
-  //       100,
-  //       0,
-  //       (uri) => {
-  //         setResizedImageUrl(uri);
-  //       },
-  //       "base64"
-  //     );
-  //   } catch (error) {
-  //     console.error("Error fetching or resizing image:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   resizeImage();
-  // }, [metadata.imageUrl, width, height]);
-
-  // console.log("resized image:", resizedImageUrl);
 
   const H1 = ({ children }) => (
     <h1 className="text-2xl font-bold mb-4">{children}</h1>
@@ -92,24 +83,11 @@ const Post = ({ metadata }) => {
       />
     </div>
   );
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const params = { blogspace_id, postId };
-  //       const metadata = await generateMetadata(params);
-  //       setMetadata(metadata);
-  //     } catch (error) {
-  //       console.error("Error fetching metadata:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [blogspace_id, postId]);
+
   const handleBackClick = () => {
     router.back();
   };
-  // if (!metadata) {
-  //   return <div>Loading...</div>;
-  // }
+
   const stripMarkdown = (md) => {
     let content = md.replace(/#+\s+/g, "");
     content = content.replace(/---/g, "");
@@ -119,7 +97,7 @@ const Post = ({ metadata }) => {
     return content;
   };
 
-  const wordsPerMinute = 200; // Average reading speed in words per minute
+  const wordsPerMinute = 200;
 
   const calculateTimeToRead = (wordCount) => {
     const minutes = wordCount / wordsPerMinute;
@@ -128,6 +106,7 @@ const Post = ({ metadata }) => {
 
   const wordCount = metadata.description.split(" ").length;
   const timeToRead = calculateTimeToRead(wordCount);
+
   return (
     <>
       <NextSeo
@@ -161,37 +140,7 @@ const Post = ({ metadata }) => {
         }}
         canonical={router.asPath}
       />
-      {/* <Head>
-        <title>{metadata.title}</title>
-        <meta property="og:title" content={metadata.title} />
-        <meta property="og:description" content={metadata.description} />
-        <meta property="og:image" content={metadata.imageUrl} />
-        <meta name="image" property="og:image" content={resizedImageUrl}></meta>
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:image:url" content={metadata.imageUrl} />
-         <meta property="og:image:width" content="800" />
-         <meta property="og:image:height" content="600" />
-         <meta property="og:image:url" content={metadata.imageUrl} />
-         <meta property="og:image:width" content="1800" />
-         <meta property="og:image:height" content="1600" />
-        <meta property="og:image:alt" content="Diary Blog" />
 
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={router.asPath} />
-        <meta property="og:type" content="article" />
-        <meta property="og:article:author" content={metadata.author} />
-        <meta
-          property="og:article:published_time"
-          content={metadata.createDate}
-        />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@diaryblogUnv" />
-        <meta name="twitter:title" content={metadata.title} />
-        <meta name="twitter:description" content={metadata.description} />
-        <meta name="twitter:image" content={metadata.imageUrl} />
-        <link rel="canonical" href={router.asPath} />
-      </Head> */}
       <div>
         <Header />
         <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
@@ -252,8 +201,21 @@ const Post = ({ metadata }) => {
             <div className="p-5 pt-0">
               <h1 className="text-2xl mb-2 text-black font-semibold">
                 {metadata.title}
+                <a
+                  href={`/profile?user_id=${encodeURIComponent(metadata.author)}`}
+                  className="text-primary-500 hover:text-primary-600 hover:underline"
+                >
+                  <div className="flex items-center">
+                     <img
+                        src={`data:image/jpeg;base64, ${metadata.image_base64}`}
+                        alt="avatar"
+                        className="object-cover w-10 h-10 mx-2 rounded-full"
+                    />
+                  
+                    <span>{metadata.username }</span>
+                  </div>
+                </a>
               </h1>
-              <h3 className="text-slate-900">{metadata.author}</h3>
               <div className="flex flex-row text-sm md:text-sm lg:text-sm justify-between items-center text-center ">
                 <div className="flex flex-row">
                   <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
@@ -322,18 +284,27 @@ export async function generateMetadata(params) {
     `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
-  // console.log(post);
-
   return post;
 }
 
 export async function getServerSideProps(context) {
+  console.log('Before getUsernameById');
   const { params } = context;
   const metadata = await generateMetadata(params);
+  const userData = await getUsernameById(metadata.author);
+  console.log(userData);
+
+  metadata.username = userData.username;
+  metadata.image_base64 = userData.image_base64;
+  console.log(metadata.username); // Check if username is set
+
+  const sorted = []; // Replace this with your actual sorted array
   return {
     props: {
       metadata,
+      sorted,
     },
   };
 }
+
 export default Post;

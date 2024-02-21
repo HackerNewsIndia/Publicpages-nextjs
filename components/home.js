@@ -13,6 +13,22 @@ const Home = () => {
   const [blogspace, setBlogSpace] = useState([]);
   const uniquePostIds = new Set(); // Keep track of unique post IDs
 
+
+  const getUsernameById = async (userId) => {
+    try {
+      const response = await fetch(`https://usermgtapi3.onrender.com/api/get_user/${userId}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      return data.username;
+    } catch (error) {
+      console.error("Error fetching username:", error.message);
+      return ''; // Return an empty string or handle the error as needed
+    }
+  };
+
   const fetchAllPosts = async () => {
     try {
       setLoading(true);
@@ -33,6 +49,14 @@ const Home = () => {
         return dateB - dateA;
       });
 
+      const postsWithUsernames = await Promise.all(
+        sortedPosts.map(async (post) => {
+          const username = await getUsernameById(post.author);
+          return { ...post, username };
+        })
+      );
+
+
       // Filter out duplicates before appending new posts
       const filteredNewPosts = sortedPosts.filter(
         (post) => !uniquePostIds.has(post.id)
@@ -41,7 +65,7 @@ const Home = () => {
       // Add new post IDs to the set
       filteredNewPosts.forEach((post) => uniquePostIds.add(post.id));
 
-      setPosts((prevPosts) => [...prevPosts, ...filteredNewPosts]);
+      setPosts((prevPosts) => [...prevPosts, ...postsWithUsernames]);
       setLoading(false);
       setPage((prevPage) => prevPage + 1);
       setTotalPages(response.headers.get("Total-Pages") || 1);
@@ -83,27 +107,6 @@ const Home = () => {
       });
   };
 
-  // const fetchBlogSpace = async (blogSpaceId) => {
-  //   try {
-  //     setLoading(true);
-  //     const response = await fetch(
-  //       `http://127.0.0.1:5001/api/blogSpace/${blogSpaceId}`
-  //       // `https://diaryblogapi2.onrender.com/api/all_posts?page=${page}`
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setBlogSpace(data);
-  //   } catch (error) {
-  //     console.error("Error in fetching posts", error.message);
-  //     setLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -114,11 +117,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchAllPosts();
-  }, []); // Fetch initial posts
-
-  // useEffect(() => {
-  //   fetchBlogSpace();
-  // }, []);
+  }, []); 
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -187,16 +186,7 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="flex flex-row space-x-3 text-gray-500">
-                      {/* <div>
-                        <FontAwesomeIcon
-                          className="text-sm text-gray-500"
-                          icon={faEye}
-                        />
-                        : {post.views}
-                      </div> */}
-                      {/* <div className="bg-white">
-                              <FontAwesomeIcon icon={faBookmark} />
-                            </div> */}
+                     
 
                       <div className="italic text-gray-500">
                         {timeToRead(post)} min
@@ -210,9 +200,7 @@ const Home = () => {
                           {post.title}
                         </h2>
                         <div className="flex flex-wrap">
-                          {/* {tags.map((tag) => (
-                            <Tag key={tag} text={tag} />
-                          ))} */}
+                          
                         </div>
                       </div>
                       <div className="prose max-w-none text-gray-500 ">
@@ -233,20 +221,18 @@ const Home = () => {
                         </CustomLink>
                       </div>
                       <div className="flex items-center">
-                        <img
-                          src="https://source.unsplash.com/50x50/?portrait"
-                          alt="avatar"
-                          className="object-cover w-10 h-10 mx-4 rounded-full "
-                        />
-                        <a
-                          href={`/profile?user_id=${encodeURIComponent(
-                            post.author
-                          )}`}
-                          className="text-primary-500 hover:text-primary-600"
-                        >
-                          <span>{post.author}</span>
-                        </a>
-                      </div>
+                  <img
+                    src="https://source.unsplash.com/50x50/?portrait"
+                    alt="avatar"
+                    className="object-cover w-10 h-10 mx-4 rounded-full "
+                  />
+                  <a
+                    href={`/profile?user_id=${encodeURIComponent(post.author)}`}
+                    className="text-primary-500 hover:text-primary-600 hover:underline"
+                  >
+                    <span>{post.username}</span>
+                  </a>
+                </div>
                     </div>
                   </div>
                 </div>

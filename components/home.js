@@ -26,7 +26,10 @@ const Home = () => {
       }
 
       const data = await response.json();
-      return data.username;
+      return {
+        username: data.username,
+        image_base64: data.image_base64,
+      };
     } catch (error) {
       console.error("Error fetching username:", error.message);
       return ""; // Return an empty string or handle the error as needed
@@ -266,19 +269,27 @@ const Home = () => {
                         </CustomLink>
                       </div>
                       <div className="flex items-center">
-                        <img
-                          src="https://source.unsplash.com/50x50/?portrait"
-                          alt="avatar"
-                          className="object-cover w-10 h-10 mx-4 rounded-full "
-                        />
-                        <a
+                        <CustomLink
                           href={`/profile?user_id=${encodeURIComponent(
                             post.author
                           )}`}
                           className="text-primary-500 hover:text-primary-600 hover:underline"
                         >
-                          <span>{post.username}</span>
-                        </a>
+                          <div className="flex items-center">
+                            {/* Display the user's avatar if available */}
+                            {post.username && post.username.image_base64 && (
+                              <img
+                                src={`data:image/jpeg;base64, ${post.username.image_base64}`}
+                                alt="avatar"
+                                className="object-cover w-10 h-10 mx-2 rounded-full"
+                              />
+                            )}
+                            {/* Display the user's username */}
+                            <span>
+                              {post.username && post.username.username}
+                            </span>
+                          </div>
+                        </CustomLink>
                       </div>
                     </div>
                   </div>

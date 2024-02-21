@@ -39,7 +39,10 @@ const Home = () => {
   const fetch_latest_10_Posts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://127.0.0.1:5001/api/latest_10_posts`);
+      const response = await fetch(
+        // `http://127.0.0.1:5001/api/latest_10_posts`
+        `https://diaryblogapi2.onrender.com/api/latest_10_posts`
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -79,10 +82,9 @@ const Home = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://127.0.0.1:5001/api/next_10_posts?last_post_id=${lastPostId}`
-        // `https://diaryblogapi2.onrender.com/api/next_10_posts`,
+        // `http://127.0.0.1:5001/api/next_10_posts?last_post_id=${lastPostId}`
+        `https://diaryblogapi2.onrender.com/api/next_10_posts?last_post_id=${lastPostId}`
       );
-
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

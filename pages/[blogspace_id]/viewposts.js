@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import { useRouter } from "next/router"; // Import useRouter from Next.js
+import { useRouter } from "next/router"; 
 import CustomLink from "../../components/link";
-// import "./ViewPosts.css";
-// import { useBlogContext } from "./BlogContext";
+
 import ReactMarkdown from "react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -14,18 +13,14 @@ import ThemeSwitch from "./themeSwitch";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Sharepost from "./[postId]/sharepost";
-// import "../../globals.css";
 
-// export const metadata = {
-//   title: 'Diary Blog',
-// }
 
 const ViewPosts = () => {
   const [posts, setPosts] = useState([]);
   const [postSearch, setPostSearch] = useState("");
-  // const { blogData, selectedBlog, setSelectedBlog } = useBlogContext();
-  const router = useRouter(); // Use the useRouter hook from Next.js
-  const { blogspace_id, blogspace_name } = router.query; // Access query parameters using router.query
+  
+  const router = useRouter(); 
+  const { blogspace_id, blogspace_name } = router.query; 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentFollowCompany, setCurrentFollowCompany] = useState(null);
   const [emailForFollow, setEmailForFollow] = useState("");
@@ -34,6 +29,7 @@ const ViewPosts = () => {
   const [viewMode, setViewMode] = useState("card");
   const [sortedPosts, setSortedPosts] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
 
   console.log(router.query.blogspace_id);
 
@@ -52,6 +48,25 @@ const ViewPosts = () => {
     // Set the theme in local storage
     localStorage.setItem("theme", newTheme);
   };
+
+
+
+
+  const getUsernameById = async (userId) => {
+    try {
+      const response = await fetch(`https://usermgtapi3.onrender.com/api/get_user/${userId}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      return data.username;
+    } catch (error) {
+      console.error("Error fetching username:", error.message);
+      return ''; // Return an empty string or handle the error as needed
+    }
+  };
+
 
   useEffect(() => {
     console.log("hi");
@@ -96,24 +111,33 @@ const ViewPosts = () => {
 
   console.log(posts);
 
-  // const filteredPosts = posts.filter((post) => {
-  //   const title = post.title || '';
-  //   const description = post.description || '';
-
-  //   return (
-  //     title.toLowerCase().includes(postSearch.toLowerCase()) ||
-  //     description.toLowerCase().includes(postSearch.toLowerCase())
-  //   );
-  // });
+ 
 
   useEffect(() => {
-    const sorted = [...posts].sort((a, b) => {
-      const dateA = new Date(a.createDate);
-      const dateB = new Date(b.createDate);
-      return dateB - dateA;
-    });
-    setSortedPosts(sorted);
+    const fetchUsernames = async () => {
+      try {
+        const sorted = [...posts].sort((a, b) => {
+          const dateA = new Date(a.createDate);
+          const dateB = new Date(b.createDate);
+          return dateB - dateA;
+        });
+        setSortedPosts(sorted);
+  
+        const postsWithUsernames = await Promise.all(
+          sorted.map(async (post) => {
+            const username = await getUsernameById(post.author);
+            return { ...post, username };
+          })
+        );
+        setSortedPosts(postsWithUsernames);
+      } catch (error) {
+        console.error("Error fetching usernames:", error.message);
+      }
+    };
+  
+    fetchUsernames();
   }, [posts]);
+  
 
   console.log(sortedPosts);
 
@@ -153,44 +177,7 @@ const ViewPosts = () => {
       });
   };
 
-  // const toggleFollow = (companyName) => {
-  //   setCurrentFollowCompany(companyName);
-  //   setIsModalOpen(true);
-  // };
-
-  // const handleCloseModal = () => {
-  //   setIsModalOpen(false);
-  //   setCurrentFollowCompany(null);
-  //   setEmailForFollow("");
-  // };
-
-  // const handleConfirmFollow = () => {
-  //   fetch(
-  //     `https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}/follow`,
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ email: emailForFollow }),
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.message) {
-  //         // No need to update the local state here, unless you want to reflect changes immediately.
-  //         handleCloseModal();
-  //       } else {
-  //         console.error(data.error);
-  //       }
-  //     })
-  //     .catch((error) => console.error("Error following company:", error));
-  // };
-
-  // const handleViewModeChange = (mode) => {
-  //   setViewMode(mode);
-  // };
-
+ 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -242,14 +229,7 @@ const ViewPosts = () => {
               <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
                 {posts.length} posts in 5 categories
               </h1>
-              {/* <input
-              type="search"
-              name="Search"
-              placeholder="Search..."
-              value={blogSearch}
-              onChange={handleChange}
-              className="w-full md:w-32 py-2 pl-10 border-2 bg-white border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none "
-            /> */}
+             
             </div>
             <div className="flex flex-row items-center justify-center">
               <div className="relative">
@@ -357,17 +337,7 @@ const ViewPosts = () => {
                             </div>
                           </div>
                           <div className="flex flex-row space-x-3 text-gray-500">
-                            {/* <div>
-                        <FontAwesomeIcon
-                          className="text-sm text-gray-500"
-                          icon={faEye}
-                        />
-                        : {post.views}
-                      </div> */}
-                            {/* <div className="bg-white">
-                              <FontAwesomeIcon icon={faBookmark} />
-                            </div> */}
-
+                           
                             <div className="italic text-gray-500">
                               {timeToRead(post)} min
                             </div>
@@ -381,9 +351,7 @@ const ViewPosts = () => {
                               </h2>
 
                               <div className="flex flex-wrap">
-                                {/* {tags.map((tag) => (
-                            <Tag key={tag} text={tag} />
-                          ))} */}
+                               
                               </div>
                             </div>
                             <div className="prose max-w-none text-gray-500 ">
@@ -393,7 +361,6 @@ const ViewPosts = () => {
                           <div className="flex items-center justify-between mt-4 text-slate-900">
                             <div className="text-base font-medium leading-6 hover:text-orange-600">
                               <CustomLink
-                                // href={`/${router.query.blogspace_id}/${router.query.blogspace_name}/${post._id}/post`}
                                 href={`/${router.query.blogspace_id}/${post._id}/post`}
                                 className="text-primary-500 hover:text-orange-600 "
                                 aria-label={`Read more: "${post.title}"`}
@@ -414,7 +381,7 @@ const ViewPosts = () => {
                           )}`}
                           className="text-primary-500 hover:text-primary-600 hover:underline"
                         >
-                          <span>{post.author}</span>
+                          <span>{post.username}</span>
                         </a>
                             </div>
                           </div>
@@ -432,215 +399,7 @@ const ViewPosts = () => {
         <Footer />
       </div>
     </>
-    // <div>
-    //   <Header />
-    //   <div className="flex flex-col justify-center w-full ">
-    //     <ThemeSwitch onThemeChange={toggleDarkMode} />
-    //     <h2 className="text-2xl font-bold mx-auto my-8">
-    //       {blogspace_name}&apos;s Blog
-    //     </h2>
-
-    //     <div className="flex items-center justify-center gap-4 mb-4 my-2">
-    //       {/* Follow button */}
-    //       <button
-    //         className="px-4 py-2 bg-black text-white border border-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-    //         onClick={() => toggleFollow(blogspace_name)}
-    //       >
-    //         {followedCompanies.includes(blogspace_name) ? "Unfollow" : "Follow"}
-    //       </button>
-
-    //       {/* Followers count */}
-    //       <span
-    //         className={`text-sm ${
-    //           isDarkMode ? "dark:text-white" : "text-black"
-    //         }`}
-    //       >
-    //         {followersCount} {followersCount === 1 ? "follower" : "followers"}
-    //       </span>
-    //     </div>
-
-    //     {/* Modal */}
-    //     {isModalOpen && (
-    //       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
-    //         <div className="bg-white p-8 rounded-md w-1/3">
-    //           <h2 className="text-xl font-bold mb-2">
-    //             Follow {currentFollowCompany}
-    //           </h2>
-    //           <input
-    //             type="email"
-    //             value={emailForFollow}
-    //             onChange={(e) => setEmailForFollow(e.target.value)}
-    //             placeholder="Enter your email"
-    //             className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
-    //           />
-    //           <div className="flex justify-end space-x-2">
-    //             <button
-    //               className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-    //               onClick={handleConfirmFollow}
-    //             >
-    //               Confirm Follow
-    //             </button>
-    //             <button
-    //               className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-opacity-50"
-    //               onClick={handleCloseModal}
-    //             >
-    //               Cancel
-    //             </button>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     )}
-
-    //     <form
-    //       className="w-full mb-4 flex justify-center"
-    //       onSubmit={(e) => e.preventDefault()}
-    //     >
-    //       <div>
-    //         <input
-    //           className=" w-full px-4 py-3 mx-auto m-2 border border-slate-950 rounded-md"
-    //           type="text"
-    //           placeholder="search posts, company"
-    //           value={postSearch}
-    //           onChange={handleChange}
-    //         />
-    //       </div>
-    //     </form>
-    //     <section className=" flex justify-center mb-4">
-    //       <div className="flex space-x-4">
-    //         <div className="px-4 py-2 bg-black text-white border border-white shadow-xl rounded-md">
-    //           All
-    //         </div>
-    //         <div
-    //           className={`px-4 py-2 bg-white ${
-    //             isDarkMode ? "dark:text-black" : "text-black"
-    //           } border border-black shadow-xl rounded-md`}
-    //         >
-    //           Recent Posted
-    //         </div>
-    //         <div
-    //           className={`px-4 py-2 bg-white ${
-    //             isDarkMode ? "dark:text-black" : "text-black"
-    //           } border border-black shadow-xl rounded-md`}
-    //         >
-    //           Most Trending Posted
-    //         </div>
-    //         <div
-    //           className={`px-4 py-2 bg-white ${
-    //             isDarkMode ? "dark:text-black" : "text-black"
-    //           } border border-black shadow-xl rounded-md`}
-    //         >
-    //           Geography
-    //         </div>
-    //         <div
-    //           className={`px-4 py-2 bg-white ${
-    //             isDarkMode ? "dark:text-black" : "text-black"
-    //           } border border-black shadow-xl rounded-md`}
-    //         >
-    //           Science
-    //         </div>
-    //         <div
-    //           className={`px-4 py-2 bg-white ${
-    //             isDarkMode ? "dark:text-black" : "text-black"
-    //           } border border-black shadow-xl rounded-md`}
-    //         >
-    //           History
-    //         </div>
-    //       </div>
-    //     </section>
-
-    //     <div className="flex justify-between mx-16 my-4">
-    //       <button
-    //         className=" p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-    //         onClick={handleBackClick}
-    //       >
-    //         <FontAwesomeIcon icon={faArrowLeft} />
-    //       </button>
-    //       <div className="flex space-x-4">
-    //         <button
-    //           className="p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-    //           onClick={() => handleViewModeChange("card")}
-    //         >
-    //           <i className="material-icons">grid_on</i>
-    //         </button>
-    //         <button
-    //           className="p-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-    //           onClick={() => handleViewModeChange("list")}
-    //         >
-    //           <i className="material-icons">list</i>
-    //         </button>
-    //       </div>
-    //     </div>
-
-    //     {viewMode === "card" ? (
-    //       <div className="grid grid-cols-4 gap-4 mx-4">
-    //         {filteredPosts.map((post, index) => (
-    //           <div
-    //             key={index}
-    //             className={`flex w-full`}
-    //             onClick={() => handlePostClick(post._id)}
-    //           >
-    //             <div
-    //               className={`flex flex-col w-full ${
-    //                 isDarkMode ? "dark:bg-dark-blue" : "bg-white"
-    //               } shadow-2xl shadow-slate-950 border border-slate-950" rounded-md m-2 transform transition-transform duration-200 hover:scale-105`}
-    //             >
-    //               <img
-    //                 src={
-    //                   post.imageUrl ||
-    //                   "https://assets.hongkiat.com/uploads/psd-text-svg/logo-example.jpg"
-    //                 }
-    //                 className="w-full h-48 object-cover mb-2 rounded-md"
-    //                 alt={"image"}
-    //               />
-    //               <div className="flex flex-col space-y-2">
-    //                 <h2 className="text-lg font-bold px-3">
-    //                   {post.title.substring(0, 30)}
-    //                 </h2>
-    //                 <p className="text-sm text-gray-500 px-3">~{post.author}</p>
-    //                 <p className="text-sm text-gray-500 px-3 pb-2">
-    //                   <FontAwesomeIcon icon={faEye} />: {post.views}
-    //                 </p>
-    //               </div>
-    //             </div>
-    //           </div>
-    //         ))}
-    //       </div>
-    //     ) : (
-    //       <div className="w-full p-8 shadow-lg">
-    //         <ul className=" mx-8 p-4 list-none bg-gray-200  shadow-md rounded-md overflow-hidden flex flex-col">
-    //           {filteredPosts.map((post, index) => (
-    //             <li
-    //               key={index}
-    //               className="w-3/4 mx-auto flex items-center justify-center p-2 bg-white border-b border-gray-300 cursor-pointer my-2 shadow-md rounded-md transform transition-transform duration-200 hover:scale-105"
-    //             >
-    //               <img
-    //                 src={
-    //                   post.imageUrl ||
-    //                   "https://assets.hongkiat.com/uploads/psd-text-svg/logo-example.jpg"
-    //                 }
-    //                 alt={"image"}
-    //                 className="w-16 h-16 object-cover mr-2"
-    //               />
-    //               <div className="flex-1 ml-2">
-    //                 <h2 className="text-xl mb-1 border-b border-gray-400">
-    //                   <ReactMarkdown className="mb-0">
-    //                     {post.title.substring(0, 30)}
-    //                   </ReactMarkdown>
-    //                 </h2>
-    //                 <div className="flex justify-between items-center">
-    //                   <p className="mt-0 mb-0">
-    //                     {post.description.substring(0, 90)}...
-    //                   </p>
-    //                   <p className="text-gray-500 mb-0">~{post.author}</p>
-    //                 </div>
-    //               </div>
-    //             </li>
-    //           ))}
-    //         </ul>
-    //       </div>
-    //     )}
-    //   </div>
-    // </div>
+   
   );
 };
 

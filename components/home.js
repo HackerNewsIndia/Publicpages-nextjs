@@ -4,17 +4,17 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import debounce from "lodash.debounce";
+import { BeatLoader } from "react-spinners";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
   const [lastPostId, setLastPostId] = useState("");
   const [fetchingMore, setFetchingMore] = useState(false);
-
+  const [allPostsLoaded, setAllPostsLoaded] = useState(false);
   useEffect(() => {
-    fetch_latest_10_Posts();
-  }, [1]);
+    fetch_latest_5_Posts();
+  }, []);
 
   const getUsernameById = async (userId) => {
     try {
@@ -36,12 +36,11 @@ const Home = () => {
     }
   };
 
-  const fetch_latest_10_Posts = async () => {
+  const fetch_latest_5_Posts = async () => {
     try {
       setLoading(true);
       const response = await fetch(
-        // `http://127.0.0.1:5001/api/latest_10_posts`
-        `https://diaryblogapi2.onrender.com/api/latest_10_posts`
+        `https://diaryblogapi2.onrender.com/api/latest_5_posts`
       );
 
       if (!response.ok) {
@@ -78,12 +77,11 @@ const Home = () => {
     }
   };
 
-  const fetch_10_more_posts = async (lastPostId) => {
+  const fetch_5_more_posts = async (lastPostId) => {
     try {
       setLoading(true);
       const response = await fetch(
-        // `http://127.0.0.1:5001/api/next_10_posts?last_post_id=${lastPostId}`
-        `https://diaryblogapi2.onrender.com/api/next_10_posts?last_post_id=${lastPostId}`
+        `https://diaryblogapi2.onrender.com/api/next_5_posts?last_post_id=${lastPostId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -104,23 +102,31 @@ const Home = () => {
         })
       );
 
-      setPosts((prevPosts) => {
-        const updatedPosts = [...prevPosts, ...postsWithUsernames];
-        const lastPostId =
-          updatedPosts.length > 0
-            ? updatedPosts[updatedPosts.length - 1]._id
-            : null;
-        setLastPostId(lastPostId);
-        return updatedPosts;
-      });
+      if (postsWithUsernames.length < 1) {
+        setAllPostsLoaded(true);
+      } else {
+        setPosts((prevPosts) => {
+          const updatedPosts = [...prevPosts, ...postsWithUsernames];
+          const lastPostId =
+            updatedPosts.length > 0
+              ? updatedPosts[updatedPosts.length - 1]._id
+              : null;
+          setLastPostId(lastPostId);
+          return updatedPosts;
+        });
+      }
     } catch (error) {
       console.error("Error fetching more blog posts:", error);
+    } finally {
+      setLoading(false);
+      setFetchingMore(false);
     }
   };
 
   const fetch_more_posts = () => {
-    if (!loading && hasMore) {
-      fetch_10_more_posts(lastPostId);
+    if (!loading && lastPostId) {
+      setFetchingMore(true);
+      fetch_5_more_posts(lastPostId);
     }
   };
 
@@ -129,17 +135,10 @@ const Home = () => {
       window.innerHeight + document.documentElement.scrollTop + 100 >=
       document.documentElement.offsetHeight;
 
-    if (isAtBottom && !loading && hasMore && !fetchingMore) {
-      setFetchingMore(true);
+    if (isAtBottom && !fetchingMore && !allPostsLoaded) {
       fetch_more_posts();
     }
   }, 200);
-
-  useEffect(() => {
-    if (!loading && !hasMore) {
-      setFetchingMore(false);
-    }
-  }, [loading, hasMore]);
 
   useEffect(() => {
     // Add scroll event listener when component mounts
@@ -148,10 +147,9 @@ const Home = () => {
       // Remove scroll event listener when component unmounts
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastPostId, fetchingMore]);
+  }, [handleScroll]);
 
   const handlePostClick = (post) => {
-    console.log(post);
     const postId = post._id;
 
     fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
@@ -198,7 +196,7 @@ const Home = () => {
   };
 
   return (
-    <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
+    <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white text-black">
       <div className="text-center pt-10">
         <h2 className="text-3xl text-slate-900 font-bold">Latest Post</h2>
       </div>
@@ -214,8 +212,7 @@ const Home = () => {
                     alt="Logo"
                     width={250}
                     height={250}
-                    objectFit="fit"
-                    className="rounded-md w-full"
+                    className="rounded-md w-full object-fit"
                   />
                 </div>
                 <div className="flex flex-col p-2 md:w-4/5">
@@ -260,10 +257,8 @@ const Home = () => {
                     <div className="flex items-center justify-between mt-4 text-slate-900">
                       <div className="text-base font-medium leading-6 hover:text-orange-600 cursor-pointer">
                         <CustomLink
-                          // href={`/${post.blogSpace}/${blogspace.name}/${post._id}/post`}
                           href={`/${post.blogSpace}/${post._id}/post`}
                           className="text-primary-500 hover:text-primary-600 "
-                          // onClick={() => fetchBlogSpace(post.blogSpace)}
                           aria-label={`Read more: "${post.title}"`}
                           onClick={() => handlePostClick(post)}
                         >
@@ -278,7 +273,6 @@ const Home = () => {
                           className="text-primary-500 hover:text-primary-600 hover:underline"
                         >
                           <div className="flex items-center">
-                            {/* Display the user's avatar if available */}
                             {post.username && post.username.image_base64 && (
                               <img
                                 src={`data:image/jpeg;base64, ${post.username.image_base64}`}
@@ -286,7 +280,6 @@ const Home = () => {
                                 className="object-cover w-10 h-10 mx-2 rounded-full"
                               />
                             )}
-                            {/* Display the user's username */}
                             <span>
                               {post.username && post.username.username}
                             </span>
@@ -302,7 +295,16 @@ const Home = () => {
         )}
       </ul>
 
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <div className="flex justify-center items-center py-5">
+          <BeatLoader color="hsla(168, 4%, 75%, 1)" />
+        </div>
+      )}
+      {allPostsLoaded && (
+        <p className="text-center mt-5 mb-5 font-medium text-gray-500">
+          ** All posts loaded **
+        </p>
+      )}
     </div>
   );
 };

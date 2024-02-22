@@ -1,60 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import { useRouter } from "next/router"; 
+import { useRouter } from "next/router";
 import CustomLink from "../../components/link";
-
-import ReactMarkdown from "react-markdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import "material-icons/iconfont/material-icons.css";
-import ThemeSwitch from "./themeSwitch";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import Sharepost from "./[postId]/sharepost";
-
+import debounce from "lodash.debounce";
+import { BeatLoader } from "react-spinners";
 
 const ViewPosts = () => {
-  const [posts, setPosts] = useState([]);
-  const [postSearch, setPostSearch] = useState("");
-  
-  const router = useRouter(); 
-  const { blogspace_id, blogspace_name } = router.query; 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentFollowCompany, setCurrentFollowCompany] = useState(null);
-  const [emailForFollow, setEmailForFollow] = useState("");
-  const [followedCompanies, setFollowedCompanies] = useState([]); // If you need this
-  const [followersCount, setFollowersCount] = useState(0);
-  const [viewMode, setViewMode] = useState("card");
-  const [sortedPosts, setSortedPosts] = useState([]);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-
-  console.log(router.query.blogspace_id);
-
+  const router = useRouter();
   const blog_id = router.query.blogspace_id;
   const blog_name = router.query.blogspace_name;
 
+  const [posts, setPosts] = useState([]);
+  const [postSearch, setPostSearch] = useState("");
+  const { blogspace_id, blogspace_name } = router.query;
+  const [sortedPosts, setSortedPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [fetchingMore, setFetchingMore] = useState(false);
+  const [allPostsLoaded, setAllPostsLoaded] = useState(false);
+  const [lastPostId, setLastPostId] = useState("");
+
   useEffect(() => {
-    // Check the initial theme when the component mounts
-    const initialTheme = localStorage.getItem("theme");
-    setIsDarkMode(initialTheme === "dark");
-  }, []);
-
-  // Function to toggle dark mode
-  const toggleDarkMode = (newTheme) => {
-    setIsDarkMode(newTheme === "dark");
-    // Set the theme in local storage
-    localStorage.setItem("theme", newTheme);
-  };
-
-
-
+    if (blog_id && blog_id !== "undefined") {
+      fetch_latest_5_Posts();
+    } else {
+      console.error("blog_id is undefined!");
+    }
+  }, [blog_id]);
 
   const getUsernameById = async (userId) => {
     try {
-      const response = await fetch(`https://usermgtapi3.onrender.com/api/get_user/${userId}`);
+      const response = await fetch(
+        `https://usermgtapi3.onrender.com/api/get_user/${userId}`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -63,95 +45,131 @@ const ViewPosts = () => {
       return {
         username: data.username,
         image_base64: data.image_base64,
-      };    } catch (error) {
+      };
+    } catch (error) {
       console.error("Error fetching username:", error.message);
-      return ''; // Return an empty string or handle the error as needed
+      return ""; // Return an empty string or handle the error as needed
     }
   };
 
+  const fetch_latest_5_Posts = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://diaryblogapi2.onrender.com/api/blogspace/${blog_id}/posts`
+        // `http://127.0.0.1:5001/api/blogspace/${blog_id}/posts`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+
+      const sortedPosts = data.sort((a, b) => {
+        const dateA = new Date(a.createDate);
+        const dateB = new Date(b.createDate);
+        return dateB - dateA;
+      });
+
+      const postsWithUsernames = await Promise.all(
+        sortedPosts.map(async (post) => {
+          const username = await getUsernameById(post.author);
+          return { ...post, username };
+        })
+      );
+
+      setPosts(postsWithUsernames);
+      const lastPostId =
+        postsWithUsernames.length > 0
+          ? postsWithUsernames[postsWithUsernames.length - 1]._id
+          : null;
+      setLastPostId(lastPostId);
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching posts:", error.message);
+      setLoading(false);
+      // You can also set an error state here if you want to show an error message to the user
+    }
+  };
+
+  const fetch_5_more_posts = async (lastPostId) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `https://diaryblogapi2.onrender.com/api/blogspace/${blog_id}/5_more_posts?last_post_id=${lastPostId}`
+        // `http://127.0.0.1:5001/api/blogspace/${blog_id}/5_more_posts?last_post_id=${lastPostId}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const data = await response.json();
+
+      const sortedPosts = data.sort((a, b) => {
+        const dateA = new Date(a.createDate);
+        const dateB = new Date(b.createDate);
+        return dateB - dateA;
+      });
+
+      const postsWithUsernames = await Promise.all(
+        sortedPosts.map(async (post) => {
+          const username = await getUsernameById(post.author);
+          return { ...post, username };
+        })
+      );
+      if (postsWithUsernames.length < 1) {
+        setAllPostsLoaded(true);
+      } else {
+        setPosts((prevPosts) => {
+          const updatedPosts = [...prevPosts, ...postsWithUsernames];
+          const lastPostId =
+            updatedPosts.length > 0
+              ? updatedPosts[updatedPosts.length - 1]._id
+              : null;
+          setLastPostId(lastPostId);
+          return updatedPosts;
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching more blog posts:", error);
+    } finally {
+      setLoading(false);
+      setFetchingMore(false);
+    }
+  };
+
+  const fetch_more_posts = () => {
+    if (!loading && lastPostId) {
+      setFetchingMore(true);
+      fetch_5_more_posts(lastPostId);
+    }
+  };
+
+  const handleScroll = debounce(() => {
+    const isAtBottom =
+      window.innerHeight + document.documentElement.scrollTop + 100 >=
+      document.documentElement.offsetHeight;
+
+    if (isAtBottom && !fetchingMore && !allPostsLoaded) {
+      fetch_more_posts();
+    }
+  }, 200);
 
   useEffect(() => {
-    console.log("hi");
-    if (
-      router.query.blogspace_id &&
-      router.query.blogspace_id !== "undefined"
-    ) {
-      fetch(`https://diaryblogapi2.onrender.com/api/blogspace/${blog_id}/posts`)
-        .then((response) => response.json())
-        .then((data) => {
-          setPosts(data);
-        })
-        .catch((error) => console.error("Error fetching posts:", error));
-
-      // Fetch follower count for the current blogSpace
-      fetch(
-        `https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}/followers`
-      )
-        .then((response) => response.json())
-        .then((followersData) => {
-          setFollowersCount(followersData.userEmails?.length || 0);
-        })
-        .catch((error) => {
-          console.warn(
-            `Error fetching followers for blogSpace ID: ${blogspace_id}`,
-            error
-          );
-          setFollowersCount(0);
-        });
-    } else {
-      console.error("blogspace_id is undefined!");
-    }
-  }, [blogspace_id]);
+    // Add scroll event listener when component mounts
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      // Remove scroll event listener when component unmounts
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   const handleChange = (e) => {
     setPostSearch(e.target.value);
   };
-
-  const handleBackClick = () => {
-    router.push("/diaryblogspace"); // Use router.push to navigate
-  };
-
-  console.log(posts);
-
- 
-
-  useEffect(() => {
-    const fetchUsernames = async () => {
-      try {
-        const sorted = [...posts].sort((a, b) => {
-          const dateA = new Date(a.createDate);
-          const dateB = new Date(b.createDate);
-          return dateB - dateA;
-        });
-        setSortedPosts(sorted);
-  
-        const postsWithUsernames = await Promise.all(
-          sorted.map(async (post) => {
-            const username = await getUsernameById(post.author);
-            return { ...post, username };
-          })
-        );
-        setSortedPosts(postsWithUsernames);
-      } catch (error) {
-        console.error("Error fetching usernames:", error.message);
-      }
-    };
-  
-    fetchUsernames();
-  }, [posts]);
-  
-
-  console.log(sortedPosts);
-
-  const filteredPosts = sortedPosts.filter((post) => {
-    const title = post.title || "";
-    const description = post.description || "";
-
-    return (
-      title.toLowerCase().includes(postSearch.toLowerCase()) ||
-      description.toLowerCase().includes(postSearch.toLowerCase())
-    );
-  });
 
   const handlePostClick = (post) => {
     console.log(post);
@@ -179,7 +197,10 @@ const ViewPosts = () => {
       });
   };
 
- 
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(postSearch.toLowerCase())
+  );
+
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -231,7 +252,6 @@ const ViewPosts = () => {
               <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
                 {posts.length} posts in 5 categories
               </h1>
-             
             </div>
             <div className="flex flex-row items-center justify-center">
               <div className="relative">
@@ -298,10 +318,6 @@ const ViewPosts = () => {
           </div>
 
           <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white">
-            {/* <div className="text-center pt-10">
-            <h2 className="text-3xl text-slate-900 font-bold">Latest Post</h2>
-          </div> */}
-
             <ul className="divide-y divide-gray-400 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10 mt-5 mb-5">
               {filteredPosts.map((post, index) =>
                 post.status === "published" ? (
@@ -339,7 +355,6 @@ const ViewPosts = () => {
                             </div>
                           </div>
                           <div className="flex flex-row space-x-3 text-gray-500">
-                           
                             <div className="italic text-gray-500">
                               {timeToRead(post)} min
                             </div>
@@ -352,9 +367,7 @@ const ViewPosts = () => {
                                 {post.title}
                               </h2>
 
-                              <div className="flex flex-wrap">
-                               
-                              </div>
+                              <div className="flex flex-wrap"></div>
                             </div>
                             <div className="prose max-w-none text-gray-500 ">
                               {truncateText(post.description, 27)}
@@ -372,22 +385,27 @@ const ViewPosts = () => {
                               </CustomLink>
                             </div>
                             <CustomLink
-  href={`/profile?user_id=${encodeURIComponent(post.author)}`}
-  className="text-primary-500 hover:text-primary-600"
->
-  <div className="flex items-center">
-    {/* Display the user's avatar if available */}
-    {post.username && post.username.image_base64 && (
-      <img
-        src={`data:image/jpeg;base64, ${post.username.image_base64}`}
-        alt="avatar"
-        className="object-cover w-10 h-10 mx-2 rounded-full"
-      />
-    )}
-    {/* Display the user's username */}
-    <span>{post.username && post.username.username}</span>
-  </div>
-</CustomLink>
+                              href={`/profile?user_id=${encodeURIComponent(
+                                post.author
+                              )}`}
+                              className="text-primary-500 hover:text-primary-600"
+                            >
+                              <div className="flex items-center">
+                                {/* Display the user's avatar if available */}
+                                {post.username &&
+                                  post.username.image_base64 && (
+                                    <img
+                                      src={`data:image/jpeg;base64, ${post.username.image_base64}`}
+                                      alt="avatar"
+                                      className="object-cover w-10 h-10 mx-2 rounded-full"
+                                    />
+                                  )}
+                                {/* Display the user's username */}
+                                <span>
+                                  {post.username && post.username.username}
+                                </span>
+                              </div>
+                            </CustomLink>
                           </div>
                         </div>
                       </div>
@@ -397,13 +415,21 @@ const ViewPosts = () => {
               )}
             </ul>
 
-            {/* {loading && <p>Loading...</p>} */}
+            {loading && (
+              <div className="flex justify-center items-center py-5">
+                <BeatLoader color="hsla(168, 4%, 75%, 1)" />
+              </div>
+            )}
+            {allPostsLoaded && (
+              <p className="text-center mt-5 mb-5 font-medium text-gray-500">
+                ** All posts loaded **
+              </p>
+            )}
           </div>
         </div>
         <Footer />
       </div>
     </>
-   
   );
 };
 

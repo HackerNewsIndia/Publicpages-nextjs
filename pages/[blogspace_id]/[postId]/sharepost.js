@@ -84,7 +84,7 @@ const Sharepost = ({ post_title, post_image, post_description }) => {
                   post_title
                 )}&description=${encodeURIComponent(
                   truncateText(post_description, 27)
-                )}&via=diaryblogUnv&image=${encodeURIComponent(post_image)}`}
+                )}&via=PeopleConninc&image=${encodeURIComponent(post_image)}`}
                 target="_blank"
                 rel="noreferrer"
               >

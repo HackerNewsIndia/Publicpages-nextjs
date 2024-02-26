@@ -81,23 +81,23 @@ const PublicBlogSpace = () => {
     // const param2 = blogspace_id;
     // router.push(`/viewposts?param1=${param1}&param2=${param2}`);
     router.push(`/${blogspace_id}/viewposts`);
-    fetch(`https://diaryblogapi2.onrender.com/api/${blogspace_id}/views`, {
-      method: "PUT",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the view count locally for the company that was clicked.
-        const updatedBlogSpace = blogSpace.map((blogSpaceItem) => {
-          if (blogSpaceItem._id === blogId) {
-            blogSpaceItem.views = data.views;
-          }
-          return blogSpaceItem;
-        });
-        setBlogSpace(updatedBlogSpace); // Update the state with the new view count.
-      })
-      .catch((error) => {
-        console.error("Error incrementing views:", error);
-      });
+    // fetch(`https://diaryblogapi2.onrender.com/api/${blogspace_id}/views`, {
+    //   method: "PUT",
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // Update the view count locally for the company that was clicked.
+    //     const updatedBlogSpace = blogSpace.map((blogSpaceItem) => {
+    //       if (blogSpaceItem._id === blogId) {
+    //         blogSpaceItem.views = data.views;
+    //       }
+    //       return blogSpaceItem;
+    //     });
+    //     setBlogSpace(updatedBlogSpace); // Update the state with the new view count.
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error incrementing views:", error);
+    //   });
   };
 
   const toggleFollow = (companyName) => {

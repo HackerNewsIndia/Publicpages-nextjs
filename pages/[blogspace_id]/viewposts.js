@@ -183,14 +183,15 @@ const ViewPosts = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.message);
         // Update the view count locally for the post that was clicked.
-        const updatedPosts = posts.map((postItem) => {
-          if (postItem._id === postId) {
-            postItem.views = data.views; // Assuming data.views contains the updated view count.
-          }
-          return postItem;
-        });
-        setPosts(updatedPosts); // Update the state with the new post views.
+        // const updatedPosts = posts.map((postItem) => {
+        //   if (postItem._id === postId) {
+        //     postItem.views = data.views; // Assuming data.views contains the updated view count.
+        //   }
+        //   return postItem;
+        // });
+        // setPosts(updatedPosts); // Update the state with the new post views.
       })
       .catch((error) => {
         console.error("Error incrementing views:", error);

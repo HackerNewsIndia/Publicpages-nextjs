@@ -19,9 +19,11 @@ import ImageResizer from "react-image-file-resizer";
 import { NextSeo } from "next-seo";
 
 const getUsernameById = async (userId) => {
-  console.log('Inside getUsernameById');
+  console.log("Inside getUsernameById");
   try {
-    const response = await fetch(`https://usermgtapi3.onrender.com/api/get_user/${userId}`);
+    const response = await fetch(
+      `https://usermgtapi3.onrender.com/api/get_user/${userId}`
+    );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -33,7 +35,7 @@ const getUsernameById = async (userId) => {
     };
   } catch (error) {
     console.error("Error fetching username:", error.message);
-    return { username: '', image_base64: '' };
+    return { username: "", image_base64: "" };
   }
 };
 
@@ -42,7 +44,26 @@ const Post = ({ metadata, sorted }) => {
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
   const [isActive, setIsActive] = useState(false);
+  // const [postViews, setPostViews] = useState(metadata.views);
   const [sortedPosts, setSortedPosts] = useState([]);
+  // const [hasEffectRun, setHasEffectRun] = useState(false);
+
+  // useEffect(() => {
+  //   if (!hasEffectRun) {
+  //     fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
+  //       method: "PUT",
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log("post_views", data);
+  //         setPostViews(data.views);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error incrementing views:", error);
+  //       });
+  //     setHasEffectRun(true);
+  //   }
+  // }, [hasEffectRun]);
 
   const showCommentBar = () => {
     setIsActive(true);
@@ -202,17 +223,19 @@ const Post = ({ metadata, sorted }) => {
               <h1 className="text-2xl mb-2 text-black font-semibold">
                 {metadata.title}
                 <a
-                  href={`/profile?user_id=${encodeURIComponent(metadata.author)}`}
+                  href={`/profile?user_id=${encodeURIComponent(
+                    metadata.author
+                  )}`}
                   className="text-primary-500 hover:text-primary-600 hover:underline"
                 >
                   <div className="flex items-center">
-                     <img
-                        src={`data:image/jpeg;base64, ${metadata.image_base64}`}
-                        alt="avatar"
-                        className="object-cover w-10 h-10 mx-2 rounded-full"
+                    <img
+                      src={`data:image/jpeg;base64, ${metadata.image_base64}`}
+                      alt="avatar"
+                      className="object-cover w-10 h-10 mx-2 rounded-full"
                     />
-                  
-                    <span>{metadata.username }</span>
+
+                    <span>{metadata.username}</span>
                   </div>
                 </a>
               </h1>
@@ -288,7 +311,7 @@ export async function generateMetadata(params) {
 }
 
 export async function getServerSideProps(context) {
-  console.log('Before getUsernameById');
+  console.log("Before getUsernameById");
   const { params } = context;
   const metadata = await generateMetadata(params);
   const userData = await getUsernameById(metadata.author);

@@ -19,7 +19,6 @@ import ImageResizer from "react-image-file-resizer";
 import { NextSeo } from "next-seo";
 
 const getUsernameById = async (userId) => {
-  console.log("Inside getUsernameById");
   try {
     const response = await fetch(
       `https://usermgtapi3.onrender.com/api/get_user/${userId}`
@@ -39,7 +38,7 @@ const getUsernameById = async (userId) => {
   }
 };
 
-const Post = ({ metadata, sorted }) => {
+const Post = ({ metadata, sorted, postViews }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
@@ -50,17 +49,17 @@ const Post = ({ metadata, sorted }) => {
 
   // useEffect(() => {
   //   if (!hasEffectRun) {
-  //     fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
-  //       method: "PUT",
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log("post_views", data);
-  //         setPostViews(data.views);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error incrementing views:", error);
-  //       });
+  // fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
+  //   method: "PUT",
+  // })
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     console.log("post_views", data);
+  //     setPostViews(data.views);
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error incrementing views:", error);
+  //   });
   //     setHasEffectRun(true);
   //   }
   // }, [hasEffectRun]);
@@ -259,7 +258,8 @@ const Post = ({ metadata, sorted }) => {
                 <div className="flex flex-row text-sm space-x-4">
                   <div className="flex flex-row text-sm items-center text-center ">
                     <FontAwesomeIcon className="text-lg" icon={faEye} /> :{" "}
-                    {metadata.views}
+                    {/* {metadata.views} */}
+                    {postViews}
                   </div>
 
                   <div className="bg-white">
@@ -311,21 +311,34 @@ export async function generateMetadata(params) {
 }
 
 export async function getServerSideProps(context) {
-  console.log("Before getUsernameById");
   const { params } = context;
   const metadata = await generateMetadata(params);
   const userData = await getUsernameById(metadata.author);
-  console.log(userData);
+
+  const postId = metadata._id;
+  const response = await fetch(
+    `https://diaryblogapi2.onrender.com/api/posts/${postId}/views`,
+    {
+      method: "PUT",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update post views");
+  }
+
+  const postViewsData = await response.json();
+  const postViews = postViewsData.views;
 
   metadata.username = userData.username;
   metadata.image_base64 = userData.image_base64;
-  console.log(metadata.username); // Check if username is set
 
   const sorted = []; // Replace this with your actual sorted array
   return {
     props: {
       metadata,
       sorted,
+      postViews,
     },
   };
 }

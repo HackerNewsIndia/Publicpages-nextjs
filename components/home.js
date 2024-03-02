@@ -149,29 +149,29 @@ const Home = () => {
     };
   }, [handleScroll]);
 
-  const handlePostClick = (post) => {
-    const postId = post._id;
+  // const handlePostClick = (post) => {
+  //   const postId = post._id;
 
-    fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
-      method: "PUT",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.message);
-        // Update the view count locally for the post that was clicked.
-        //   const updatedPosts = posts.map((postItem) => {
-        //     if (postItem._id === postId) {
-        //       postItem.views = data.views; // Assuming data.views contains the updated view count.
-        //     }
-        //     return postItem;
-        //   });
-        //   setPosts(updatedPosts); // Update the state with the new post views.
-        // }
-      })
-      .catch((error) => {
-        console.error("Error incrementing views:", error);
-      });
-  };
+  //   fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
+  //     method: "PUT",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data.message);
+  //       // Update the view count locally for the post that was clicked.
+  //       //   const updatedPosts = posts.map((postItem) => {
+  //       //     if (postItem._id === postId) {
+  //       //       postItem.views = data.views; // Assuming data.views contains the updated view count.
+  //       //     }
+  //       //     return postItem;
+  //       //   });
+  //       //   setPosts(updatedPosts); // Update the state with the new post views.
+  //       // }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error incrementing views:", error);
+  //     });
+  // };
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -262,7 +262,7 @@ const Home = () => {
                           href={`/${post.blogSpace}/${post._id}/post`}
                           className="text-primary-500 hover:text-primary-600 "
                           aria-label={`Read more: "${post.title}"`}
-                          onClick={() => handlePostClick(post)}
+                          // onClick={() => handlePostClick(post)}
                         >
                           Read more &rarr;
                         </CustomLink>

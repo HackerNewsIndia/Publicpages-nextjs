@@ -171,32 +171,32 @@ const ViewPosts = () => {
     setPostSearch(e.target.value);
   };
 
-  const handlePostClick = (post) => {
-    console.log(post);
-    const postId = post._id;
-    // router.push(
-    //   `/${router.query.blogspace_id}/${router.query.blogspace_name}/${postId}/post`
-    // );
+  // const handlePostClick = (post) => {
+  //   console.log(post);
+  //   const postId = post._id;
+  //   // router.push(
+  //   //   `/${router.query.blogspace_id}/${router.query.blogspace_name}/${postId}/post`
+  //   // );
 
-    fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
-      method: "PUT",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.message);
-        // Update the view count locally for the post that was clicked.
-        // const updatedPosts = posts.map((postItem) => {
-        //   if (postItem._id === postId) {
-        //     postItem.views = data.views; // Assuming data.views contains the updated view count.
-        //   }
-        //   return postItem;
-        // });
-        // setPosts(updatedPosts); // Update the state with the new post views.
-      })
-      .catch((error) => {
-        console.error("Error incrementing views:", error);
-      });
-  };
+  //   fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
+  //     method: "PUT",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data.message);
+  //       // Update the view count locally for the post that was clicked.
+  //       // const updatedPosts = posts.map((postItem) => {
+  //       //   if (postItem._id === postId) {
+  //       //     postItem.views = data.views; // Assuming data.views contains the updated view count.
+  //       //   }
+  //       //   return postItem;
+  //       // });
+  //       // setPosts(updatedPosts); // Update the state with the new post views.
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error incrementing views:", error);
+  //     });
+  // };
 
   const filteredPosts = posts.filter((post) =>
     post.title.toLowerCase().includes(postSearch.toLowerCase())
@@ -380,7 +380,7 @@ const ViewPosts = () => {
                                 href={`/${router.query.blogspace_id}/${post._id}/post`}
                                 className="text-primary-500 hover:text-orange-600 "
                                 aria-label={`Read more: "${post.title}"`}
-                                onClick={() => handlePostClick(post)}
+                                // onClick={() => handlePostClick(post)}
                               >
                                 Read more &rarr;
                               </CustomLink>

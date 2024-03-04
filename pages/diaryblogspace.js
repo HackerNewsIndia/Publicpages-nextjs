@@ -398,7 +398,7 @@ const PublicBlogSpace = () => {
         />
         <meta
           property="og:image"
-          content="https://universe-nextjs.onrender.com/DBlogo.png"
+          content="https://https://diaryblog.connectingpeopletech.com/DBlogo.png"
         />
       </Head>
       <div>

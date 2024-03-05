@@ -237,7 +237,7 @@ const ViewPosts = () => {
         />
         <meta
           property="og:image"
-          content="https://universe-nextjs.onrender.com/DBlogo.pn"
+          content="https://diaryblog.connectingpeopletech.com/DBlogo.png"
         />
       </Head>
       <div>

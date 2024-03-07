@@ -20,7 +20,7 @@ function BlogProvider({ children }) {
         {/* <!-- Facebook Meta Tags --> */}
         <meta
           property="og:url"
-          content="https://universe-nextjs.onrender.com/"
+          content="https://diaryblog.connectingpeopletech.com/"
         />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="DiaryBlog All Post" />
@@ -30,7 +30,7 @@ function BlogProvider({ children }) {
         />
         <meta
           property="og:image"
-          content="https://universe-nextjs.onrender.com/DBlogo.png"
+          content="https://diaryblog.connectingpeopletech.com/DBlogo.png"
         />
 
         {/* <!-- Twitter Meta Tags --> */}
@@ -41,7 +41,7 @@ function BlogProvider({ children }) {
         />
         <meta
           property="twitter:url"
-          content="https://universe-nextjs.onrender.com/"
+          content="https://diaryblog.connectingpeopletech.com/"
         />
         <meta name="twitter:title" content="DiaryBlog All Post" />
         <meta
@@ -50,7 +50,7 @@ function BlogProvider({ children }) {
         />
         <meta
           name="twitter:image"
-          content="https://universe-nextjs.onrender.com/DBlogo.png"
+          content="https://diaryblog.connectingpeopletech.com/DBlogo.png"
         />
       </Head>
       <BlogContext.Provider

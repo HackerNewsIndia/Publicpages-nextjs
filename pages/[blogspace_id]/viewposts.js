@@ -9,6 +9,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import debounce from "lodash.debounce";
 import { BeatLoader } from "react-spinners";
+import Markdown from "markdown-to-jsx";
 
 const ViewPosts = () => {
   const router = useRouter();
@@ -23,6 +24,49 @@ const ViewPosts = () => {
   const [fetchingMore, setFetchingMore] = useState(false);
   const [allPostsLoaded, setAllPostsLoaded] = useState(false);
   const [lastPostId, setLastPostId] = useState("");
+
+  const H1 = ({ children }) => (
+    <h1 className="text-2xl font-bold mb-4">{children}</h1>
+  );
+  const H2 = ({ children }) => (
+    <h2 className="text-xl font-bold mb-4">{children}</h2>
+  );
+  const H3 = ({ children }) => (
+    <h3 className="text-lg font-bold mb-4">{children}</h3>
+  );
+  const P = ({ children }) => <p className="mb-4">{children}</p>;
+  const Hr = () => <hr />;
+  const a = ({ children }) => <a style={{ color: "blue" }}>{children}</a>;
+  const Img = ({ alt, src }) => (
+    <div style={{ textAlign: "center" }}>
+      <img
+        alt={alt}
+        src={src}
+        style={{
+          width: "100%",
+          maxWidth: "500px",
+          maxHeight: "300px",
+          display: "block",
+          margin: "0 auto",
+          borderRadius: "5px",
+        }}
+      />
+    </div>
+  );
+
+  const CodeBlock = ({ children }) => {
+    return (
+      <pre
+        style={{
+          backgroundColor: "#f3f4f6",
+          padding: "10px",
+          borderRadius: "5px",
+        }}
+      >
+        {children}
+      </pre>
+    );
+  };
 
   useEffect(() => {
     if (blog_id && blog_id !== "undefined") {
@@ -371,7 +415,22 @@ const ViewPosts = () => {
                               <div className="flex flex-wrap"></div>
                             </div>
                             <div className="prose max-w-none text-gray-500 ">
-                              {truncateText(post.description, 27)}
+                              <Markdown
+                                options={{
+                                  overrides: {
+                                    h1: { component: H1 },
+                                    h2: { component: H2 },
+                                    h3: { component: H3 },
+                                    p: { component: P },
+                                    img: { component: Img },
+                                    hr: { component: Hr },
+                                    a: { component: a },
+                                    code: { component: CodeBlock },
+                                  },
+                                }}
+                              >
+                                {truncateText(post.description, 10)}
+                              </Markdown>
                             </div>
                           </div>
                           <div className="flex items-center justify-between mt-4 text-slate-900">

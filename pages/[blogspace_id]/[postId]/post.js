@@ -104,6 +104,20 @@ const Post = ({ metadata, sorted, postViews }) => {
     </div>
   );
 
+  const CodeBlock = ({ children }) => {
+    return (
+      <pre
+        style={{
+          backgroundColor: "#f3f4f6",
+          padding: "10px",
+          borderRadius: "5px",
+        }}
+      >
+        {children}
+      </pre>
+    );
+  };
+
   const handleBackClick = () => {
     router.back();
   };
@@ -280,6 +294,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                       img: { component: Img },
                       hr: { component: Hr },
                       a: { component: a },
+                      code: { component: CodeBlock },
                     },
                   }}
                 >

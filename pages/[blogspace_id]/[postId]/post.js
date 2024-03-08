@@ -259,6 +259,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                       postId={postId}
                       blogId={blogspace_id}
                       postlikes={metadata.likes ? metadata.likes.length : ""}
+                      postStatus={metadata.status}
                     />
                   </span>
                   <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
@@ -266,6 +267,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                       post_title={metadata.title}
                       post_image={metadata.imageUrl}
                       post_description={metadata.description}
+                      postStatus={metadata.status}
                     />
                   </span>
                 </div>

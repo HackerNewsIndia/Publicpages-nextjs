@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { jwtDecode } from "jwt-decode";
 
-const Postsentiment = ({ postId, blogId, postlikes }) => {
+const Postsentiment = ({ postId, blogId, postlikes, postStatus }) => {
   const [isSentimentActive, setIsSentimentActive] = useState(false);
   const [selectedSentimentIcon, setSelectedSentimentIcon] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -85,36 +85,38 @@ const Postsentiment = ({ postId, blogId, postlikes }) => {
       onMouseEnter={() => setIsSentimentActive(true)}
       onMouseLeave={() => setIsSentimentActive(false)}
     >
-      <div className="flex flex-col">
-        <div>
-          {isSentimentActive ? (
-            <div className="flex text-md md:text-md lg:text-md bg-transparent rounded-md items-center">
+      {postStatus === "preview" ? null : (
+        <div className="flex flex-col">
+          <div>
+            {isSentimentActive ? (
+              <div className="flex text-md md:text-md lg:text-md bg-transparent rounded-md items-center">
+                <FontAwesomeIcon
+                  id="faHeart"
+                  className="pt-2 pb-2 pr-1 pl-1  hover:text-pink-700 duration-300 cursor-pointer"
+                  onClick={() => handleSentimentIcon("faHeart")}
+                  icon={faHeart}
+                />
+              </div>
+            ) : selectedSentimentIcon ? (
               <FontAwesomeIcon
-                id="faHeart"
-                className="pt-2 pb-2 pr-1 pl-1  hover:text-pink-700 duration-300 cursor-pointer"
-                onClick={() => handleSentimentIcon("faHeart")}
-                icon={faHeart}
+                icon={selectedSentimentIcon === "faHeart" ? faHeart : null}
+                className={`text-md md:text-2xl lg:text-2xl ${
+                  selectedSentimentIcon === "faHeart" ? "text-pink-700" : ""
+                }`}
               />
+            ) : (
+              <FontAwesomeIcon icon={faHeart} />
+            )}
+          </div>
+          <div>
+            <div className="text-xs text-slate-900">
+              {postlikes
+                ? `${postlikes} ${postlikes > 1 ? "likes" : "like"}`
+                : ""}
             </div>
-          ) : selectedSentimentIcon ? (
-            <FontAwesomeIcon
-              icon={selectedSentimentIcon === "faHeart" ? faHeart : null}
-              className={`text-md md:text-2xl lg:text-2xl ${
-                selectedSentimentIcon === "faHeart" ? "text-pink-700" : ""
-              }`}
-            />
-          ) : (
-            <FontAwesomeIcon icon={faHeart} />
-          )}
-        </div>
-        <div>
-          <div className="text-xs text-slate-900">
-            {postlikes
-              ? `${postlikes} ${postlikes > 1 ? "likes" : "like"}`
-              : ""}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

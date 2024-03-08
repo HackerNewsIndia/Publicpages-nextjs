@@ -12,7 +12,12 @@ import Head from "next/head";
 
 import { useRouter } from "next/router";
 
-const Sharepost = ({ post_title, post_image, post_description }) => {
+const Sharepost = ({
+  post_title,
+  post_image,
+  post_description,
+  postStatus,
+}) => {
   const [isShareIconActive, setIsShareIconActive] = useState(false);
   const [selectedShareIcon, setSelectedShareIcon] = useState(null);
 
@@ -45,17 +50,18 @@ const Sharepost = ({ post_title, post_image, post_description }) => {
       onMouseEnter={() => setIsShareIconActive(true)}
       onMouseLeave={() => setIsShareIconActive(false)}
     >
-      <div className="flex">
-        <div className="flex-col">
-          {isShareIconActive ? (
-            <div className="flex text-2xl bg-transparent rounded-md">
-              {/* <FontAwesomeIcon
+      {postStatus === "preview" ? null : (
+        <div className="flex">
+          <div className="flex-col">
+            {isShareIconActive ? (
+              <div className="flex text-2xl bg-transparent rounded-md">
+                {/* <FontAwesomeIcon
                 id="faLinkedin"
                 className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-blue-700 duration-300 cursor-pointer"
                 onClick={() => handleShareIcon("faLinkedin")}
                 icon={faLinkedin}
               /> */}
-              {/* <LinkedinShareButton url={window.location.href}>
+                {/* <LinkedinShareButton url={window.location.href}>
                 <FontAwesomeIcon
                   id="faLinkedin"
                   className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-blue-700 duration-300 cursor-pointer"
@@ -63,52 +69,52 @@ const Sharepost = ({ post_title, post_image, post_description }) => {
                   icon={faLinkedin}
                 />
               </LinkedinShareButton> */}
-              <a
-                href={`https://www.linkedin.com/shareArticle?url=${encodeURIComponent(
-                  currentUrl
-                )}&title=${encodeURIComponent(post_title)}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FontAwesomeIcon
-                  id="faLinkedin"
-                  className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-blue-700 duration-300 cursor-pointer"
-                  // onClick={() => handleShareIcon("faLinkedin")}
-                  icon={faLinkedin}
-                />
-              </a>
-              <a
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                  currentUrl
-                )}&text=${encodeURIComponent(
-                  post_title
-                )}&description=${encodeURIComponent(
-                  truncateText(post_description, 27)
-                )}&via=PeopleConninc&image=${encodeURIComponent(post_image)}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FontAwesomeIcon
-                  id="faLinkedin"
-                  className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-slate-700 duration-300 cursor-pointer"
-                  // onClick={() => handleShareIcon("faLinkedin")}
-                  icon={faXTwitter}
-                />
-              </a>
+                <a
+                  href={`https://www.linkedin.com/shareArticle?url=${encodeURIComponent(
+                    currentUrl
+                  )}&title=${encodeURIComponent(post_title)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FontAwesomeIcon
+                    id="faLinkedin"
+                    className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-blue-700 duration-300 cursor-pointer"
+                    // onClick={() => handleShareIcon("faLinkedin")}
+                    icon={faLinkedin}
+                  />
+                </a>
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                    currentUrl
+                  )}&text=${encodeURIComponent(
+                    post_title
+                  )}&description=${encodeURIComponent(
+                    truncateText(post_description, 27)
+                  )}&via=PeopleConninc&image=${encodeURIComponent(post_image)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FontAwesomeIcon
+                    id="faLinkedin"
+                    className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-slate-700 duration-300 cursor-pointer"
+                    // onClick={() => handleShareIcon("faLinkedin")}
+                    icon={faXTwitter}
+                  />
+                </a>
 
-              <a
-                href={`https://www.reddit.com/submit?url=${encodeURIComponent(
-                  currentUrl
-                )}&title=${encodeURIComponent(post_title)}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FontAwesomeIcon
-                  className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:text-orange-700 duration-300 cursor-pointer"
-                  icon={faRedditAlien}
-                />
-              </a>
-              {/* <TwitterShareButton title={post_title} url={currentUrl}>
+                <a
+                  href={`https://www.reddit.com/submit?url=${encodeURIComponent(
+                    currentUrl
+                  )}&title=${encodeURIComponent(post_title)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FontAwesomeIcon
+                    className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:text-orange-700 duration-300 cursor-pointer"
+                    icon={faRedditAlien}
+                  />
+                </a>
+                {/* <TwitterShareButton title={post_title} url={currentUrl}>
                 <FontAwesomeIcon
                   id="faLinkedin"
                   className="pt-2 pb-2 pr-1 pl-1 transition ease-in-out delay-150 hover:-translate-y-1  hover:text-blue-700 duration-300 cursor-pointer"
@@ -116,12 +122,13 @@ const Sharepost = ({ post_title, post_image, post_description }) => {
                   icon={faXTwitter}
                 />
               </TwitterShareButton> */}
-            </div>
-          ) : (
-            <FontAwesomeIcon icon={faShare} />
-          )}
+              </div>
+            ) : (
+              <FontAwesomeIcon icon={faShare} />
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

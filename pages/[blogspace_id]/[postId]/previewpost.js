@@ -38,7 +38,7 @@ const getUsernameById = async (userId) => {
   }
 };
 
-const Post = ({ metadata, sorted, postViews }) => {
+const PreviewPost = ({ metadata, sorted, postViews }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
@@ -212,7 +212,7 @@ const Post = ({ metadata, sorted, postViews }) => {
               //     postId={postId}
               //     post_title={metadata.title}
               //   />
-              <p>Sorry! You can't comment for preview post</p>
+              <p>Sorry! You cannot comment for preview post</p>
             ) : null}
           </div>
           <div
@@ -333,7 +333,7 @@ export async function getServerSideProps(context) {
   const metadata = await generateMetadata(params);
   const userData = await getUsernameById(metadata.author);
 
-  const postId = metadata._id;
+  //   const postId = metadata._id;
   //   const response = await fetch(
   //     `https://diaryblogapi2.onrender.com/api/posts/${postId}/views`,
   //     {
@@ -361,4 +361,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default Post;
+export default PreviewPost;

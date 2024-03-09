@@ -47,8 +47,8 @@ const PreviewPost = ({ metadata, sorted, postViews }) => {
   const [sortedPosts, setSortedPosts] = useState([]);
   // const [hasEffectRun, setHasEffectRun] = useState(false);
 
-  const { previewKey } = router.query;
-  console.log("previewKey:", previewKey);
+  const { Key } = router.query;
+  console.log("previewKey:", Key);
   console.log("pkey:", metadata.pkey);
 
   // useEffect(() => {

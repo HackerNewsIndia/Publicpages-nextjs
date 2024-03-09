@@ -48,6 +48,8 @@ const PreviewPost = ({ metadata, sorted, postViews }) => {
   // const [hasEffectRun, setHasEffectRun] = useState(false);
 
   const { previewKey } = router.query;
+  console.log("previewKey:", previewKey);
+  console.log("pkey:", metadata.pkey);
 
   // useEffect(() => {
   //   if (!hasEffectRun) {
@@ -179,7 +181,7 @@ const PreviewPost = ({ metadata, sorted, postViews }) => {
 
       <div>
         <Header />
-        {metadata.pkey === previewKey && (
+        {metadata.pkey == previewKey && (
           <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
             <div
               className={`bg-white text-black border border-slate-900 p-1 mt-4 ${

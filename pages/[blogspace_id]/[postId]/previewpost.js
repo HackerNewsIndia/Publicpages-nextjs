@@ -181,150 +181,150 @@ const PreviewPost = ({ metadata, sorted, postViews }) => {
 
       <div>
         <Header />
-        {metadata.pkey && (
-          // === key
-          <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
-            <div
-              className={`bg-white text-black border border-slate-900 p-1 mt-4 ${
-                isActive
-                  ? "fixed top-15 right-0 w-3/4 md:w-1/6 lg:w-1/6 h-2/3 md:h-3/4 lg:h-3/4 bg-gray-100 rounded-md p-2 transition-transform duration-10000 ease-in-out shadow-md z-999"
-                  : "fixed top-40 right-[-1%] bg-gray-100 rounded-full p-2 shadow-md text-md md:text-2xl lg:text-2xl"
-              } `}
-              onMouseEnter={showCommentBar}
-              style={{ zIndex: 100 }}
-            >
-              <div>
-                {isActive ? (
-                  <button
-                    onClick={closeCommentBar}
-                    className="absolute top-[-2%] right-[-1%] bg-white border border-slate-900 w-6 h-6 rounded-full hover:bg-black hover:text-white "
-                  >
-                    <FontAwesomeIcon icon={faXmark} />
-                  </button>
-                ) : null}
-              </div>
-              <div className="m-0 md:m-1 lg:m-1 font-mono text-md md:text-2xl lg:text-2xl">
-                {isActive ? (
-                  <h1>
-                    Type IT <FontAwesomeIcon icon={faFeather} />
-                  </h1>
-                ) : (
-                  <FontAwesomeIcon icon={faFeather} />
-                )}
-              </div>
+        {/* {( */}
+
+        <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
+          <div
+            className={`bg-white text-black border border-slate-900 p-1 mt-4 ${
+              isActive
+                ? "fixed top-15 right-0 w-3/4 md:w-1/6 lg:w-1/6 h-2/3 md:h-3/4 lg:h-3/4 bg-gray-100 rounded-md p-2 transition-transform duration-10000 ease-in-out shadow-md z-999"
+                : "fixed top-40 right-[-1%] bg-gray-100 rounded-full p-2 shadow-md text-md md:text-2xl lg:text-2xl"
+            } `}
+            onMouseEnter={showCommentBar}
+            style={{ zIndex: 100 }}
+          >
+            <div>
               {isActive ? (
-                //   <Comments
-                //     blogId={blogspace_id}
-                //     postId={postId}
-                //     post_title={metadata.title}
-                //   />
-                <p>Sorry! You cannot comment for preview post</p>
+                <button
+                  onClick={closeCommentBar}
+                  className="absolute top-[-2%] right-[-1%] bg-white border border-slate-900 w-6 h-6 rounded-full hover:bg-black hover:text-white "
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
               ) : null}
             </div>
-            <div
-              className={`my-5 mt-3 w-full md:w-4/5 mx-auto ${
-                isActive ? "ml-4 mr-1" : "mx-auto"
-              }`}
-            >
-              <div className="relative mx-auto justify-center flex items-center">
-                <img
-                  className="w-full sm:w-11/12 md:w-4/5 lg:w-4/5 h-1/2 object-cover rounded-md mt-5 mb-1 mx-5 justify-center"
-                  src={metadata.imageUrl || "path-to-default-image.jpg"}
-                  alt={`Image for ${metadata.title}`}
-                />
-                <button
-                  className="hidden sm:block absolute top-4 left-11 hover:bg-transparent transform transition-transform duration-300 ease-in-out hover:scale-105 z-10"
-                  onClick={handleBackClick}
-                >
-                  <FontAwesomeIcon icon={faArrowLeft} />
-                </button>
-              </div>
-              <div className="p-5 pt-0">
-                <h1 className="text-2xl mb-2 text-black font-semibold">
-                  {metadata.title}
-                  <a
-                    href={`/profile?user_id=${encodeURIComponent(
-                      metadata.author
-                    )}`}
-                    className="text-primary-500 hover:text-primary-600 hover:underline"
-                  >
-                    <div className="flex items-center">
-                      <img
-                        src={`data:image/jpeg;base64, ${metadata.image_base64}`}
-                        alt="avatar"
-                        className="object-cover w-10 h-10 mx-2 rounded-full"
-                      />
-
-                      <span>{metadata.username}</span>
-                    </div>
-                  </a>
+            <div className="m-0 md:m-1 lg:m-1 font-mono text-md md:text-2xl lg:text-2xl">
+              {isActive ? (
+                <h1>
+                  Type IT <FontAwesomeIcon icon={faFeather} />
                 </h1>
-                <div className="flex flex-row text-sm md:text-sm lg:text-sm justify-between items-center text-center ">
-                  <div className="flex flex-row">
-                    <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
-                      <Postsentiment
-                        postId={postId}
-                        blogId={blogspace_id}
-                        postlikes={metadata.likes ? metadata.likes.length : ""}
-                        postStatus={metadata.status}
-                      />
-                    </span>
-                    <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
-                      <Sharepost
-                        post_title={metadata.title}
-                        post_image={metadata.imageUrl}
-                        post_description={metadata.description}
-                        postStatus={metadata.status}
-                      />
-                    </span>
-                  </div>
-                  <div className="flex flex-row text-sm space-x-4">
-                    <div className="flex flex-row text-sm items-center text-center ">
-                      <FontAwesomeIcon className="text-lg" icon={faEye} /> :{" "}
-                      {metadata.views}
-                      {/* {postViews} */}
-                    </div>
+              ) : (
+                <FontAwesomeIcon icon={faFeather} />
+              )}
+            </div>
+            {isActive ? (
+              //   <Comments
+              //     blogId={blogspace_id}
+              //     postId={postId}
+              //     post_title={metadata.title}
+              //   />
+              <p>Sorry! You cannot comment for preview post</p>
+            ) : null}
+          </div>
+          <div
+            className={`my-5 mt-3 w-full md:w-4/5 mx-auto ${
+              isActive ? "ml-4 mr-1" : "mx-auto"
+            }`}
+          >
+            <div className="relative mx-auto justify-center flex items-center">
+              <img
+                className="w-full sm:w-11/12 md:w-4/5 lg:w-4/5 h-1/2 object-cover rounded-md mt-5 mb-1 mx-5 justify-center"
+                src={metadata.imageUrl || "path-to-default-image.jpg"}
+                alt={`Image for ${metadata.title}`}
+              />
+              <button
+                className="hidden sm:block absolute top-4 left-11 hover:bg-transparent transform transition-transform duration-300 ease-in-out hover:scale-105 z-10"
+                onClick={handleBackClick}
+              >
+                <FontAwesomeIcon icon={faArrowLeft} />
+              </button>
+            </div>
+            <div className="p-5 pt-0">
+              <h1 className="text-2xl mb-2 text-black font-semibold">
+                {metadata.title}
+                <a
+                  href={`/profile?user_id=${encodeURIComponent(
+                    metadata.author
+                  )}`}
+                  className="text-primary-500 hover:text-primary-600 hover:underline"
+                >
+                  <div className="flex items-center">
+                    <img
+                      src={`data:image/jpeg;base64, ${metadata.image_base64}`}
+                      alt="avatar"
+                      className="object-cover w-10 h-10 mx-2 rounded-full"
+                    />
 
-                    <div className="bg-white">
-                      <FontAwesomeIcon icon={faBookmark} />
-                    </div>
-
-                    <div className="italic">{timeToRead} min</div>
+                    <span>{metadata.username}</span>
                   </div>
+                </a>
+              </h1>
+              <div className="flex flex-row text-sm md:text-sm lg:text-sm justify-between items-center text-center ">
+                <div className="flex flex-row">
+                  <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
+                    <Postsentiment
+                      postId={postId}
+                      blogId={blogspace_id}
+                      postlikes={metadata.likes ? metadata.likes.length : ""}
+                      postStatus={metadata.status}
+                    />
+                  </span>
+                  <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">
+                    <Sharepost
+                      post_title={metadata.title}
+                      post_image={metadata.imageUrl}
+                      post_description={metadata.description}
+                      postStatus={metadata.status}
+                    />
+                  </span>
                 </div>
-                <div className="pt-8 text-black leading-6 text-justify">
-                  <Markdown
-                    options={{
-                      overrides: {
-                        h1: { component: H1 },
-                        h2: { component: H2 },
-                        h3: { component: H3 },
-                        p: { component: P },
-                        img: { component: Img },
-                        hr: { component: Hr },
-                        a: { component: a },
-                        code: { component: CodeBlock },
-                      },
-                    }}
-                  >
-                    {metadata.description}
-                  </Markdown>
-                  <TextToSpeech
-                    text={stripMarkdown(metadata.description)}
-                    setCurrentWord={setCurrentWord}
-                    currentWord={currentWord}
-                    isActive={isActive}
-                  />
+                <div className="flex flex-row text-sm space-x-4">
+                  <div className="flex flex-row text-sm items-center text-center ">
+                    <FontAwesomeIcon className="text-lg" icon={faEye} /> :{" "}
+                    {metadata.views}
+                    {/* {postViews} */}
+                  </div>
+
+                  <div className="bg-white">
+                    <FontAwesomeIcon icon={faBookmark} />
+                  </div>
+
+                  <div className="italic">{timeToRead} min</div>
                 </div>
+              </div>
+              <div className="pt-8 text-black leading-6 text-justify">
+                <Markdown
+                  options={{
+                    overrides: {
+                      h1: { component: H1 },
+                      h2: { component: H2 },
+                      h3: { component: H3 },
+                      p: { component: P },
+                      img: { component: Img },
+                      hr: { component: Hr },
+                      a: { component: a },
+                      code: { component: CodeBlock },
+                    },
+                  }}
+                >
+                  {metadata.description}
+                </Markdown>
+                <TextToSpeech
+                  text={stripMarkdown(metadata.description)}
+                  setCurrentWord={setCurrentWord}
+                  currentWord={currentWord}
+                  isActive={isActive}
+                />
               </div>
             </div>
           </div>
-        )}
-        {metadata.pkey !== previewKey && (
+        </div>
+        {/* )} */}
+        {/* {metadata.pkey !== previewKey && (
           <p className="flex items-center m-auto">
             Sorry! you are not authorised to preview this post{" "}
           </p>
-        )}
+        )} */}
         <Footer />
       </div>
     </>

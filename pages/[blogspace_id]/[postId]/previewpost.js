@@ -181,7 +181,7 @@ const PreviewPost = ({ metadata, sorted, postViews }) => {
 
       <div>
         <Header />
-        {metadata.pkey == key && (
+        {metadata.pkey === key && (
           <div className="relative pt-3 bg-white p-3 md:p-0 lg:p-0">
             <div
               className={`bg-white text-black border border-slate-900 p-1 mt-4 ${

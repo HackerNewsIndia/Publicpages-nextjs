@@ -17,6 +17,7 @@ import Sharepost from "./sharepost";
 import Footer from "../../../components/footer";
 import ImageResizer from "react-image-file-resizer";
 import { NextSeo } from "next-seo";
+import { format } from "date-fns";
 
 const getUsernameById = async (userId) => {
   try {
@@ -43,26 +44,22 @@ const Post = ({ metadata, sorted, postViews }) => {
   const { blogspace_id, postId } = router.query || {};
   const [currentWord, setCurrentWord] = useState("");
   const [isActive, setIsActive] = useState(false);
-  // const [postViews, setPostViews] = useState(metadata.views);
   const [sortedPosts, setSortedPosts] = useState([]);
-  // const [hasEffectRun, setHasEffectRun] = useState(false);
+  const [blogSpaceData, setBlogSpaceData] = useState("");
 
-  // useEffect(() => {
-  //   if (!hasEffectRun) {
-  // fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
-  //   method: "PUT",
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log("post_views", data);
-  //     setPostViews(data.views);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error incrementing views:", error);
-  //   });
-  //     setHasEffectRun(true);
-  //   }
-  // }, [hasEffectRun]);
+  useEffect(() => {
+    fetch(`https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("post_views", data);
+        setBlogSpaceData(data);
+      })
+      .catch((error) => {
+        console.error("Error incrementing views:", error);
+      });
+  }, [blogspace_id]);
 
   const showCommentBar = () => {
     setIsActive(true);
@@ -140,6 +137,15 @@ const Post = ({ metadata, sorted, postViews }) => {
 
   const wordCount = metadata.description.split(" ").length;
   const timeToRead = calculateTimeToRead(wordCount);
+
+  // const formatDate = (dateString) => {
+  //   const options = { year: "numeric", month: "long", day: "numeric" };
+  //   return new Date(dateString).toLocaleDateString(undefined, options);
+  // };
+
+  const formatDate = (date) => {
+    return format(new Date(date), "MMMM d, yyyy"); // Format the date as "Month day, year"
+  };
 
   return (
     <>
@@ -233,25 +239,50 @@ const Post = ({ metadata, sorted, postViews }) => {
               </button>
             </div>
             <div className="p-5 pt-0">
-              <h1 className="text-2xl mb-2 text-black font-semibold">
-                {metadata.title}
-                <a
-                  href={`/profile?user_id=${encodeURIComponent(
-                    metadata.author
-                  )}`}
-                  className="text-primary-500 hover:text-primary-600 hover:underline"
-                >
-                  <div className="flex items-center">
+              <div className="mb-2">
+                <h1 className="text-2xl mb-5 text-black font-semibold">
+                  {metadata.title}
+                </h1>
+                <div className="flex flex-col md:flex-row md:justify-between md:items-center text-primary-500">
+                  <div className="flex items-center mb-2 md:mb-0">
                     <img
                       src={`data:image/jpeg;base64, ${metadata.image_base64}`}
                       alt="avatar"
                       className="object-cover w-10 h-10 mx-2 rounded-full"
                     />
-
-                    <span>{metadata.username}</span>
+                    <span className="flex flex-col">
+                      <a
+                        href={`/profile?user_id=${encodeURIComponent(
+                          metadata.author
+                        )}`}
+                        className="text-lg hover:underline hover:decoration-1"
+                      >
+                        {metadata.username}
+                      </a>
+                      <div className="flex flex-row text-sm text-center space-x-2">
+                        <p>Published in</p>
+                        <img
+                          className="object-fill w-4 h-4 rounded-full"
+                          src={blogSpaceData.image_url}
+                          alt="Blog Space"
+                        />
+                        <a href={`/${blogspace_id}/viewposts`}>
+                          {blogSpaceData.name}
+                        </a>
+                        <a
+                          href={`/${blogspace_id}/subscribe`}
+                          className="text-blue-400 font-bold underline decoration-1"
+                        >
+                          Follow
+                        </a>
+                      </div>
+                    </span>
                   </div>
-                </a>
-              </h1>
+                  <div className="text-sm font-medium leading-6 text-gray-500">
+                    <div>{formatDate(metadata.createDate)}</div>
+                  </div>
+                </div>
+              </div>
               <div className="flex flex-row text-sm md:text-sm lg:text-sm justify-between items-center text-center ">
                 <div className="flex flex-row">
                   <span className="w-10 flex-row text-sm md:text-sm lg:text-sm">

@@ -302,6 +302,16 @@ const ViewPosts = () => {
       });
   };
 
+  const generateRandomImageUrls = (count) => {
+    const imageUrls = [];
+    for (let i = 0; i < count; i++) {
+      imageUrls.push(`https://picsum.photos/200/200?random=${i}`);
+    }
+    return imageUrls;
+  };
+
+  const randomImageUrl = generateRandomImageUrls(1);
+
   return (
     <>
       <Head>
@@ -329,14 +339,17 @@ const ViewPosts = () => {
                   <h1 className="text-3xl font-bold my-4">
                     {blogSpaceData.name}
                   </h1>
-                  <p className="text-md text-slate-500 mb-4">
+                  <p className="text-md text-slate-500 mb-4 text-pretty text-ellipsis overflow-hidden">
                     {blogSpaceData.url}
                   </p>
                   <div className="flex flex-row space-x-10 items-center">
                     <div className="flex flex-row space-x-3 items-center">
                       <span>
                         <img
-                          src={`data:image/jpeg;base64, ${userImage}`}
+                          src={
+                            `data:image/jpeg;base64, ${userImage}` ||
+                            `data:image/jpeg;base64, ${randomImageUrl}`
+                          }
                           alt="user_image"
                           className="object-cover w-10 h-10 mx-2 rounded-full"
                         />
@@ -361,9 +374,10 @@ const ViewPosts = () => {
               </div>
               <div className="flex items-center justify-center w-full  md:w-2/5 p-2">
                 <img
-                  src={blogSpaceData.image_url}
+                  src={blogSpaceData.image_url || `${randomImageUrl}`}
                   alt="Logo of blogSpace"
-                  className="rounded-md w-full lg:w-3/4 xl:w-3/4 h-full"
+                  className="rounded-md w-96 h-56 border-2 border-slate-200 object-cover"
+                  // style={{ width: "100%", height: "auto" }}
                 />
               </div>
             </div>

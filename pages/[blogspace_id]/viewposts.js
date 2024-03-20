@@ -361,13 +361,13 @@ const ViewPosts = () => {
             <div className="flex flex-row justify-between flex-wrap pb-4">
               <div className="w-full md:w-3/5 p-2 md:pr-0 md:pb-2">
                 <div className="flex flex-col text-wrap">
-                  <h1 className="text-3xl font-bold my-4">
+                  <h1 className="text-3xl text-slate-900 font-bold my-4">
                     {blogSpaceData.name}
                   </h1>
                   <p className="text-md text-slate-500 mb-4 text-pretty text-ellipsis overflow-hidden">
                     {blogSpaceData.url}
                   </p>
-                  <div className="flex flex-row space-x-10 items-center">
+                  <div className="flex flex-row text-slate-900 space-x-10 items-center">
                     <div className="flex flex-row space-x-3 items-center">
                       <span>
                         <img
@@ -414,7 +414,7 @@ const ViewPosts = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="border-2 border-gray-300 rounded-md w-full md:w-3/4 p-2"
+                  className="border-2 border-gray-300 bg-white text-slate-900 rounded-md w-full md:w-3/4 p-2"
                   onChange={(e) => handleEmail(e)}
                   value={email}
                 />

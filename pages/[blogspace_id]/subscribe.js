@@ -103,7 +103,7 @@ const SubscribePage = () => {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center m-5 md:m-10">
+      <div className="flex flex-col items-center bg-white m-5 md:m-10">
         <img
           src={blogSpaceData.image_url}
           className="rounded-md w-full md:w-1/3 mb-5"
@@ -123,7 +123,7 @@ const SubscribePage = () => {
           <input
             type="email"
             placeholder="Enter your email"
-            className="px-2 py-1 rounded-md border-2 border-slate-300 w-full md:w-auto"
+            className="px-2 py-1 rounded-md border-2 border-slate-300 text-slate-900 bg-white w-full md:w-auto"
             value={email}
             onChange={(e) => handleInputChange(e)}
           />

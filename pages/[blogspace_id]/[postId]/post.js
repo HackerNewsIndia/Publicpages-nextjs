@@ -259,8 +259,8 @@ const Post = ({ metadata, sorted, postViews }) => {
                       >
                         {metadata.username}
                       </a>
-                      <div className="flex flex-row text-sm text-center space-x-2">
-                        <p>Published in</p>
+                      <div className="flex flex-row text-slate-900 text-sm text-center items-center space-x-2">
+                        <p className="hidden md:block">Published in</p>
                         <img
                           className="object-fill w-4 h-4 rounded-full"
                           src={blogSpaceData.image_url}

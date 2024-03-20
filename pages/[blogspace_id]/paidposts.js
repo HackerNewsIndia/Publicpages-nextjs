@@ -329,7 +329,7 @@ const ViewPosts = () => {
       <div>
         <Header />
         <div>
-          <div className="flex flex-col pl-4 pr-4 pb-3 mx-auto md:pl-20 md:pr-5 lg:mx-4 xl:mx-4">
+          <div className="bg-white flex flex-col pl-4 pr-4 pb-3 mx-auto md:pl-20 md:pr-5 lg:mx-4 xl:mx-4">
             <div className="flex flex-row justify-between flex-wrap pb-4">
               <div className="w-full md:w-3/5 p-2 md:pr-0 md:pb-2">
                 <h1 className="text-3xl text-slate-500 font-bold my-4">

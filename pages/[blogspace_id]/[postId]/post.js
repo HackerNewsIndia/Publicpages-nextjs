@@ -302,11 +302,11 @@ const Post = ({ metadata, sorted, postViews }) => {
                     />
                   </span>
                 </div>
-                <div className="flex flex-row text-sm space-x-4">
-                  <div className="flex flex-row text-sm items-center text-center ">
-                    <FontAwesomeIcon className="text-lg" icon={faEye} /> :{" "}
+                <div className="flex flex-row text-slate-900 text-sm space-x-4">
+                  <div className="flex flex-row text-sm items-center text-center justify-center space-x-1 ">
+                    <FontAwesomeIcon className="text-md" icon={faEye} />
                     {/* {metadata.views} */}
-                    {postViews}
+                    <p>{postViews}</p>
                   </div>
 
                   <div className="bg-white">

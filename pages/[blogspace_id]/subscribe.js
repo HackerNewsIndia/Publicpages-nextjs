@@ -103,75 +103,77 @@ const SubscribePage = () => {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center bg-white m-5 md:m-10">
-        <img
-          src={blogSpaceData.image_url}
-          className="rounded-md w-full md:w-1/3 mb-5"
-          alt="Blog Space"
-        />
-        <h1 className="text-3xl font-bold text-slate-600 mb-5 text-center">
-          {blogSpaceData.name}
-        </h1>
-        <div className="flex flex-row space-x-2 mb-5 text-center items-center">
-          <FontAwesomeIcon icon={faPeopleGroup} />
-          <p>{blogSpaceData.followers} Followers</p>
-        </div>
-        <form
-          onSubmit={(e) => handleSubmit(e)}
-          className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-5"
-        >
-          <input
-            type="email"
-            placeholder="Enter your email"
-            className="px-2 py-1 rounded-md border-2 border-slate-300 text-slate-900 bg-white w-full md:w-auto"
-            value={email}
-            onChange={(e) => handleInputChange(e)}
+      <div className="bg-white text-slate-900">
+        <div className="flex flex-col items-center bg-white m-5 md:m-10">
+          <img
+            src={blogSpaceData.image_url}
+            className="rounded-md w-full md:w-1/3 mb-5"
+            alt="Blog Space"
           />
-          <button
-            type="submit"
-            className="bg-slate-800 text-white px-4 py-1 rounded-md w-full md:w-auto"
-          >
-            Subscribe
-          </button>
-        </form>
-
-        {responseMessage && (
-          <p className="mb-5 text-green-500 text-center">{responseMessage}</p>
-        )}
-
-        {userData && (
-          <div className="flex flex-row space-x-2 text-center mb-5">
-            <img
-              src={`data:image/jpeg;base64, ${userData.image_base64}`}
-              alt="avatar"
-              className="object-cover w-8 h-8 mx-2 rounded-full"
-            />
-            <div>{userData.username}</div>
-          </div>
-        )}
-
-        <div className="flex flex-col items-center">
-          <h1 className="text-slate-500 text-2xl font-bold mb-2">
-            Get Our Updates
+          <h1 className="text-3xl font-bold text-slate-600 mb-5 text-center">
+            {blogSpaceData.name}
           </h1>
-          <p className="text-md text-center mb-5">
-            Find out about events and other news
-          </p>
-          {emailAdded === true ? (
+          <div className="flex flex-row space-x-2 mb-5 text-slate-900 text-center items-center">
+            <FontAwesomeIcon icon={faPeopleGroup} />
+            <p>{blogSpaceData.followers} Followers</p>
+          </div>
+          <form
+            onSubmit={(e) => handleSubmit(e)}
+            className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-5"
+          >
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="px-2 py-1 rounded-md border-2 border-slate-300 text-slate-900 bg-white w-full md:w-auto"
+              value={email}
+              onChange={(e) => handleInputChange(e)}
+            />
             <button
-              className="border-0 cursor-pointer mt-2 mb-5 text-slate-500 underline decoration-2"
-              onClick={() => handleNotNowButton()}
+              type="submit"
+              className="bg-slate-800 text-white px-4 py-1 rounded-md w-full md:w-auto"
             >
-              Back
+              Subscribe
             </button>
-          ) : (
-            <button
-              className="border-0 cursor-pointer mt-2 mb-5 text-slate-500 underline decoration-2"
-              onClick={() => handleNotNowButton()}
-            >
-              Not now
-            </button>
+          </form>
+
+          {responseMessage && (
+            <p className="mb-5 text-green-500 text-center">{responseMessage}</p>
           )}
+
+          {userData && (
+            <div className="flex flex-row space-x-2 text-slate-900 text-center mb-5">
+              <img
+                src={`data:image/jpeg;base64, ${userData.image_base64}`}
+                alt="avatar"
+                className="object-cover w-8 h-8 mx-2 rounded-full"
+              />
+              <div>{userData.username}</div>
+            </div>
+          )}
+
+          <div className="flex flex-col items-center">
+            <h1 className="text-slate-500 text-2xl font-bold mb-2">
+              Get Our Updates
+            </h1>
+            <p className="text-md text-slate-900 text-center mb-5">
+              Find out about events and other news
+            </p>
+            {emailAdded === true ? (
+              <button
+                className="border-0 cursor-pointer mt-2 mb-5 text-slate-500 underline decoration-2"
+                onClick={() => handleNotNowButton()}
+              >
+                Back
+              </button>
+            ) : (
+              <button
+                className="border-0 cursor-pointer mt-2 mb-5 text-slate-500 underline decoration-2"
+                onClick={() => handleNotNowButton()}
+              >
+                Not now
+              </button>
+            )}
+          </div>
         </div>
       </div>
 

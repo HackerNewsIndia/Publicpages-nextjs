@@ -32,6 +32,7 @@ const ViewPosts = () => {
   const [email, setEmail] = useState("");
   const [emailAdded, setEmailAdded] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   useEffect(() => {
     fetch(`https://diaryblogapi2.onrender.com/api/blogSpace/${blog_id}`)
@@ -289,45 +290,63 @@ const ViewPosts = () => {
     return time;
   };
 
+  const handleBlur = () => {
+    setEmailError("");
+  };
+
   const handleEmail = (e) => {
-    setEmail(e.target.value);
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+    const isValid = isValidEmail(emailValue);
+    if (!isValid) {
+      setEmailError("Enter a valid Email");
+    } else {
+      setEmailError("");
+    }
     setResponseMessage("");
+  };
+
+  const isValidEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await fetch(
-      `https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}/follow`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email }),
-      }
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else if (response.status === 400) {
-          throw new Error("Email is already subscribed");
-        } else {
-          throw new Error("Network response was not ok");
+    if (email === "") {
+      setEmailError("Enter your Email");
+    } else {
+      await fetch(
+        `https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}/follow`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: email }),
         }
-      })
-      .then((data) => {
-        console.log(data);
-        setResponseMessage(data.message);
-        setEmail("");
-        setEmailAdded(true);
-        console.log(data.message);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setResponseMessage(error.message);
-        setEmail("");
-      });
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else if (response.status === 400) {
+            throw new Error("Email is already subscribed");
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          setResponseMessage(data.message);
+          setEmail("");
+          setEmailAdded(true);
+          console.log(data.message);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setResponseMessage(error.message);
+          setEmail("");
+        });
+    }
   };
 
   const generateRandomImageUrls = (count) => {
@@ -416,6 +435,7 @@ const ViewPosts = () => {
                   placeholder="Enter your email"
                   className="border-2 border-gray-300 bg-white text-slate-900 rounded-md w-full md:w-3/4 p-2"
                   onChange={(e) => handleEmail(e)}
+                  onBlur={handleBlur}
                   value={email}
                 />
                 <button
@@ -429,6 +449,11 @@ const ViewPosts = () => {
             {responseMessage && (
               <p className="flex items-center justify-center text-green-500">
                 {responseMessage}
+              </p>
+            )}
+            {emailError && (
+              <p className="flex items-center justify-center text-red-500">
+                {emailError}
               </p>
             )}
           </div>

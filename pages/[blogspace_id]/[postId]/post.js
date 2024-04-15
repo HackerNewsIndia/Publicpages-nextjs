@@ -9,6 +9,8 @@ import { faFeather } from "@fortawesome/free-solid-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import Markdown from "markdown-to-jsx";
+import MarkdownIt from "markdown-it";
+// import ReactMarkdown from "react-markdown";
 import TextToSpeech from "./texttospeech";
 import Comments from "./comments";
 import Header from "../../../components/header";
@@ -18,6 +20,9 @@ import Footer from "../../../components/footer";
 import ImageResizer from "react-image-file-resizer";
 import { NextSeo } from "next-seo";
 import { format } from "date-fns";
+// import { MarkdownBlock, MarkdownSpan } from "md-block";
+
+const mdparser = new MarkdownIt();
 
 const getUsernameById = async (userId) => {
   try {
@@ -72,18 +77,36 @@ const Post = ({ metadata, sorted, postViews }) => {
   const width = 1200;
   const height = 627;
 
-  const H1 = ({ children }) => (
-    <h1 className="text-2xl font-bold mb-4">{children}</h1>
+  const H1 = ({ children, id }) => (
+    <h1 className="text-2xl font-bold mb-4" id={id}>
+      {children}
+    </h1>
   );
-  const H2 = ({ children }) => (
-    <h2 className="text-xl font-bold mb-4">{children}</h2>
+  const H2 = ({ children, id }) => (
+    <h2 className="text-xl font-bold mb-4" id={id}>
+      {children}
+    </h2>
   );
-  const H3 = ({ children }) => (
-    <h3 className="text-lg font-bold mb-4">{children}</h3>
+  const H3 = ({ children, id }) => (
+    <h3 className="text-lg font-bold mb-4" id={id}>
+      {children}
+    </h3>
   );
   const P = ({ children }) => <p className="mb-4">{children}</p>;
-  const Hr = () => <hr />;
-  const a = ({ children }) => <a style={{ color: "blue" }}>{children}</a>;
+  const a = ({ children, href }) => (
+    <a className="ml-4" style={{ color: "blue" }} href={href}>
+      {children}
+    </a>
+  );
+  // const a = ({ children, href, id }) => (
+  //   <a className="text-blue hover:underline" href={href} id={id}>
+  //     {children}
+  //   </a>)
+  // const A = ({ children, ...props }) => (
+  //   <a className="text-blue-500 hover:underline" {...props}>
+  //     {children}
+  //   </a>
+  // );
   const Img = ({ alt, src }) => (
     <div style={{ textAlign: "center" }}>
       <img
@@ -104,6 +127,7 @@ const Post = ({ metadata, sorted, postViews }) => {
   const CodeBlock = ({ children }) => {
     return (
       <pre
+        className="overflow-x-auto mb-4"
         style={{
           backgroundColor: "#f3f4f6",
           padding: "10px",
@@ -114,6 +138,74 @@ const Post = ({ metadata, sorted, postViews }) => {
       </pre>
     );
   };
+
+  const Ul = ({ children, id }) => (
+    <ul className="list-disc list-inside mb-4" id={id}>
+      {children}
+    </ul>
+  );
+  const Ol = ({ children, id }) => (
+    <ol className="list-decimal list-inside mb-4" id={id}>
+      {children}
+    </ol>
+  );
+  const Li = ({ children, id }) => (
+    <li className="mb-2" id={id}>
+      {children}
+    </li>
+  );
+  const Blockquote = ({ children }) => (
+    <blockquote className="border-l-4 border-gray-400 pl-2 mb-4">
+      {children}
+    </blockquote>
+  );
+  const Hr = () => <hr className="my-4 border-gray-400" />;
+  const InlineCode = ({ children }) => (
+    <code className="bg-gray-200 px-1 py-0.5 rounded-md">{children}</code>
+  );
+  const Table = ({ children }) => (
+    <table className="border-collapse border border-gray-300 mb-4">
+      {children}
+    </table>
+  );
+  const THead = ({ children }) => (
+    <thead className="bg-gray-100">{children}</thead>
+  );
+  const TBody = ({ children }) => <tbody>{children}</tbody>;
+  const Tr = ({ children }) => <tr>{children}</tr>;
+  const Th = ({ children }) => (
+    <th className="border border-gray-300 p-2">{children}</th>
+  );
+  const Td = ({ children }) => (
+    <td className="border border-gray-300 p-2">{children}</td>
+  );
+  const Emphasis = ({ children }) => <em>{children}</em>;
+  const Strong = ({ children }) => <strong>{children}</strong>;
+  const H4 = ({ children }) => (
+    <h4 className="text-lg font-bold mb-4">{children}</h4>
+  );
+  const H5 = ({ children }) => (
+    <h5 className="text-base font-bold mb-4">{children}</h5>
+  );
+  const H6 = ({ children }) => (
+    <h6 className="text-sm font-bold mb-4">{children}</h6>
+  );
+  // const Link = ({ children, href, id }) => (
+  //   <a className="text-blue-500 hover:underline" href={href} id={id}>
+  //     {children}
+  //   </a>
+  // );
+  const Figure = ({ children }) => <figure className="mb-4">{children}</figure>;
+  const Figcaption = ({ children }) => (
+    <figcaption className="text-sm text-gray-500 mt-2">{children}</figcaption>
+  );
+  const Abbr = ({ children, title }) => <abbr title={title}>{children}</abbr>;
+  const Dl = ({ children }) => <dl className="mb-4">{children}</dl>;
+  const Dt = ({ children }) => <dt className="font-bold mb-1">{children}</dt>;
+  const Dd = ({ children }) => <dd className="mb-2">{children}</dd>;
+  const Strikethrough = ({ children }) => <del>{children}</del>;
+  const Superscript = ({ children }) => <sup>{children}</sup>;
+  const Subscript = ({ children }) => <sub>{children}</sub>;
 
   const handleBackClick = () => {
     router.back();
@@ -328,11 +420,42 @@ const Post = ({ metadata, sorted, postViews }) => {
                       hr: { component: Hr },
                       a: { component: a },
                       code: { component: CodeBlock },
+                      ul: { component: Ul },
+                      ol: { component: Ol },
+                      li: { component: Li },
+                      blockquote: { component: Blockquote },
+                      inlineCode: { component: InlineCode },
+                      table: { component: Table },
+                      thead: { component: THead },
+                      tbody: { component: TBody },
+                      tr: { component: Tr },
+                      th: { component: Th },
+                      td: { component: Td },
+                      em: { component: Emphasis },
+                      strong: { component: Strong },
+                      h4: { component: H4 },
+                      h5: { component: H5 },
+                      h6: { component: H6 },
+                      // link: { component: Link },
+                      figure: { component: Figure },
+                      figcaption: { component: Figcaption },
+                      abbr: { component: Abbr },
+                      dl: { component: Dl },
+                      dt: { component: Dt },
+                      dd: { component: Dd },
+                      del: { component: Strikethrough },
+                      sup: { component: Superscript },
+                      sub: { component: Subscript },
                     },
                   }}
                 >
                   {metadata.description}
                 </Markdown>
+                {/* <pre>
+                  <code>{metadata.description}</code>
+                </pre> */}
+                {/* <ReactMarkdown>{metadata.description}</ReactMarkdown> */}
+                {/* <MarkdownBlock>{metadata.description}</MarkdownBlock> */}
                 <TextToSpeech
                   text={stripMarkdown(metadata.description)}
                   setCurrentWord={setCurrentWord}

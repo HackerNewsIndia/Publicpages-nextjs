@@ -105,7 +105,8 @@ const SubscribePage = () => {
     <>
     <Head>
  <title>{blogSpaceData.name} - Subscribe</title>
- <meta name="description" content={`Subscribe to ${blogSpaceData.name} and get the latest updates and news.`} />
+ <meta name="description" content={`Subscribe to ${blogSpaceData.name} and get the latest updates and news. Join our community and stay informed about events and other news .`} />
+    <meta property="og:image" content={blogSpaceData.image_url} />
 </Head>
       <Header />
       <div className="bg-white text-slate-900">

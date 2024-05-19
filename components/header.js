@@ -5,13 +5,23 @@ import logo from "../public/logo2.svg";
 import headerNavLinks from "./headernavlinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faBars } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [loginActive, setLoginActive] = useState(true);
+  console.log("login active:", loginActive);
 
   const mobileMenuRef = useRef(null);
+
+  const router = useRouter();
+  const { key } = router.query;
+  console.log("key:", key);
+  if (key != undefined) {
+    setLoginActive(false);
+  }
 
   useEffect(() => {
     // Fetch comments using the post ID
@@ -135,21 +145,26 @@ const Header = () => {
         </div>
 
         {/* Login Button */}
-        <div className="flex items-center">
-          <div className="flex items-center py-6">
-            {!isLoggedIn ? (
-              <button className="mr-5 text-white" onClick={() => handleLogin()}>
-                Log in
-                <FontAwesomeIcon
-                  className="pl-2 hidden md:inline"
-                  icon={faArrowRight}
-                />
-              </button>
-            ) : (
-              <div className="bg-white rounded-full text-blue"></div>
-            )}
+        {loginActive == true && (
+          <div className="flex items-center">
+            <div className="flex items-center py-6">
+              {!isLoggedIn ? (
+                <button
+                  className="mr-5 text-white"
+                  onClick={() => handleLogin()}
+                >
+                  Log in
+                  <FontAwesomeIcon
+                    className="pl-2 hidden md:inline"
+                    icon={faArrowRight}
+                  />
+                </button>
+              ) : (
+                <div className="bg-white rounded-full text-blue"></div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </header>
     </div>
   );

@@ -169,15 +169,9 @@ const Comments = ({ blogId, postId, post_title }) => {
   }
 
   const handleLogin = () => {
-    console.log("handleLogin called");
     const currentUrl = window.location.href;
-    // Redirect the user to the login page with the current URL as a query parameter
-    window.location.href = `https://universal-jikv.onrender.com/#/login?redirectUrl=${encodeURIComponent(
-      currentUrl
-    )}`;
-    // window.location.href = `http://localhost:3000/#/login?redirectUrl=${encodeURIComponent(
-    //   currentUrl
-    // )}`;
+    const loginUrl = `https://universe.connectingpeopletech.com/#/login?redirectUrl=${encodeURIComponent(currentUrl)}`;
+    window.location.href = loginUrl;
   };
 
   return (

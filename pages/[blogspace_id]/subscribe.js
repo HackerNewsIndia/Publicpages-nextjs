@@ -4,6 +4,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
+import Head from 'next/head';
 
 const getUsernameById = async (userId) => {
   try {
@@ -102,6 +103,11 @@ const SubscribePage = () => {
 
   return (
     <>
+    <Head>
+ <title>{blogSpaceData.name} - Subscribe</title>
+ <meta name="description" content={`Subscribe to ${blogSpaceData.name} and get the latest updates and news. Join our community and stay informed about events and other news .`} />
+ <meta property="og:image" content={blogSpaceData.image_url || 'https://diaryblog.connectingpeopletech.com/DBlogo.png'} />
+  </Head>
       <Header />
       <div className="bg-white text-slate-900">
         <div className="flex flex-col items-center bg-white m-5 md:m-10">

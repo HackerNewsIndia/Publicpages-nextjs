@@ -5,23 +5,25 @@ import logo from "../public/logo2.svg";
 import headerNavLinks from "./headernavlinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faBars } from "@fortawesome/free-solid-svg-icons";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // const [loginActive, setLoginActive] = useState(true);
-  // console.log("login active:", loginActive);
+  const [loginActive, setLoginActive] = useState(true);
+  console.log("login active:", loginActive);
 
   const mobileMenuRef = useRef(null);
 
-  // const router = useRouter();
-  // const { key } = router.query;
-  // console.log("key:", key);
-  // if (key != undefined) {
-  //   setLoginActive(false);
-  // }
+  const router = useRouter();
+  const { key } = router.query;
+  console.log("key:", key);
+  useEffect(() => {
+    if (key !== undefined) {
+      setLoginActive(false);
+    }
+  }, [key]);
 
   useEffect(() => {
     // Fetch comments using the post ID
@@ -145,7 +147,7 @@ const Header = () => {
         </div>
 
         {/* Login Button */}
-        {/* {loginActive == true && (
+        {loginActive == true && (
           <div className="flex items-center">
             <div className="flex items-center py-6">
               {!isLoggedIn ? (
@@ -164,8 +166,8 @@ const Header = () => {
               )}
             </div>
           </div>
-        )} */}
-        <div className="flex items-center">
+        )}
+        {/* <div className="flex items-center">
           <div className="flex items-center py-6">
             {!isLoggedIn ? (
               <button className="mr-5 text-white" onClick={() => handleLogin()}>
@@ -179,7 +181,7 @@ const Header = () => {
               <div className="bg-white rounded-full text-blue"></div>
             )}
           </div>
-        </div>
+        </div> */}
       </header>
     </div>
   );

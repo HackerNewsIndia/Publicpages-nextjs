@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import CustomLink from "next/link";
-import logo from "../public/logo2.svg";
+import logo from "../public/logo7.svg";
 import headerNavLinks from "./headernavlinks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -75,10 +75,10 @@ const Header = () => {
 
   return (
     <div className="bg-slate-900 w-full">
-      <header className="flex items-center justify-between mx-4 sm:mx-6 md:mx-8 lg:mx-10 xl:mx-20 py-1">
+      <header className="flex items-center justify-between ml-4 lg:ml-28 mr-4 lg:mr-10   py-1">
         {/* Mobile Menu Button */}
-        <div className="flex flex-row space-x-4 items-center">
-          <div className="sm:hidden " ref={mobileMenuRef}>
+        <div className="w-full flex flex-row justify-between items-center ">
+          <div className=" sm:hidden " ref={mobileMenuRef}>
             <button
               className="text-white focus:outline-none"
               onClick={toggleMobileMenu}
@@ -88,37 +88,39 @@ const Header = () => {
           </div>
 
           {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <CustomLink href="/" aria-label={"DiaryBlog"}>
-              <div className="flex items-center justify-center mt-3 mb-2 rounded-md bg-slate-900 cursor-pointer">
-                <Image
-                  src={logo}
-                  alt="Logo"
-                  width={200}
-                  height={70}
-                  className="rounded-md object-fill"
-                />
-              </div>
-            </CustomLink>
-          </div>
-
-          {/* Desktop Menu */}
-          <div className="hidden sm:flex items-center space-x-4 leading-5">
-            {headerNavLinks
-              .filter((link) => link.href !== "/")
-              .map((link) => (
-                <div
-                  key={link.title}
-                  className="bg-white text-black rounded-md px-2 py-1 text-sm font-medium"
-                >
-                  <CustomLink
-                    href={link.href === "/allposts" ? "/" : link.href}
-                    className="font-medium !important "
-                  >
-                    {link.title}
-                  </CustomLink>
+          <div className="flex flex-row space-x-20 mr-20 ">
+            <div className="flex items-center">
+              <CustomLink href="/" aria-label={"DiaryBlog"}>
+                <div className="flex items-center justify-center rounded-md bg-slate-900 cursor-pointer">
+                  <Image
+                    src={logo}
+                    alt="Logo"
+                    width={100}
+                    height={70}
+                    className="rounded-md object-fill"
+                  />
                 </div>
-              ))}
+              </CustomLink>
+            </div>
+
+            {/* Desktop Menu */}
+            <div className="hidden sm:flex items-center space-x-4 leading-5">
+              {headerNavLinks
+                .filter((link) => link.href !== "/")
+                .map((link) => (
+                  <div
+                    key={link.title}
+                    className="bg-white text-black rounded-md px-2 py-1 text-sm font-medium"
+                  >
+                    <CustomLink
+                      href={link.href === "/allposts" ? "/" : link.href}
+                      className="font-medium !important "
+                    >
+                      {link.title}
+                    </CustomLink>
+                  </div>
+                ))}
+            </div>
           </div>
 
           {/* Mobile Menu */}
@@ -155,7 +157,7 @@ const Header = () => {
                   className="mr-5 text-white"
                   onClick={() => handleLogin()}
                 >
-                  Log in
+                  Login
                   <FontAwesomeIcon
                     className="pl-2 hidden md:inline"
                     icon={faArrowRight}

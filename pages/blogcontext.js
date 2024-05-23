@@ -31,7 +31,7 @@ function BlogProvider({ children }) {
         <meta
           property="og:image"
           // content="https://diaryblog.connectingpeopletech.com/DBlogo.png"
-          content="https://diaryblog.connectingpeopletech.com/_next/static/media/logo7.cc585cd6.svg"
+          content="https://raw.githubusercontent.com/HackerNewsIndia/Publicpages-nextjs/master/public/logo7.svg"
         />
 
         {/* <!-- Twitter Meta Tags --> */}
@@ -51,7 +51,7 @@ function BlogProvider({ children }) {
         />
         <meta
           name="twitter:image"
-          content="https://diaryblog.connectingpeopletech.com/_next/static/media/logo7.cc585cd6.svg"
+          content="https://raw.githubusercontent.com/HackerNewsIndia/Publicpages-nextjs/master/public/logo7.svg"
         />
       </Head>
       <BlogContext.Provider

@@ -98,11 +98,18 @@ const PublicBlogSpace = () => {
       });
   };
 
-  const toggleFollow = (companyName) => {
-    setCurrentFollowCompany(companyName);
-    setIsModalOpen(true);
-  };
+ // const toggleFollow = (companyName) => {
+ //   setCurrentFollowCompany(companyName);
+ //   setIsModalOpen(true);
+//  };
 
+ const toggleFollow = (_id) => {
+    setCurrentFollowCompany(_id);
+    setIsModalOpen(true);
+    // Navigate to the subscription page for the company being followed using _id
+    router.push(`/${_id}/subscribe`);
+  };
+  
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setCurrentFollowCompany(null);
@@ -436,7 +443,9 @@ const PublicBlogSpace = () => {
                   <div>
       <button
         className="h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
-        onClick={() => toggleFollow(companyData.name)}
+       // onClick={() => toggleFollow(companyData.name)}
+                  onClick={() => toggleFollow(companyData._id.$oid)} // Pass the _id to toggleFollow
+
       >
         Follow
       </button>

@@ -430,9 +430,12 @@ const PublicBlogSpace = () => {
                 <div className="flex justify-between w-full">
 
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold leading-7 text-gray-900 dark:text-white">
+                    
+                   <div className=" hover:underline">
+                    <h3 className="text-xl font-semibold leading-7 text-gray-900 dark:text-white ">
                       {companyData.name}
                     </h3>
+                    </div>
                     {/* <p className="mt-3 text-base leading-6 text-gray-500 dark:text-gray-400">
                       {companyData.description}
                     </p> */}

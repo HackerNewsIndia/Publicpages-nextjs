@@ -408,11 +408,11 @@ const PublicBlogSpace = () => {
                 className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 cursor-pointer"
                 onClick={() => handleBlog(companyData)}
               >
-                <div className="flex flex-col space-y-1">
+               {/*  <div className="flex flex-col space-y-1">
                   <span className="text-md dark:text-black-600">
                     Created: 02 Feb 2023
                   </span>
-                </div>
+                </div> */}
                 <div>
                 <img
                   src={companyData.image_url}

@@ -16,7 +16,7 @@ const PublicBlogSpace = () => {
   const [emailForFollow, setEmailForFollow] = useState("");
   const [blogSearch, setBlogSearch] = useState("");
   const [followersCounts, setFollowersCounts] = useState({});
-
+  const [selectedCategory, setSelectedCategory] = useState(null);
   // const navigate = useNavigate();
   const router = useRouter();
 
@@ -149,10 +149,22 @@ const PublicBlogSpace = () => {
     setBlogSearch(e.target.value);
   };
 
+ 
+  const handleCategorySelect = (category) => {
+    setSelectedCategory((prevCategory) =>
+      prevCategory === category ? null : category
+    );
+  };
+
   const filteredBlogSpace = blogSpace.filter((companyData) => {
     const name = companyData.name || ""; // Ensuring 'name' is defined
-    return name.toLowerCase().includes(blogSearch.toLowerCase());
+    const category = companyData.category || ""; // Assuming 'category' is a field in your data
+    return (
+      name.toLowerCase().includes(blogSearch.toLowerCase()) &&
+      (selectedCategory === null || category === selectedCategory)
+    );
   });
+
 
   const handleBackClick = () => {
     router.push("/");
@@ -417,7 +429,7 @@ const PublicBlogSpace = () => {
               {/* <input
               type="search"
               name="Search"
-              placeholder="Search..."
+             placeholder="Search by Blogname …"
               value={blogSearch}
               onChange={handleChange}
               className="w-full md:w-32 py-2 pl-10 border-2 bg-white border-slate-400 text-sm rounded-md sm:w-auto focus:outline-none "
@@ -445,7 +457,7 @@ const PublicBlogSpace = () => {
                 <input
                   type="search"
                   name="Search"
-                  placeholder="Search..."
+                  placeholder="Search by Blogname …"
                   value={blogSearch}
                   onChange={handleChange}
                   className="w-32 py-2 pl-10 bg-white border-2 text-sm text-slate-900 rounded-md sm:w-auto focus:outline"
@@ -456,36 +468,164 @@ const PublicBlogSpace = () => {
 
           <div className="flex flex-wrap items-start text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
             <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              Lifestyle
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              Technology
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              Food and Recipes
-            </button>
+    type="button"
+    className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+      selectedCategory === "Lifestyle" ? "bg-blue-500 text-white" : ""
+    }`}
+    onClick={() => handleCategorySelect("Lifestyle")}
+  >
+    <span className="flex items-center">
+      Lifestyle
+      {selectedCategory === "Lifestyle" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4 ml-1 text-red-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the button click event from triggering
+            handleCategorySelect(null); // Deselect the category
+          }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      )}
+    </span>
+  </button>
+  <button
+          type="button"
+          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+            selectedCategory === "Technology" ? "bg-blue-500 text-white" : ""
+          }`}
+          onClick={() => handleCategorySelect("Technology")}
+        >
+          <span className="flex items-center">
+          Technology
+      {selectedCategory === "Technology" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4 ml-1 text-red-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the button click event from triggering
+            handleCategorySelect(null); // Deselect the category
+          }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      )}
+    </span>
+  </button>    
+  <button
+          type="button"
+          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+            selectedCategory === "Food and Recipes" ? "bg-blue-500 text-white" : ""
+          }`}
+          onClick={() => handleCategorySelect("Food and Recipes")}
+        >
+        
 
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              Personal Finance
-            </button>
-            <button
-              type="button"
-              className="relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50"
-            >
-              Parenting and Family
-            </button>
+         <span className="flex items-center">
+         Food and Recipes
+      {selectedCategory === "Food and Recipes" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4 ml-1 text-red-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the button click event from triggering
+            handleCategorySelect(null); // Deselect the category
+          }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      )}
+    </span>
+  </button> 
+          <button
+          type="button"
+          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+            selectedCategory === "Personal Finance" ? "bg-blue-500 text-white" : ""
+          }`}
+          onClick={() => handleCategorySelect("Personal Finance")}
+        >
+          
+          <span className="flex items-center">
+          Personal Finance
+      {selectedCategory === "Personal Finance" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4 ml-1 text-red-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the button click event from triggering
+            handleCategorySelect(null); // Deselect the category
+          }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      )}
+    </span>
+  </button> 
+        <button
+          type="button"
+          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+            selectedCategory === "Parenting and Family" ? "bg-blue-500 text-white" : ""
+          }`}
+          onClick={() => handleCategorySelect("Parenting and Family")}
+        >
+          
+          <span className="flex items-center">
+          Parenting and Family
+      {selectedCategory === "Parenting and Family" && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4 ml-1 text-red-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the button click event from triggering
+            handleCategorySelect(null); // Deselect the category
+          }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      )}
+    </span>
+  </button> 
           </div>
 
           <div className="flex flex-col mx-auto rounded-md mx-4 my-5 sm:mx-20 md:mx-20 lg:mx-20 xl:mx-40 p-6 ">
@@ -496,28 +636,36 @@ const PublicBlogSpace = () => {
                   className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 cursor-pointer"
                   onClick={() => handleBlog(companyData)}
                 >
-                  <img
-                    alt=""
-                    className="object-cover w-full h-52  "
-                    src={randomImageUrls[index]}
-                  />
+                 
+  <div>
+                <img
+                  src={companyData.image_url}
+                  alt=""
+                  className="object-cover w-full h-52"
+                /></div>
+                <div className="flex-grow flex flex-col justify-between bg-white dark:bg-slate-800 p-6">
+                <div className="flex justify-between w-full">
 
-                  <div className="flex flex-col flex-1 p-6 ">
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
-                      aria-label="Te nulla oportere reprimique his dolorum"
-                    ></a>
-                    <a
-                      rel="noopener noreferrer"
-                      href="#"
-                      className="text-xs tracking uppercase hover:underline text-slate-900 "
-                    >
-                      Convenire
-                    </a>
-                    <h3 className="flex-1 py-2 text-lg font-semibold leading-5 text-slate-900 ">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold leading-7 text-gray-900 dark:text-white">
                       {companyData.name}
                     </h3>
+                    {/* <p className="mt-3 text-base leading-6 text-gray-500 dark:text-gray-400">
+                      {companyData.description}
+                    </p> */}
+                    <p >  
+                    <strong>category:</strong>{companyData.category} </p>
+                  </div>
+                  {/* Follow Button */}
+                  <div>
+      <button
+        className="h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+        onClick={() => toggleFollow(companyData.name)}
+      >
+        Follow
+      </button>
+    </div>
+    </div>
                     <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900 ">
                       <span>{companyData.views} Views</span>
                       <span>

@@ -449,9 +449,9 @@ const Post = ({ metadata, sorted, postViews }) => {
                     },
                   }}
                 >
- <div id="text">
+
                   {metadata.description}
-                  </div>
+                 
                 </Markdown>
                 {/* <pre>
                   <code>{metadata.description}</code>

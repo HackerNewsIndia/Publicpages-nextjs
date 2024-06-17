@@ -239,6 +239,17 @@ const Post = ({ metadata, sorted, postViews }) => {
     return format(new Date(date), "MMMM d, yyyy"); // Format the date as "Month day, year"
   };
 
+  const btn = document.getElementById("btn");
+
+  const highlight = (text, from, to) => {
+  let replacement = highlightBackground(text.slice(from, to));
+  return text.substring(0, from) + replacement + text.substring(to);
+  };
+
+  const highlightBackground = (sample) =>  
+  `<span style="background-color:yellow;">${sample}</span>`;
+
+
   return (
     <>
       <NextSeo
@@ -408,7 +419,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                   <div className="italic">{timeToRead} min</div>
                 </div>
               </div>
-              <div className="pt-8 text-black leading-6 text-justify">
+              <div id="text" className="pt-8 text-black leading-6 text-justify">
                 <Markdown
                   options={{
                     overrides: {
@@ -465,6 +476,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                   isActive={isActive}
                 />
               </div>
+              <button id="btn" type="button">klik me</button>
             </div>
           </div>
         </div>

@@ -247,7 +247,7 @@ const Post = ({ metadata, sorted, postViews }) => {
   };
 
   const highlightBackground = (sample) =>  
-  '<span style="background-color:yellow;">${sample}</span>`;
+  `<span style="background-color:yellow;">${sample}</span>`;
 
   const handleHighlight = () => {
     const synth = window.speechSynthesis;

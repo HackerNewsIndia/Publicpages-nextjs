@@ -239,7 +239,7 @@ const Post = ({ metadata, sorted, postViews }) => {
     return format(new Date(date), "MMMM d, yyyy"); // Format the date as "Month day, year"
   };
 
-  const btn = document.getElementById("btn");
+  
 
   const highlight = (text, from, to) => {
   let replacement = highlightBackground(text.slice(from, to));
@@ -247,7 +247,27 @@ const Post = ({ metadata, sorted, postViews }) => {
   };
 
   const highlightBackground = (sample) =>  
-  `<span style="background-color:yellow;">${sample}</span>`;
+  '<span style="background-color:yellow;">${sample}</span>`;
+
+  const handleHighlight = () => {
+    const synth = window.speechSynthesis;
+    if (!synth) {
+      console.error("no tts");
+      return;
+    }
+    let text = document.getElementById("text");
+    let originalText = text.innerText;
+    let utterance = new SpeechSynthesisUtterance(originalText);
+    utterance.addEventListener("boundary", (event) => {
+      const { charIndex, charLength } = event;
+      text.innerHTML = highlight(
+        originalText,
+        charIndex,
+        charIndex + charLength
+      );
+    });
+    synth.speak(utterance);
+  };
 
 
   return (
@@ -476,10 +496,10 @@ const Post = ({ metadata, sorted, postViews }) => {
                   isActive={isActive}
                 />
               </div>
-              <button id="btn" type="button">klik me</button>
             </div>
           </div>
         </div>
+        <button id="btn" type="button" onClick={handleHighlight}>klik me</button>
         <Footer />
       </div>
     </>

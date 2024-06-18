@@ -496,8 +496,9 @@ const Post = ({ metadata, sorted, postViews }) => {
                   isActive={isActive}
                 />
               </div>
-              <button id="btn" type="button" onClick={handleHighlight}>klik me</button>
+             
             </div>
+                    <button id="btn" type="button" onClick={handleHighlight}>klik me</button>
           </div>
         </div>
         

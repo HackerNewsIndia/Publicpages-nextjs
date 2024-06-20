@@ -3,10 +3,8 @@ import Head from "next/head";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { faFeather } from "@fortawesome/free-solid-svg-icons";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faXmark, faFeather, faEye, faPlay, faPause, faStop } from "@fortawesome/free-solid-svg-icons";
+
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import Markdown from "markdown-to-jsx";
 import MarkdownIt from "markdown-it";
@@ -47,6 +45,8 @@ const getUsernameById = async (userId) => {
 const Post = ({ metadata, sorted, postViews }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
+  const [isPaused, setIsPaused] = useState(true);
+
   const [currentWord, setCurrentWord] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [sortedPosts, setSortedPosts] = useState([]);
@@ -240,16 +240,12 @@ const Post = ({ metadata, sorted, postViews }) => {
   };
 
   
-
-  const highlight = (text, from, to) => {
-  let replacement = highlightBackground(text.slice(from, to));
-  return text.substring(0, from) + replacement + text.substring(to);
+  const handleHighlight = (text, from, to) => {
+    let replacement = `<span style="background-color:yellow;">${text.slice(from, to)}</span>`;
+    return text.substring(0, from) + replacement + text.substring(to);
   };
 
-  const highlightBackground = (sample) =>  
-  `<span style="background-color:yellow;">${sample}</span>`;
-
-  const handleHighlight = () => {
+  const handlePlay = () => {
     const synth = window.speechSynthesis;
     if (!synth) {
       console.error("no tts");
@@ -259,16 +255,37 @@ const Post = ({ metadata, sorted, postViews }) => {
     let originalText = text.innerText;
     let utterance = new SpeechSynthesisUtterance(originalText);
     utterance.addEventListener("boundary", (event) => {
-      const { charIndex, charLength } = event;
-      text.innerHTML = highlight(
-        originalText,
-        charIndex,
-        charIndex + charLength
-      );
+      text.innerHTML = handleHighlight(originalText, event.charIndex, event.charIndex + event.charLength);
     });
+    utterance.onend = () => {
+      text.innerHTML = originalText;
+    };
     synth.speak(utterance);
   };
 
+  const handlePause = () => {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.pause();
+      setIsPaused(true);
+    }
+  };
+
+  const handleResume = () => {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.resume();
+      setIsPaused(false);
+    }
+  };
+
+  const handleStop = () => {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      synth.cancel();
+      setIsPaused(true);
+    }
+  };
 
   return (
     <>
@@ -498,7 +515,30 @@ const Post = ({ metadata, sorted, postViews }) => {
               </div>
              
             </div>
-                    <button id="btn" type="button" onClick={handleHighlight}>klik me</button>
+            <div className="mt-4 flex space-x-4">
+  <button
+    onClick={handlePlay}
+    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
+  >
+    <FontAwesomeIcon icon={faPlay} className="mr-1" />
+    Play
+  </button>
+  <button
+    onClick={handlePause}
+    className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
+  >
+    <FontAwesomeIcon icon={faPause} className="mr-1" />
+    Pause
+  </button>
+  <button
+    onClick={handleStop}
+    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
+  >
+    <FontAwesomeIcon icon={faStop} className="mr-1" />
+    Stop
+  </button>
+</div>
+
           </div>
         </div>
         

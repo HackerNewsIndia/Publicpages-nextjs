@@ -3,7 +3,15 @@ import Head from "next/head";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faXmark, faFeather, faEye, faPlay, faPause, faStop } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faXmark,
+  faFeather,
+  faEye,
+  faPlay,
+  faPause,
+  faStop,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import Markdown from "markdown-to-jsx";
@@ -25,7 +33,7 @@ const mdparser = new MarkdownIt();
 const getUsernameById = async (userId) => {
   try {
     const response = await fetch(
-      `https://usermgtapi3.onrender.com/api/get_user/${userId}`
+      `https://usermgtapi-msad.onrender.com/api/get_user/${userId}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -53,9 +61,12 @@ const Post = ({ metadata, sorted, postViews }) => {
   const [blogSpaceData, setBlogSpaceData] = useState("");
 
   useEffect(() => {
-    fetch(`https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}`, {
-      method: "GET",
-    })
+    fetch(
+      `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogspace_id}`,
+      {
+        method: "GET",
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("post_views", data);
@@ -239,9 +250,11 @@ const Post = ({ metadata, sorted, postViews }) => {
     return format(new Date(date), "MMMM d, yyyy"); // Format the date as "Month day, year"
   };
 
-  
   const handleHighlight = (text, from, to) => {
-    let replacement = `<span style="background-color:yellow;">${text.slice(from, to)}</span>`;
+    let replacement = `<span style="background-color:yellow;">${text.slice(
+      from,
+      to
+    )}</span>`;
     return text.substring(0, from) + replacement + text.substring(to);
   };
 
@@ -255,7 +268,11 @@ const Post = ({ metadata, sorted, postViews }) => {
     let originalText = text.innerText;
     let utterance = new SpeechSynthesisUtterance(originalText);
     utterance.addEventListener("boundary", (event) => {
-      text.innerHTML = handleHighlight(originalText, event.charIndex, event.charIndex + event.charLength);
+      text.innerHTML = handleHighlight(
+        originalText,
+        event.charIndex,
+        event.charIndex + event.charLength
+      );
     });
     utterance.onend = () => {
       text.innerHTML = originalText;
@@ -497,9 +514,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                     },
                   }}
                 >
-
                   {metadata.description}
-                 
                 </Markdown>
                 {/* <pre>
                   <code>{metadata.description}</code>
@@ -513,35 +528,33 @@ const Post = ({ metadata, sorted, postViews }) => {
                   isActive={isActive}
                 />
               </div>
-             
             </div>
             <div className="mt-4 flex space-x-4">
-  <button
-    onClick={handlePlay}
-    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
-  >
-    <FontAwesomeIcon icon={faPlay} className="mr-1" />
-    Play
-  </button>
-  <button
-    onClick={handlePause}
-    className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
-  >
-    <FontAwesomeIcon icon={faPause} className="mr-1" />
-    Pause
-  </button>
-  <button
-    onClick={handleStop}
-    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
-  >
-    <FontAwesomeIcon icon={faStop} className="mr-1" />
-    Stop
-  </button>
-</div>
-
+              <button
+                onClick={handlePlay}
+                className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
+              >
+                <FontAwesomeIcon icon={faPlay} className="mr-1" />
+                Play
+              </button>
+              <button
+                onClick={handlePause}
+                className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
+              >
+                <FontAwesomeIcon icon={faPause} className="mr-1" />
+                Pause
+              </button>
+              <button
+                onClick={handleStop}
+                className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
+              >
+                <FontAwesomeIcon icon={faStop} className="mr-1" />
+                Stop
+              </button>
+            </div>
           </div>
         </div>
-        
+
         <Footer />
       </div>
     </>
@@ -551,7 +564,7 @@ const Post = ({ metadata, sorted, postViews }) => {
 export async function generateMetadata(params) {
   const { blogspace_id, postId } = params;
   const response = await fetch(
-    `https://diaryblogapi2.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
+    `https://diaryblogapi-eul3.onrender.com/api/companies/${blogspace_id}/posts/${postId}`
   );
   const post = await response.json();
   return post;
@@ -564,7 +577,7 @@ export async function getServerSideProps(context) {
 
   const postId = metadata._id;
   const response = await fetch(
-    `https://diaryblogapi2.onrender.com/api/posts/${postId}/views`,
+    `https://diaryblogapi-eul3.onrender.com/api/posts/${postId}/views`,
     {
       method: "PUT",
     }

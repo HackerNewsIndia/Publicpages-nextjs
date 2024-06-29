@@ -35,7 +35,7 @@ const ViewPosts = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   useEffect(() => {
-    fetch(`https://diaryblogapi2.onrender.com/api/blogSpace/${blog_id}`)
+    fetch(`https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blog_id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log("blogSpaceData:", data);
@@ -97,7 +97,7 @@ const ViewPosts = () => {
   const getUsernameById = async (userId) => {
     try {
       const response = await fetch(
-        `https://usermgtapi3.onrender.com/api/get_user/${userId}`
+        `https://usermgtapi-msad.onrender.com/api/get_user/${userId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -120,7 +120,7 @@ const ViewPosts = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://diaryblogapi2.onrender.com/api/blogspace/${blog_id}/posts`
+        `https://diaryblogapi-eul3.onrender.com/api/blogspace/${blog_id}/posts`
         // `http://127.0.0.1:5001/api/blogspace/${blog_id}/posts`
       );
 
@@ -162,7 +162,7 @@ const ViewPosts = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://diaryblogapi2.onrender.com/api/blogspace/${blog_id}/5_more_posts?last_post_id=${lastPostId}`
+        `https://diaryblogapi-eul3.onrender.com/api/blogspace/${blog_id}/5_more_posts?last_post_id=${lastPostId}`
         // `http://127.0.0.1:5001/api/blogspace/${blog_id}/5_more_posts?last_post_id=${lastPostId}`
       );
 
@@ -270,7 +270,7 @@ const ViewPosts = () => {
     e.preventDefault();
 
     await fetch(
-      `https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}/follow`,
+      `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogspace_id}/follow`,
       {
         method: "POST",
         headers: {

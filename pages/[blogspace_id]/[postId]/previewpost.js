@@ -21,7 +21,7 @@ import { NextSeo } from "next-seo";
 const getUsernameById = async (userId) => {
   try {
     const response = await fetch(
-      `https://usermgtapi3.onrender.com/api/get_user/${userId}`
+      `https://usermgtapi-msad.onrender.com/api/get_user/${userId}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

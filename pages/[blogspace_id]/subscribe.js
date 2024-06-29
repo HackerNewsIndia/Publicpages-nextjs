@@ -4,12 +4,12 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
-import Head from 'next/head';
+import Head from "next/head";
 
 const getUsernameById = async (userId) => {
   try {
     const response = await fetch(
-      `https://usermgtapi3.onrender.com/api/get_user/${userId}`
+      `https://usermgtapi-msad.onrender.com/api/get_user/${userId}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -40,7 +40,7 @@ const SubscribePage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}`
+          `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogspace_id}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -64,7 +64,7 @@ const SubscribePage = () => {
     e.preventDefault();
 
     await fetch(
-      `https://diaryblogapi2.onrender.com/api/blogSpace/${blogspace_id}/follow`,
+      `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogspace_id}/follow`,
       {
         method: "POST",
         headers: {
@@ -103,11 +103,20 @@ const SubscribePage = () => {
 
   return (
     <>
-    <Head>
- <title>{blogSpaceData.name} - Subscribe</title>
- <meta name="description" content={`Subscribe to ${blogSpaceData.name} and get the latest updates and news. Join our community and stay informed about events and other news .`} />
- <meta property="og:image" content={blogSpaceData.image_url || 'https://diaryblog.connectingpeopletech.com/DBlogo.png'} />
-  </Head>
+      <Head>
+        <title>{blogSpaceData.name} - Subscribe</title>
+        <meta
+          name="description"
+          content={`Subscribe to ${blogSpaceData.name} and get the latest updates and news. Join our community and stay informed about events and other news .`}
+        />
+        <meta
+          property="og:image"
+          content={
+            blogSpaceData.image_url ||
+            "https://diaryblog.connectingpeopletech.com/DBlogo.png"
+          }
+        />
+      </Head>
       <Header />
       <div className="bg-white text-slate-900">
         <div className="flex flex-col items-center bg-white m-5 md:m-10">

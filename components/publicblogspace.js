@@ -20,7 +20,7 @@ const PublicBlogSpace = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("https://diaryblogapi2.onrender.com/api/diaryblog_space")
+    fetch("https://diaryblogapi-eul3.onrender.com/api/diaryblog_space")
       .then((response) => response.json())
       .then(async (data) => {
         setBlogSpace(data);
@@ -29,7 +29,7 @@ const PublicBlogSpace = () => {
         const counts = {};
         const promises = data.map(async (bspace) => {
           const response = await fetch(
-            `https://diaryblogapi2.onrender.com/api/blogSpace/${bspace._id.$oid}/followers`
+            `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${bspace._id.$oid}/followers`
           );
           const followersData = await response.json();
           if (response.ok) {
@@ -73,7 +73,7 @@ const PublicBlogSpace = () => {
     const blogId = companyData._id.$oid;
     console.log("Navigating with ID:", companyData.name, blogId);
     router.push(`/diaryblog/${companyData.name}/${blogId}`);
-    fetch(`https://diaryblogapi2.onrender.com/api/${blogId}/views`, {
+    fetch(`https://diaryblogapi-eul3.onrender.com/api/${blogId}/views`, {
       method: "PUT",
     })
       .then((response) => response.json())
@@ -111,13 +111,16 @@ const PublicBlogSpace = () => {
 
     const blogId = companyData._id.$oid;
 
-    fetch(`https://diaryblogapi2.onrender.com/api/blogSpace/${blogId}/follow`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: emailForFollow }),
-    })
+    fetch(
+      `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogId}/follow`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: emailForFollow }),
+      }
+    )
       .then((response) => response.json()) // Convert response to json
       .then((data) => {
         if (data.message) {

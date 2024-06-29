@@ -19,10 +19,8 @@ const PublicBlogSpace = () => {
 
   const router = useRouter();
 
-
-
   useEffect(() => {
-    fetch("https://diaryblogapi2.onrender.com/api/diaryblog_space")
+    fetch("https://diaryblogapi-eul3.onrender.com/api/diaryblog_space")
       .then((response) => response.json())
       .then(async (data) => {
         console.log("blogSpaces:", data);
@@ -33,7 +31,7 @@ const PublicBlogSpace = () => {
         const counts = {};
         const promises = data.map(async (bspace) => {
           const response = await fetch(
-            `https://diaryblogapi2.onrender.com/api/blogSpace/${bspace._id.$oid}/followers`
+            `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${bspace._id.$oid}/followers`
           );
           const followersData = await response.json();
           if (response.ok) {
@@ -79,7 +77,7 @@ const PublicBlogSpace = () => {
     const blogspace_name = companyData.name;
     console.log("Navigating with ID:", blogspace_name, blogspace_id);
     router.push(`/${blogspace_id}/viewposts`);
-    fetch(`https://diaryblogapi2.onrender.com/api/${blogspace_id}/views`, {
+    fetch(`https://diaryblogapi-eul3.onrender.com/api/${blogspace_id}/views`, {
       method: "PUT",
     })
       .then((response) => response.json())
@@ -98,18 +96,18 @@ const PublicBlogSpace = () => {
       });
   };
 
- // const toggleFollow = (companyName) => {
- //   setCurrentFollowCompany(companyName);
- //   setIsModalOpen(true);
-//  };
+  // const toggleFollow = (companyName) => {
+  //   setCurrentFollowCompany(companyName);
+  //   setIsModalOpen(true);
+  //  };
 
- const toggleFollow = (_id) => {
+  const toggleFollow = (_id) => {
     setCurrentFollowCompany(_id);
     setIsModalOpen(true);
     // Navigate to the subscription page for the company being followed using _id
     router.push(`/${_id}/subscribe`);
   };
-  
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setCurrentFollowCompany(null);
@@ -125,13 +123,16 @@ const PublicBlogSpace = () => {
 
     const blogId = companyData._id.$oid;
 
-    fetch(`https://diaryblogapi2.onrender.com/api/blogSpace/${blogId}/follow`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: emailForFollow }),
-    })
+    fetch(
+      `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogId}/follow`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: emailForFollow }),
+      }
+    )
       .then((response) => response.json()) // Convert response to json
       .then((data) => {
         if (data.message) {
@@ -154,7 +155,6 @@ const PublicBlogSpace = () => {
     setBlogSearch(e.target.value);
   };
 
-
   const handleCategorySelect = (category) => {
     setSelectedCategory((prevCategory) =>
       prevCategory === category ? null : category
@@ -169,7 +169,6 @@ const PublicBlogSpace = () => {
       (selectedCategory === null || category === selectedCategory)
     );
   });
-
 
   const handleBackClick = () => {
     router.push("/");
@@ -214,7 +213,7 @@ const PublicBlogSpace = () => {
               <h1 className="text-3xl sm:text-xl md:text-3xl font-semibold text-center lg:text-left">
                 {blogSpace.length} Blogs in 5 categories
               </h1>
-              </div>
+            </div>
             <div className="flex flex-row items-center justify-center">
               <div className="relative">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -247,165 +246,169 @@ const PublicBlogSpace = () => {
           </section>
 
           <div className="flex flex-wrap items-start text-slate-900 justify-center p-6 md:mx-10 lg:mx-20 xl:mx-40">
-          <button
-    type="button"
-    className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
-      selectedCategory === "Lifestyle" ? "bg-blue-500 text-white" : ""
-    }`}
-    onClick={() => handleCategorySelect("Lifestyle")}
-  >
-    <span className="flex items-center">
-      Lifestyle
-      {selectedCategory === "Lifestyle" && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 ml-1 text-red-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent the button click event from triggering
-            handleCategorySelect(null); // Deselect the category
-          }}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      )}
-    </span>
-  </button>
-  <button
-          type="button"
-          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
-            selectedCategory === "Technology" ? "bg-blue-500 text-white" : ""
-          }`}
-          onClick={() => handleCategorySelect("Technology")}
-        >
-          <span className="flex items-center">
-          Technology
-      {selectedCategory === "Technology" && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 ml-1 text-red-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent the button click event from triggering
-            handleCategorySelect(null); // Deselect the category
-          }}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      )}
-    </span>
-  </button>    
-  <button
-          type="button"
-          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
-            selectedCategory === "Food and Recipes" ? "bg-blue-500 text-white" : ""
-          }`}
-          onClick={() => handleCategorySelect("Food and Recipes")}
-        >
-        
-
-         <span className="flex items-center">
-         Food and Recipes
-      {selectedCategory === "Food and Recipes" && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 ml-1 text-red-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent the button click event from triggering
-            handleCategorySelect(null); // Deselect the category
-          }}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      )}
-    </span>
-  </button> 
-          <button
-          type="button"
-          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
-            selectedCategory === "Personal Finance" ? "bg-blue-500 text-white" : ""
-          }`}
-          onClick={() => handleCategorySelect("Personal Finance")}
-        >
-          
-          <span className="flex items-center">
-          Personal Finance
-      {selectedCategory === "Personal Finance" && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 ml-1 text-red-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent the button click event from triggering
-            handleCategorySelect(null); // Deselect the category
-          }}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      )}
-    </span>
-  </button> 
-        <button
-          type="button"
-          className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
-            selectedCategory === "Parenting and Family" ? "bg-blue-500 text-white" : ""
-          }`}
-          onClick={() => handleCategorySelect("Parenting and Family")}
-        >
-          
-          <span className="flex items-center">
-          Parenting and Family
-      {selectedCategory === "Parenting and Family" && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 ml-1 text-red-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent the button click event from triggering
-            handleCategorySelect(null); // Deselect the category
-          }}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      )}
-    </span>
-  </button> 
+            <button
+              type="button"
+              className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+                selectedCategory === "Lifestyle" ? "bg-blue-500 text-white" : ""
+              }`}
+              onClick={() => handleCategorySelect("Lifestyle")}
+            >
+              <span className="flex items-center">
+                Lifestyle
+                {selectedCategory === "Lifestyle" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1 text-red-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the button click event from triggering
+                      handleCategorySelect(null); // Deselect the category
+                    }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+                selectedCategory === "Technology"
+                  ? "bg-blue-500 text-white"
+                  : ""
+              }`}
+              onClick={() => handleCategorySelect("Technology")}
+            >
+              <span className="flex items-center">
+                Technology
+                {selectedCategory === "Technology" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1 text-red-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the button click event from triggering
+                      handleCategorySelect(null); // Deselect the category
+                    }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+                selectedCategory === "Food and Recipes"
+                  ? "bg-blue-500 text-white"
+                  : ""
+              }`}
+              onClick={() => handleCategorySelect("Food and Recipes")}
+            >
+              <span className="flex items-center">
+                Food and Recipes
+                {selectedCategory === "Food and Recipes" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1 text-red-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the button click event from triggering
+                      handleCategorySelect(null); // Deselect the category
+                    }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+                selectedCategory === "Personal Finance"
+                  ? "bg-blue-500 text-white"
+                  : ""
+              }`}
+              onClick={() => handleCategorySelect("Personal Finance")}
+            >
+              <span className="flex items-center">
+                Personal Finance
+                {selectedCategory === "Personal Finance" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1 text-red-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the button click event from triggering
+                      handleCategorySelect(null); // Deselect the category
+                    }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`relative px-3 py-1 m-1 text-sm border rounded-md shadow-sm sm:py-2 sm:text-base ring ring-transparent group md:px-4 hover:ring hover:ring-opacity-50 focus:ring-opacity-50 ${
+                selectedCategory === "Parenting and Family"
+                  ? "bg-blue-500 text-white"
+                  : ""
+              }`}
+              onClick={() => handleCategorySelect("Parenting and Family")}
+            >
+              <span className="flex items-center">
+                Parenting and Family
+                {selectedCategory === "Parenting and Family" && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1 text-red-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the button click event from triggering
+                      handleCategorySelect(null); // Deselect the category
+                    }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
           </div>
 
           <div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
@@ -415,89 +418,89 @@ const PublicBlogSpace = () => {
                 className="flex flex-col border-2 border-slate-200 rounded-md divide-slate-900 cursor-pointer"
                 onClick={() => handleBlog(companyData)}
               >
-               {/*  <div className="flex flex-col space-y-1">
+                {/*  <div className="flex flex-col space-y-1">
                   <span className="text-md dark:text-black-600">
                     Created: 02 Feb 2023
                   </span>
                 </div> */}
                 <div>
-                <img
-                  src={companyData.image_url}
-                  alt=""
-                  className="object-cover w-full h-48 mb-6 dark:bg-gray-100"
-                /></div>
+                  <img
+                    src={companyData.image_url}
+                    alt=""
+                    className="object-cover w-full h-48 mb-6 dark:bg-gray-100"
+                  />
+                </div>
                 <div className="flex-grow flex flex-col justify-between bg-white dark:bg-slate-800 p-6">
-                <div className="flex justify-between w-full">
-
-                  <div className="flex-1">
-                    
-                   <div className=" hover:underline">
-                    <h3 className="text-xl font-semibold leading-7 text-gray-900 dark:text-white ">
-                      {companyData.name}
-                    </h3>
-                    </div>
-                    {/* <p className="mt-3 text-base leading-6 text-gray-500 dark:text-gray-400">
+                  <div className="flex justify-between w-full">
+                    <div className="flex-1">
+                      <div className=" hover:underline">
+                        <h3 className="text-xl font-semibold leading-7 text-gray-900 dark:text-white ">
+                          {companyData.name}
+                        </h3>
+                      </div>
+                      {/* <p className="mt-3 text-base leading-6 text-gray-500 dark:text-gray-400">
                       {companyData.description}
                     </p> */}
-                    <p >  
-                    <strong>category:</strong>{companyData.category} </p>
-                  </div>
-                  {/* Follow Button */}
-                  <div>
-      <button
-        className="h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
-       // onClick={() => toggleFollow(companyData.name)}
-                  onClick={() => toggleFollow(companyData._id.$oid)} // Pass the _id to toggleFollow
-
-      >
-        Follow
-      </button>
-    </div>
-    </div>
-
-    <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900 ">
-                      <span>{companyData.views} Views</span>
-                      <span>
-                        {followersCounts[companyData._id.$oid] || 0} Followers
-                      </span>
+                      <p>
+                        <strong>category:</strong>
+                        {companyData.category}{" "}
+                      </p>
                     </div>
-                  </div>
-                </article>
-              ))}
-              {isModalOpen && (
-                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="bg-white p-8 rounded-md w-1/3">
-                    <h2 className="text-xl font-bold mb-2">
-                      Follow {currentFollowCompany}
-                    </h2>
-                    <input
-                      type="email"
-                      value={emailForFollow}
-                      onChange={(e) => setEmailForFollow(e.target.value)}
-                      placeholder="Enter your email"
-                      className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
-                    />
-                    <div className="flex justify-end space-x-2">
+                    {/* Follow Button */}
+                    <div>
                       <button
-                        onClick={handleConfirmFollow}
-                        className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                        className="h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+                        // onClick={() => toggleFollow(companyData.name)}
+                        onClick={() => toggleFollow(companyData._id.$oid)} // Pass the _id to toggleFollow
                       >
-                        Confirm Follow
-                      </button>
-                      <button
-                        onClick={handleCloseModal}
-                        className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
-                      >
-                        Cancel
+                        Follow
                       </button>
                     </div>
+                  </div>
+
+                  <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs text-slate-900 ">
+                    <span>{companyData.views} Views</span>
+                    <span>
+                      {followersCounts[companyData._id.$oid] || 0} Followers
+                    </span>
                   </div>
                 </div>
-              )}
-            </div>
+              </article>
+            ))}
+            {isModalOpen && (
+              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-8 rounded-md w-1/3">
+                  <h2 className="text-xl font-bold mb-2">
+                    Follow {currentFollowCompany}
+                  </h2>
+                  <input
+                    type="email"
+                    value={emailForFollow}
+                    onChange={(e) => setEmailForFollow(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-2 py-1 mb-4 border border-gray-300 rounded-md"
+                  />
+                  <div className="flex justify-end space-x-2">
+                    <button
+                      onClick={handleConfirmFollow}
+                      className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                    >
+                      Confirm Follow
+                    </button>
+                    <button
+                      onClick={handleCloseModal}
+                      className="px-1 py-1 bg-black text-white rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        <Footer />
+      </div>
+      <Footer />
     </>
   );
 };

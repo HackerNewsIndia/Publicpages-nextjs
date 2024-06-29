@@ -64,7 +64,7 @@ const Home = () => {
   const getUsernameById = async (userId) => {
     try {
       const response = await fetch(
-        `https://usermgtapi3.onrender.com/api/get_user/${userId}`
+        `https://usermgtapi-msad.onrender.com/api/get_user/${userId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -85,7 +85,7 @@ const Home = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://diaryblogapi2.onrender.com/api/latest_5_posts`
+        `https://diaryblogapi-eul3.onrender.com/api/latest_5_posts`
       );
 
       if (!response.ok) {
@@ -126,7 +126,7 @@ const Home = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `https://diaryblogapi2.onrender.com/api/next_5_posts?last_post_id=${lastPostId}`
+        `https://diaryblogapi-eul3.onrender.com/api/next_5_posts?last_post_id=${lastPostId}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -197,7 +197,7 @@ const Home = () => {
   // const handlePostClick = (post) => {
   //   const postId = post._id;
 
-  //   fetch(`https://diaryblogapi2.onrender.com/api/posts/${postId}/views`, {
+  //   fetch(`https://diaryblogapi-eul3.onrender.com/api/posts/${postId}/views`, {
   //     method: "PUT",
   //   })
   //     .then((response) => response.json())

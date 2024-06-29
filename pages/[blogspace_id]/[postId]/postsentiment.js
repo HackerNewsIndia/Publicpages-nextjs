@@ -9,7 +9,7 @@ const Postsentiment = ({ postId, blogId, postlikes, postStatus }) => {
 
   const handleSentimentIcon = (icon) => {
     setSelectedSentimentIcon(icon);
-    fetch("https://diaryblogapi2.onrender.com/api/sentimentforpost", {
+    fetch("https://diaryblogapi-eul3.onrender.com/api/sentimentforpost", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,9 @@ const Postsentiment = ({ postId, blogId, postlikes, postStatus }) => {
             )}
           </div>
           <div className="text-xs text-slate-900">
-            {likesCount ? `${likesCount} ${likesCount > 1 ? "likes" : "like"}` : ""}
+            {likesCount
+              ? `${likesCount} ${likesCount > 1 ? "likes" : "like"}`
+              : ""}
           </div>
         </div>
       )}

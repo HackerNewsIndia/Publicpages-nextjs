@@ -3,15 +3,7 @@ import Head from "next/head";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowLeft,
-  faXmark,
-  faFeather,
-  faEye,
-  faPlay,
-  faPause,
-  faStop,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faXmark, faFeather, faEye, faPlay, faPause, faStop } from "@fortawesome/free-solid-svg-icons";
 
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import Markdown from "markdown-to-jsx";
@@ -54,19 +46,18 @@ const Post = ({ metadata, sorted, postViews }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [isPaused, setIsPaused] = useState(true);
-
+  const [mediaStream, setMediaStream] = useState(null);
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [chunks, setChunks] = useState([]);
   const [currentWord, setCurrentWord] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [sortedPosts, setSortedPosts] = useState([]);
   const [blogSpaceData, setBlogSpaceData] = useState("");
 
   useEffect(() => {
-    fetch(
-      `https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogspace_id}`,
-      {
-        method: "GET",
-      }
-    )
+    fetch(`https://diaryblogapi-eul3.onrender.com/api/blogSpace/${blogspace_id}`, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => {
         console.log("post_views", data);
@@ -250,36 +241,62 @@ const Post = ({ metadata, sorted, postViews }) => {
     return format(new Date(date), "MMMM d, yyyy"); // Format the date as "Month day, year"
   };
 
+  
   const handleHighlight = (text, from, to) => {
-    let replacement = `<span style="background-color:yellow;">${text.slice(
-      from,
-      to
-    )}</span>`;
+    let replacement = `<span style="background-color:yellow;">${text.slice(from, to)}</span>`;
     return text.substring(0, from) + replacement + text.substring(to);
   };
 
+  const startScreenRecording = async () => {
+    try {
+      const displayStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+      });
+
+      const audioStream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+
+      const combinedStream = new MediaStream([
+        ...displayStream.getTracks(),
+        ...audioStream.getTracks(),
+      ]);
+
+      const recorder = new MediaRecorder(combinedStream, { mimeType: "video/webm" });
+
+      recorder.ondataavailable = (event) => {
+        setChunks((prevChunks) => [...prevChunks, event.data]);
+      };
+
+      recorder.start();
+      setMediaRecorder(recorder);
+      setMediaStream(displayStream);
+
+      // setTimeout(() => {
+      //   recorder.stop();
+      //   stopScreenRecording();
+      // }, 5000); // Recording duration
+    } catch (error) {
+      console.error("Error starting screen recording:", error);
+    }
+  };
+  
   const handlePlay = () => {
     const synth = window.speechSynthesis;
     if (!synth) {
-      console.error("no tts");
+      console.error("Text-to-speech not supported");
       return;
     }
     let text = document.getElementById("text");
     let originalText = text.innerText;
     let utterance = new SpeechSynthesisUtterance(originalText);
     utterance.addEventListener("boundary", (event) => {
-      text.innerHTML = handleHighlight(
-        originalText,
-        event.charIndex,
-        event.charIndex + event.charLength
-      );
+      text.innerHTML = handleHighlight(originalText, event.charIndex, event.charIndex + event.charLength);
+      setCurrentWord(originalText.substring(event.charIndex, event.charIndex + event.charLength).trim());
     });
-    utterance.onend = () => {
-      text.innerHTML = originalText;
-    };
     synth.speak(utterance);
+    setIsPaused(false);
   };
-
   const handlePause = () => {
     const synth = window.speechSynthesis;
     if (synth) {
@@ -303,6 +320,44 @@ const Post = ({ metadata, sorted, postViews }) => {
       setIsPaused(true);
     }
   };
+
+ 
+
+  const stopScreenRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      setMediaRecorder(null);
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        setMediaStream(null);
+      }
+    }
+  };
+
+  const combineAndDownload = () => {
+    if (chunks.length === 0) {
+      console.error("No screen recording available");
+      return;
+    }
+
+    const blob = new Blob(chunks, { type: "video/webm" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "recorded-video.webm";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    // Optional: Create a video element to play back the recording
+    // const videoElement = document.createElement("video");
+    // videoElement.src = url;
+    // videoElement.controls = true;
+    // document.body.appendChild(videoElement);
+    // videoElement.play();
+  };
+
 
   return (
     <>
@@ -514,7 +569,9 @@ const Post = ({ metadata, sorted, postViews }) => {
                     },
                   }}
                 >
+
                   {metadata.description}
+                 
                 </Markdown>
                 {/* <pre>
                   <code>{metadata.description}</code>
@@ -528,33 +585,50 @@ const Post = ({ metadata, sorted, postViews }) => {
                   isActive={isActive}
                 />
               </div>
+             
             </div>
             <div className="mt-4 flex space-x-4">
-              <button
-                onClick={handlePlay}
-                className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
-              >
-                <FontAwesomeIcon icon={faPlay} className="mr-1" />
-                Play
-              </button>
-              <button
-                onClick={handlePause}
-                className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
-              >
-                <FontAwesomeIcon icon={faPause} className="mr-1" />
-                Pause
-              </button>
-              <button
-                onClick={handleStop}
-                className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
-              >
-                <FontAwesomeIcon icon={faStop} className="mr-1" />
-                Stop
-              </button>
-            </div>
+  <button
+onClick={() => {
+  handlePlay();
+  startScreenRecording();
+}}    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
+  >
+    <FontAwesomeIcon icon={faPlay} className="mr-1" />
+    Play
+  </button>
+  <button
+    onClick={handlePause}
+    className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
+  >
+    <FontAwesomeIcon icon={faPause} className="mr-1" />
+    Pause
+  </button>
+  <button
+    onClick={handleStop}
+    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
+  >
+    <FontAwesomeIcon icon={faStop} className="mr-1" />
+    Stop
+  </button>
+  <button
+          onClick={stopScreenRecording}
+          className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
+        >
+          <FontAwesomeIcon icon={faStop} className="mr-1" />
+          Stop Recording
+        </button>
+        <button
+          onClick={combineAndDownload}
+          className="bg-green-500 text-white hover:bg-green-700 active:bg-green-800 px-4 py-2 rounded"
+        >
+          Download Video
+        </button>
+</div>
+
           </div>
         </div>
-
+        
         <Footer />
       </div>
     </>

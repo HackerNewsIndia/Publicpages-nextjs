@@ -587,41 +587,41 @@ const Post = ({ metadata, sorted, postViews }) => {
               </div>
              
             </div>
-          <div className="mt-4 flex flex-wrap justify-center space-x-4">
+         <div className="mt-4 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
   <button
     onClick={() => {
       handlePlay();
       startScreenRecording();
     }}
-    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded mb-2 md:mb-0 md:mr-2"
+    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
   >
     <FontAwesomeIcon icon={faPlay} className="mr-1" />
     Play
   </button>
   <button
     onClick={handlePause}
-    className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded mb-2 md:mb-0 md:mr-2"
+    className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
   >
     <FontAwesomeIcon icon={faPause} className="mr-1" />
     Pause
   </button>
   <button
     onClick={handleStop}
-    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded mb-2 md:mb-0 md:mr-2"
+    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
   >
     <FontAwesomeIcon icon={faStop} className="mr-1" />
     Stop
   </button>
   <button
     onClick={stopScreenRecording}
-    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded mb-2 md:mb-0 md:mr-2"
+    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
   >
     <FontAwesomeIcon icon={faStop} className="mr-1" />
     Stop Recording
   </button>
   <button
     onClick={combineAndDownload}
-    className="bg-green-500 text-white hover:bg-green-700 active:bg-green-800 px-4 py-2 rounded mb-2 md:mb-0"
+    className="bg-green-500 text-white hover:bg-green-700 active:bg-green-800 px-4 py-2 rounded"
   >
     Download Video
   </button>

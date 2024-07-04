@@ -242,10 +242,12 @@ const Post = ({ metadata, sorted, postViews }) => {
   };
 
   
-  const handleHighlight = (text, from, to) => {
-    let replacement = `<span style="background-color:yellow;">${text.slice(from, to)}</span>`;
-    return text.substring(0, from) + replacement + text.substring(to);
-  };
+ const handleHighlight = (text, from, to) => {
+  let highlightedText = text.substring(from, to);
+  let replacement = `<span style="background-color: yellow;">${highlightedText}</span>`;
+  return text.substring(0, from) + replacement + text.substring(to);
+};
+
 
   const startScreenRecording = async () => {
     try {

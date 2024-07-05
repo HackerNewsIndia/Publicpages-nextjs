@@ -253,8 +253,6 @@ const Post = ({ metadata, sorted, postViews }) => {
     try {
       const displayStream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
-              audio: true, // Adjust based on device compatibility
-
       });
 
       const audioStream = await navigator.mediaDevices.getUserMedia({

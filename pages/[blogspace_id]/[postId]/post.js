@@ -12,7 +12,7 @@ import {
   faPause,
   faStop,
 } from "@fortawesome/free-solid-svg-icons";
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import Markdown from "markdown-to-jsx";
@@ -27,6 +27,9 @@ import Footer from "../../../components/footer";
 import ImageResizer from "react-image-file-resizer";
 import { NextSeo } from "next-seo";
 import { format } from "date-fns";
+import { marked } from "marked";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 // import { MarkdownBlock, MarkdownSpan } from "md-block";
 
 const mdparser = new MarkdownIt();
@@ -54,38 +57,72 @@ const getUsernameById = async (userId) => {
 const Post = ({ metadata, sorted, postViews }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
-  const [isPaused, setIsPaused] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
 
   const [currentWord, setCurrentWord] = useState("");
   const [isActive, setIsActive] = useState(false);
-  const [sortedPosts, setSortedPosts] = useState([]);
   const [blogSpaceData, setBlogSpaceData] = useState("");
+  const [images, setImages] = useState([]);
+  const [plainText, setPlainText] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isStopped, setIsStopped] = useState(true);
 
-
-  const handleDownload = async () => {
+  const handleDownload = async (e) => {
+    e.preventDefault();
     setIsDownloading(true);
+
+    const formData = new FormData();
+    formData.append("text_data", plainText);
+    formData.append("image_urls[]", images);
+
     try {
-      const response = await fetch(`https://diaryblogapi-1.onrender.com/api/generate-video?blog_space_id=${blogspace_id}&post_id=${postId}&outputfile=output.mp4&format_short=false`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      const response = await fetch(
+        "https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${metadata.title}.mp4`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      } else {
+        const errorText = await response.text();
+        console.error("Error:", errorText);
       }
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = `${metadata.title}.mp4`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Error downloading the video:', error.message);
+      console.error("Error:", error);
     } finally {
       setIsDownloading(false);
     }
   };
 
+  useEffect(() => {
+    // console.log("description:", metadata.description);
+    const htmlContent = marked(metadata.description);
+    // console.log("htmlContent:", htmlContent);
+    const temporaryElement = document.createElement("div");
+    // console.log("temporaryElement:", temporaryElement);
+
+    temporaryElement.innerHTML = htmlContent;
+    // console.log("temporaryElement.innerHTML:", temporaryElement.innerHTML);
+    // console.log("temporaryElement.innerText:", temporaryElement.innerText);
+
+    setPlainText(temporaryElement.innerText);
+
+    setImages(metadata.imageUrl);
+  }, [metadata]);
+  // console.log("text:", plainText);
+  // console.log("image_url:", images);
 
   useEffect(() => {
     fetch(
@@ -96,7 +133,7 @@ const Post = ({ metadata, sorted, postViews }) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("post_views", data);
+        // console.log("post_views", data);
         setBlogSpaceData(data);
       })
       .catch((error) => {
@@ -303,23 +340,31 @@ const Post = ({ metadata, sorted, postViews }) => {
     });
     utterance.onend = () => {
       text.innerHTML = originalText;
+      setIsPlaying(false);
+      setIsPaused(false);
+      setIsStopped(true);
     };
     synth.speak(utterance);
+    setIsPlaying(true);
+    setIsPaused(false);
+    setIsStopped(false);
   };
 
   const handlePause = () => {
     const synth = window.speechSynthesis;
-    if (synth) {
+    if (synth && isPlaying) {
       synth.pause();
       setIsPaused(true);
+      setIsPlaying(false);
     }
   };
 
   const handleResume = () => {
     const synth = window.speechSynthesis;
-    if (synth) {
+    if (synth && isPaused) {
       synth.resume();
       setIsPaused(false);
+      setIsPlaying(true);
     }
   };
 
@@ -327,7 +372,9 @@ const Post = ({ metadata, sorted, postViews }) => {
     const synth = window.speechSynthesis;
     if (synth) {
       synth.cancel();
-      setIsPaused(true);
+      setIsPlaying(false);
+      setIsPaused(false);
+      setIsStopped(true);
     }
   };
 
@@ -559,29 +606,63 @@ const Post = ({ metadata, sorted, postViews }) => {
             <div className="mt-4 flex space-x-4">
               <button
                 onClick={handlePlay}
-                className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
+                className={`bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded ${
+                  isPlaying || !isStopped ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={isPlaying || !isStopped}
               >
-                <FontAwesomeIcon icon={faPlay} className="mr-1" />
-                Play
+                <FontAwesomeIcon icon={faPlay} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Play</span>
               </button>
               <button
                 onClick={handlePause}
-                className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
+                className={`bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded ${
+                  !isPlaying ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={!isPlaying}
               >
-                <FontAwesomeIcon icon={faPause} className="mr-1" />
-                Pause
+                <FontAwesomeIcon icon={faPause} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Pause</span>
+              </button>
+              <button
+                onClick={handleResume}
+                className={`bg-green-500 text-white hover:bg-green-700 active:bg-green-800 px-4 py-2 rounded ${
+                  !isPaused ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={!isPaused}
+              >
+                <FontAwesomeIcon icon={faPlay} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Resume</span>
               </button>
               <button
                 onClick={handleStop}
-                className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
+                className={`bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded ${
+                  !isPlaying && !isPaused ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={!isPlaying && !isPaused}
               >
-                <FontAwesomeIcon icon={faStop} className="mr-1" />
-                Stop
+                <FontAwesomeIcon icon={faStop} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Stop</span>
               </button>
-              <button onClick={handleDownload} disabled={isDownloading} className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded">
-      {isDownloading ? 'Downloading...' : 'Download Video'}
-      <FontAwesomeIcon icon={faDownload} className="ml-2" />
-    </button>
+
+              <button
+                onClick={handleDownload}
+                disabled={isDownloading}
+                className={`${
+                  isDownloading ? "opacity-50 cursor-not-allowed" : ""
+                } bg-blue-500 text-white px-4 py-2 rounded-md flex items-center ${
+                  isDownloading ? "space-x-2" : "space-x-2 md:space-x-2"
+                }`}
+              >
+                {isDownloading ? (
+                  <FontAwesomeIcon icon={faSpinner} spin className="text-lg" />
+                ) : (
+                  <FontAwesomeIcon icon={faDownload} className="text-lg" />
+                )}
+                <span className={`hidden md:inline`}>
+                  {isDownloading ? "Downloading Video..." : "Download Video"}
+                </span>
+              </button>
             </div>
           </div>
         </div>

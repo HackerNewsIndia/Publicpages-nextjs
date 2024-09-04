@@ -67,6 +67,8 @@ const Post = ({ metadata, sorted, postViews }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isStopped, setIsStopped] = useState(true);
+  const [wordCount200, setWordCount200] = useState(false);
+  const [isBlogLengthy, setIsBlogLengthy] = useState(false);
 
   const handleDownload = async (e) => {
     e.preventDefault();
@@ -76,9 +78,12 @@ const Post = ({ metadata, sorted, postViews }) => {
     formData.append("text_data", plainText);
     formData.append("image_urls[]", images);
 
+    if(wordCount200==true){
+
     try {
       const response = await fetch(
         "https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/",
+        // "https://text-to-video-api.onrender.com/",
         {
           method: "POST",
           body: formData,
@@ -104,6 +109,10 @@ const Post = ({ metadata, sorted, postViews }) => {
     } finally {
       setIsDownloading(false);
     }
+  } else {
+    console.log("text is too lengthy to convert into video");
+    setIsBlogLengthy(true);
+  }
   };
 
   useEffect(() => {
@@ -116,13 +125,34 @@ const Post = ({ metadata, sorted, postViews }) => {
     temporaryElement.innerHTML = htmlContent;
     // console.log("temporaryElement.innerHTML:", temporaryElement.innerHTML);
     // console.log("temporaryElement.innerText:", temporaryElement.innerText);
+    const text = temporaryElement.innerText;
+    // console.log(text);
+    setPlainText(text);
+    const wordCount = text
+      .trim()
+      .split(/\s+/)
+      .filter((word) => word.length > 0).length;
+    console.log("wordCount of text :", wordCount);
+    if (wordCount <= 200) {
+      setWordCount200(true)
+    } 
 
-    setPlainText(temporaryElement.innerText);
+    // Parse the HTML content
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, "text/html");
 
-    setImages(metadata.imageUrl);
+    // Get all the img tags
+    const imgTags = doc.querySelectorAll("img");
+
+    // Extract the src attributes (image URLs)
+    const imageUrls = Array.from(imgTags).map((img) => img.src);
+
+    console.log("imageUrls", imageUrls);
+    const combinedImageUrls = [metadata.imageUrl, ...imageUrls];
+    setImages(combinedImageUrls);
   }, [metadata]);
-  // console.log("text:", plainText);
-  // console.log("image_url:", images);
+  console.log("text:", plainText);
+  console.log("image_url:", images);
 
   useEffect(() => {
     fetch(
@@ -298,12 +328,13 @@ const Post = ({ metadata, sorted, postViews }) => {
   const wordsPerMinute = 200;
 
   const calculateTimeToRead = (wordCount) => {
+    console.log("wordcount:", wordCount);
     const minutes = wordCount / wordsPerMinute;
     return Math.ceil(minutes);
   };
 
-  const wordCount = metadata.description.split(" ").length;
-  const timeToRead = calculateTimeToRead(wordCount);
+  const word_count = metadata.description.split(" ").length;
+  const timeToRead = calculateTimeToRead(word_count);
 
   // const formatDate = (dateString) => {
   //   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -663,6 +694,11 @@ const Post = ({ metadata, sorted, postViews }) => {
                   {isDownloading ? "Downloading Video..." : "Download Video"}
                 </span>
               </button>
+              {isBlogLengthy == true && (
+                <p className="text-red-500">
+                  Blog is lengthy and cannot be downloaded
+                </p>
+              )}
             </div>
           </div>
         </div>

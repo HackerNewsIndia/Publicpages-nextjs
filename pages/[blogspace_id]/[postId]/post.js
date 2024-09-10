@@ -720,10 +720,22 @@ const Post = ({ metadata, sorted, postViews }) => {
                   {isDownloading ? "Downloading Video..." : "Download Video"}
                 </span>
               </button>
-              <button onClick={handleDownloadaudio} disabled={isDownloadingAudio} className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded">
-                  {isDownloadingAudio? 'Downloading...' : 'Download Audio'}
-                  <FontAwesomeIcon icon={faDownload} className="ml-2" />
-              </button>
+             <button
+  onClick={handleDownloadaudio}
+  disabled={isDownloadingAudio}
+  className={`bg-blue-500 text-white px-4 py-2 rounded-md flex items-center ${
+    isDownloadingAudio ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700 active:bg-blue-800"
+  }`}
+>
+  {isDownloadingAudio ? (
+    <FontAwesomeIcon icon={faSpinner} spin className="text-lg" />
+  ) : (
+    <FontAwesomeIcon icon={faDownload} className="text-lg" />
+  )}
+  <span className={`hidden md:inline`}>
+    {isDownloadingAudio ? "Downloading Audio..." : "Download Audio"}
+  </span>
+</button>
               {isBlogLengthy == true && (
                 <p className="text-red-500">
                   Blog is lengthy and cannot be downloaded

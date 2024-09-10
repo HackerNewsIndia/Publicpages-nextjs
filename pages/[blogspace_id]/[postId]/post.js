@@ -58,7 +58,7 @@ const Post = ({ metadata, sorted, postViews }) => {
   const router = useRouter();
   const { blogspace_id, postId } = router.query || {};
   const [isDownloading, setIsDownloading] = useState(false);
-
+  const [isDownloadingAudio, setIsDownloadingAudio] = useState(false);
   const [currentWord, setCurrentWord] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [blogSpaceData, setBlogSpaceData] = useState("");
@@ -115,6 +115,32 @@ const Post = ({ metadata, sorted, postViews }) => {
   }
   };
 
+
+
+
+ const handleDownloadaudio = async () => {
+    setIsDownloadingAudio(true);
+    try {
+      const response = await fetch(`https://diaryblogapi-eul3.onrender.com/api/generate-audio?blog_space_id=${blogspace_id}&post_id=${postId}&outputfile=my_audio.mp3`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `${metadata.title}.mp4`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading the video:', error.message);
+    } finally {
+      setIsDownloadingAudio(false);
+    }
+  };
+  
   useEffect(() => {
     // console.log("description:", metadata.description);
     const htmlContent = marked(metadata.description);
@@ -693,6 +719,10 @@ const Post = ({ metadata, sorted, postViews }) => {
                 <span className={`hidden md:inline`}>
                   {isDownloading ? "Downloading Video..." : "Download Video"}
                 </span>
+              </button>
+              <button onClick={handleDownloadaudio} disabled={isDownloadingAudio} className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded">
+                  {isDownloadingAudio? 'Downloading...' : 'Download Audio'}
+                  <FontAwesomeIcon icon={faDownload} className="ml-2" />
               </button>
               {isBlogLengthy == true && (
                 <p className="text-red-500">

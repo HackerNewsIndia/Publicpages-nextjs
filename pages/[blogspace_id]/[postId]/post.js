@@ -660,44 +660,82 @@ const Post = ({ metadata, sorted, postViews }) => {
                 />
               </div>
             </div>
-             <div className="mt-4 flex flex-col space-y-4 md:flex-row md:space-x-4">
-  <button
-    onClick={handlePlay}
-    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
-  >
-    <FontAwesomeIcon icon={faPlay} className="mr-1" />
-    Play
-  </button>
-  <button
-    onClick={handlePause}
-    className="bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded"
-  >
-    <FontAwesomeIcon icon={faPause} className="mr-1" />
-    Pause
-  </button>
-  <button
-    onClick={handleStop}
-    className="bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded"
-  >
-    <FontAwesomeIcon icon={faStop} className="mr-1" />
-    Stop
-  </button>
-  <button
-    onClick={handleDownload}
-    disabled={isDownloading}
-    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
-  >
-    {isDownloading ? 'Downloading...' : 'Download Video'}
-    <FontAwesomeIcon icon={faDownload} className="ml-2" />
-  </button>
-  <button
-    onClick={handleDownloadaudio}
-    disabled={isDownloadingAudio}
-    className="bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded"
-  >
-    {isDownloadingAudio ? 'Downloading...' : 'Download Audio'}
-    <FontAwesomeIcon icon={faDownload} className="ml-2" />
-  </button>
+             <div className="mt-4 flex space-x-4">
+              <button
+                onClick={handlePlay}
+                className={`bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded ${
+                  isPlaying || !isStopped ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={isPlaying || !isStopped}
+              >
+                <FontAwesomeIcon icon={faPlay} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Play</span>
+              </button>
+              <button
+                onClick={handlePause}
+                className={`bg-yellow-500 text-white hover:bg-yellow-700 active:bg-yellow-800 px-4 py-2 rounded ${
+                  !isPlaying ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={!isPlaying}
+              >
+                <FontAwesomeIcon icon={faPause} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Pause</span>
+              </button>
+              <button
+                onClick={handleResume}
+                className={`bg-green-500 text-white hover:bg-green-700 active:bg-green-800 px-4 py-2 rounded ${
+                  !isPaused ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={!isPaused}
+              >
+                <FontAwesomeIcon icon={faPlay} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Resume</span>
+              </button>
+              <button
+                onClick={handleStop}
+                className={`bg-red-500 text-white hover:bg-red-700 active:bg-red-800 px-4 py-2 rounded ${
+                  !isPlaying && !isPaused ? "opacity-50 cursor-not-allowed" : ""
+                } ${"md:flex md:items-center md:space-x-2"} ${"flex items-center justify-center"}`}
+                disabled={!isPlaying && !isPaused}
+              >
+                <FontAwesomeIcon icon={faStop} className="mr-1 text-lg" />
+                <span className="hidden md:inline">Stop</span>
+              </button>
+
+              <button
+                onClick={handleDownload}
+                disabled={isDownloading}
+                className={`${
+                  isDownloading ? "opacity-50 cursor-not-allowed" : ""
+                } bg-blue-500 text-white px-4 py-2 rounded-md flex items-center ${
+                  isDownloading ? "space-x-2" : "space-x-2 md:space-x-2"
+                }`}
+              >
+                {isDownloading ? (
+                  <FontAwesomeIcon icon={faSpinner} spin className="text-lg" />
+                ) : (
+                  <FontAwesomeIcon icon={faDownload} className="text-lg" />
+                )}
+                <span className={`hidden md:inline`}>
+                  {isDownloading ? "Downloading Video..." : "Download Video"}
+                </span>
+              </button>
+             <button
+  onClick={handleDownloadaudio}
+  disabled={isDownloadingAudio}
+  className={`bg-blue-500 text-white px-4 py-2 rounded-md flex items-center ${
+    isDownloadingAudio ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700 active:bg-blue-800"
+  }`}
+>
+  {isDownloadingAudio ? (
+    <FontAwesomeIcon icon={faSpinner} spin className="text-lg" />
+  ) : (
+    <FontAwesomeIcon icon={faDownload} className="text-lg" />
+  )}
+  <span className={`hidden md:inline`}>
+    {isDownloadingAudio ? "Downloading Audio..." : "Download Audio"}
+  </span>
+</button>
               {isBlogLengthy == true && (
                 <p className="text-red-500">
                   Blog is lengthy and cannot be downloaded

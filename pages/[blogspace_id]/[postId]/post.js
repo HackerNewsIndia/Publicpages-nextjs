@@ -121,7 +121,7 @@ const Post = ({ metadata, sorted, postViews }) => {
  const handleDownloadaudio = async () => {
     setIsDownloadingAudio(true);
     try {
-      const response = await fetch(`https://diaryblogapi-eul3.onrender.com/api/generate-audio?blog_space_id=${blogspace_id}&post_id=${postId}&outputfile=my_audio.mp3`);
+      const response = await fetch("https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/");
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

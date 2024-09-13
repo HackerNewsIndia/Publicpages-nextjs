@@ -13,6 +13,7 @@ const Home = () => {
   const [lastPostId, setLastPostId] = useState("");
   const [fetchingMore, setFetchingMore] = useState(false);
   const [allPostsLoaded, setAllPostsLoaded] = useState(false);
+  const [clickedPostId, setClickedPostId] = useState(null);
 
   const H1 = ({ children }) => (
     <h1 className="text-2xl font-bold mb-4">{children}</h1>
@@ -242,6 +243,10 @@ const Home = () => {
     return time;
   };
 
+  const handlePostClick = (postId) => {
+    setClickedPostId(postId);
+  };
+
   return (
     <div className="mx-1 md:mx-10 lg:mx-20 xl:mx-40 bg-white text-black">
       <div className="text-center pt-10">
@@ -317,16 +322,25 @@ const Home = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-between mt-4 text-slate-900">
-                      <div className="text-base font-medium leading-6 hover:text-orange-600 cursor-pointer">
+                      <div className="text-base font-medium leading-6 hover:text-orange-600 cursor-pointer flex items-center space-x-2">
+                        {/* Read More Link */}
                         <CustomLink
                           href={`/${post.blogSpace}/${post._id}/post`}
-                          className="text-primary-500 hover:text-primary-600 "
+                          className="text-primary-500 hover:text-primary-600"
+                          disabled={clickedPostId === post._id} // Disable the link when clicked
                           aria-label={`Read more: "${post.title}"`}
-                          // onClick={() => handlePostClick(post)}
+                          onClick={() => handlePostClick(post._id)} // Set clicked post ID
                         >
                           Read more &rarr;
                         </CustomLink>
+
+                        {/* Loader next to Read More */}
+                        {clickedPostId === post._id && (
+                          <BeatLoader color="hsla(168, 4%, 75%, 1)" size={8} />
+                        )}
                       </div>
+
+                      {/* Profile Info */}
                       <div className="flex items-center">
                         <CustomLink
                           href={`/profile?user_id=${encodeURIComponent(

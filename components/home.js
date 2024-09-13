@@ -14,6 +14,7 @@ const Home = () => {
   const [fetchingMore, setFetchingMore] = useState(false);
   const [allPostsLoaded, setAllPostsLoaded] = useState(false);
   const [clickedPostId, setClickedPostId] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const H1 = ({ children }) => (
     <h1 className="text-2xl font-bold mb-4">{children}</h1>
@@ -245,6 +246,7 @@ const Home = () => {
 
   const handlePostClick = (postId) => {
     setClickedPostId(postId);
+    setActiveIndex(postId);
   };
 
   return (
@@ -256,7 +258,12 @@ const Home = () => {
       <ul className="divide-y divide-gray-400 mx-2 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10 mt-5 mb-5">
         {posts.map((post, index) =>
           post.status === "published" ? (
-            <li key={index} className="py-5 divide-slate-900">
+            <li
+              key={index}
+              className={`py-5 divide-slate-900 ${
+                activeIndex === post._id ? "bg-gray-200 rounded-lg" : "bg-white"
+              }`}
+            >
               <article className="flex flex-col md:flex-row">
                 <div className="flex flex-row p-2 md:w-1/5">
                   <img
@@ -335,8 +342,8 @@ const Home = () => {
                         </CustomLink>
 
                         {/* Loader next to Read More */}
-                        {clickedPostId === post._id && (
-                          <BeatLoader color="hsla(168, 4%, 75%, 1)" size={8} />
+                        {clickedPostId && activeIndex === post._id && (
+                          <BeatLoader color="#FF5733" size={8} />
                         )}
                       </div>
 

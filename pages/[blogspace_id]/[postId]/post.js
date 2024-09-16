@@ -78,69 +78,67 @@ const Post = ({ metadata, sorted, postViews }) => {
     formData.append("text_data", plainText);
     formData.append("image_urls[]", images);
 
-    if(wordCount200==true){
+    if (wordCount200 == true) {
+      try {
+        const response = await fetch(
+          "https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/",
+          // "https://text-to-video-api.onrender.com/",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
-    try {
-      const response = await fetch(
-        "https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/",
-        // "https://text-to-video-api.onrender.com/",
-        {
-          method: "POST",
-          body: formData,
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `${metadata.title}.mp4`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          window.URL.revokeObjectURL(url);
+        } else {
+          const errorText = await response.text();
+          console.error("Error:", errorText);
         }
-      );
-
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${metadata.title}.mp4`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      } else {
-        const errorText = await response.text();
-        console.error("Error:", errorText);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setIsDownloading(false);
       }
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setIsDownloading(false);
+    } else {
+      console.log("text is too lengthy to convert into video");
+      setIsBlogLengthy(true);
     }
-  } else {
-    console.log("text is too lengthy to convert into video");
-    setIsBlogLengthy(true);
-  }
   };
 
-
-
-
- const handleDownloadaudio = async () => {
+  const handleDownloadaudio = async () => {
     setIsDownloadingAudio(true);
     try {
-      const response = await fetch("https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/");
+      const response = await fetch(
+        "https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/"
+      );
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
+      const a = document.createElement("a");
+      a.style.display = "none";
       a.href = url;
       a.download = `${metadata.title}.mp4`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Error downloading the video:', error.message);
+      console.error("Error downloading the video:", error.message);
     } finally {
       setIsDownloadingAudio(false);
     }
   };
-  
+
   useEffect(() => {
     // console.log("description:", metadata.description);
     const htmlContent = marked(metadata.description);
@@ -160,8 +158,8 @@ const Post = ({ metadata, sorted, postViews }) => {
       .filter((word) => word.length > 0).length;
     console.log("wordCount of text :", wordCount);
     if (wordCount <= 200) {
-      setWordCount200(true)
-    } 
+      setWordCount200(true);
+    }
 
     // Parse the HTML content
     const parser = new DOMParser();
@@ -292,7 +290,17 @@ const Post = ({ metadata, sorted, postViews }) => {
   );
   const Hr = () => <hr className="my-4 border-gray-400" />;
   const InlineCode = ({ children }) => (
-    <code className="bg-gray-200 px-1 py-0.5 rounded-md">{children}</code>
+    <code
+      style={{
+        backgroundColor: "#f5f5f5",
+        color: "#d63384",
+        padding: "2px 4px",
+        borderRadius: "4px",
+        fontFamily: "monospace",
+      }}
+    >
+      {children}
+    </code>
   );
   const Table = ({ children }) => (
     <table className="border-collapse border border-gray-300 mb-4">
@@ -660,7 +668,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                 />
               </div>
             </div>
-             <div className="mt-4 flex space-x-4">
+            <div className="mt-4 flex space-x-4">
               <button
                 onClick={handlePlay}
                 className={`bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded ${
@@ -720,22 +728,26 @@ const Post = ({ metadata, sorted, postViews }) => {
                   {isDownloading ? "Downloading Video..." : "Download Video"}
                 </span>
               </button>
-             <button
-  onClick={handleDownloadaudio}
-  disabled={isDownloadingAudio}
-  className={`bg-blue-500 text-white px-4 py-2 rounded-md flex items-center ${
-    isDownloadingAudio ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-700 active:bg-blue-800"
-  }`}
->
-  {isDownloadingAudio ? (
-    <FontAwesomeIcon icon={faSpinner} spin className="text-lg" />
-  ) : (
-    <FontAwesomeIcon icon={faDownload} className="text-lg" />
-  )}
-  <span className={`hidden md:inline`}>
-    {isDownloadingAudio ? "Downloading Audio..." : "Download Audio"}
-  </span>
-</button>
+              <button
+                onClick={handleDownloadaudio}
+                disabled={isDownloadingAudio}
+                className={`bg-blue-500 text-white px-4 py-2 rounded-md flex items-center ${
+                  isDownloadingAudio
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-blue-700 active:bg-blue-800"
+                }`}
+              >
+                {isDownloadingAudio ? (
+                  <FontAwesomeIcon icon={faSpinner} spin className="text-lg" />
+                ) : (
+                  <FontAwesomeIcon icon={faDownload} className="text-lg" />
+                )}
+                <span className={`hidden md:inline`}>
+                  {isDownloadingAudio
+                    ? "Downloading Audio..."
+                    : "Download Audio"}
+                </span>
+              </button>
               {isBlogLengthy == true && (
                 <p className="text-red-500">
                   Blog is lengthy and cannot be downloaded

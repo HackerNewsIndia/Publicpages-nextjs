@@ -155,7 +155,17 @@ const PreviewPost = ({ metadata, sorted, postViews }) => {
   );
   const Hr = () => <hr className="my-4 border-gray-400" />;
   const InlineCode = ({ children }) => (
-    <code className="bg-gray-200 px-1 py-0.5 rounded-md">{children}</code>
+    <code
+      style={{
+        backgroundColor: "#f5f5f5",
+        color: "#d63384",
+        padding: "2px 4px",
+        borderRadius: "4px",
+        fontFamily: "monospace",
+      }}
+    >
+      {children}
+    </code>
   );
   const Table = ({ children }) => (
     <table className="border-collapse border border-gray-300 mb-4">

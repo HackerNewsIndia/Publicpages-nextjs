@@ -668,7 +668,7 @@ const Post = ({ metadata, sorted, postViews }) => {
                 />
               </div>
             </div>
-            <div className="mt-4 flex space-x-4">
+            <div className="flex flex-wrap justify-center md:justify-start space-x-4">
               <button
                 onClick={handlePlay}
                 className={`bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-800 px-4 py-2 rounded ${

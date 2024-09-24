@@ -76,10 +76,10 @@ const Post = ({ metadata, sorted, postViews }) => {
 
     const formData = new FormData();
     formData.append("text_data", plainText);
-    // formData.append("image_urls[]", images);
-    images.forEach(url => {
-  formData.append('image_urls[]', url);
-});
+    formData.append("image_urls[]", images);
+//     images.forEach(url => {
+//   formData.append('image_urls[]', url);
+// });
 
     if (wordCount200 == true) {
       try {

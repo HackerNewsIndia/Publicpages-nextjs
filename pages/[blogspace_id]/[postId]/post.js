@@ -84,7 +84,8 @@ const Post = ({ metadata, sorted, postViews }) => {
     if (wordCount200 == true) {
       try {
         const response = await fetch(
-          "https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/",
+          "https://72e98cad-0464-4e6a-a101-7107a7006927-00-11j2v34cf6qip.riker.replit.dev/",
+         // "https://1547b30e-b2a6-4d2d-9122-6d371be8f3d3-00-2iyc3gxjp1bz.sisko.replit.dev/",
           // "https://text-to-video-api.onrender.com/",
           {
             method: "POST",
